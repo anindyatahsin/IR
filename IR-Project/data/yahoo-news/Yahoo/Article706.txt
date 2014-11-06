@@ -1,0 +1,23 @@
+Computer hacker gets 3-1/2 years for stealing iPad user data
+
+By Jonathan Stempel
+       (Reuters) - A computer hacker was sentenced on Monday to three years and five months in prison for stealing the personal data of about 120,000 Apple Inc iPad users, including big-city mayors, a TV network news anchor and a Hollywood movie mogul.
+       Andrew Auernheimer, 27, had been convicted in November by a Newark, New Jersey, jury of one count of conspiracy to access AT&amp;T Inc servers without permission, and one count of identity theft.
+       The sentence imposed by U.S. District Judge Susan Wigenton in Newark was at the high end of the 33- to 41-month range that the U.S. Department of Justice had sought.
+       Prosecutors had said prison time would help deter hackers from invading the privacy of innocent people on the Internet.
+       Among those affected by Auernheimer's activities were ABC News anchor Diane Sawyer, New York Mayor Michael Bloomberg, Chicago Mayor Rahm Emanuel and Hollywood movie producer Harvey Weinstein, prosecutors said.
+       "When it became clear that he was in trouble, he concocted the fiction that he was trying to make the Internet more secure, and that all he did was walk in through an unlocked door," U.S. Attorney Paul Fishman said in a statement. "The jury didn't buy it, and neither did the court in imposing sentence."
+       Auernheimer had sought probation. His lawyer had argued that no passwords were hacked, and that a long prison term was unjustified given that the government recently sought six months for a defendant in a case involving "far more intrusive facts."
+       The lawyer, Tor Ekeland, did not immediately respond to requests for comment on Monday. He has said his client would appeal.
+       Ekeland is also a lawyer for Matthew Keys, a deputy social media editor at Thomson Reuters Corp who was suspended with pay on Friday.
+       Keys was indicted last week in California on federal charges of aiding the Anonymous hacking collective by giving a hacker access to Tribune Co computer systems in December 2010.
+       The alleged events occurred before Keys began working at the website Reuters.com. Ekeland on Friday said Keys "maintains his innocence" and "looks forward to contesting these baseless charges.
+       INTERNET TROLL
+       Prosecutors called Auernheimer a "well-known computer hacker and internet 'troll,'" who with co-defendant Daniel Spitler and the group Goatse Security tried to disrupt online content and services.
+       The two men were accused of using an "account slurper" designed to match email addresses with identifiers for iPad users, and of conducting a "brute force" attack to extract data about those users, who accessed the Internet through the AT&amp;T servers.
+       This stolen information was then provided to the website Gawker, which published an article naming well-known people whose emails had been compromised, prosecutors said.
+       Spitler pleaded guilty in June 2011 to the same charges for which Auernheimer was convicted, and is awaiting sentencing.
+       Gawker was not charged in the case. In its original article, Gawker said Goatse obtained its data through a script on AT&amp;T's website that was accessible to anyone on the Internet. Gawker also said in the article that it established the authenticity of the data through two people listed among the names. A Gawker spokesman on Monday declined to elaborate.
+       AT&amp;T has partnered with Apple in the United States to provide wireless service on the iPad. After the hacking, it shut off the feature that allowed email addresses to be obtained.
+       The case is U.S. v. Auernheimer, U.S. District Court, District of New Jersey, No. 11-00470.
+       (Reporting by Jonathan Stempel in New York; Editing by Martha Graybow and Alden Bentley)

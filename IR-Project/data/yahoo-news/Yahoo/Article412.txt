@@ -1,0 +1,20 @@
+Report: Bribery probe targets Microsoft partners
+
+REDMOND, Wash. (AP) — Microsoft is entangled in a U.S. government investigation into whether the software maker and some of its business partners resorted to bribery to close deals in China, Romania and Italy, according to a report published Tuesday.
+Citing anonymous people familiar with the matter, The Wall Street Journal said the Justice Department and the Securities and Exchange Commission are examining whether kickbacks were paid to foreign officials to help close sale of software. The probe's targets include resellers of Microsoft software, company consultants and Microsoft's own employees outside the U.S., according to the Journal.
+The newspaper emphasized that the inquiry remains in an early stage and there have been no accusations of wrongdoing.
+In a blog post, Microsoft lawyer John Frank said the issues raised in the Journal's story are important enough to merit a review by the Redmond, Wash., company and the federal government.
+"We take all allegations brought to our attention seriously, and we cooperate fully in any government inquiries," wrote Frank, Microsoft's deputy general counsel. "Like other large companies with operations around the world, we sometimes receive allegations about potential misconduct by employees or business partners, and we investigate them fully, regardless of the source."
+Both the Justice Department and the SEC declined to comment.
+The reported investigation poses another potential legal headache for Microsoft, which has been sparring with government regulators in the U.S. and Europe for the past two decades.
+Most of the regulatory battles have been over whether Microsoft abused its position as the leading maker of personal computer software to thwart competition. Microsoft suffered it latest setback in that regulatory arena earlier this month when European regulators fined the company 561 million euros ($733 million). Microsoft violated an agreement to provide users of PCs running on its Windows operating system with an alternative to its Internet Explorer Web browser.
+The investigation cited by the Journal revolves around the Foreign Corrupt Practices Act, a 36-year-old law that forbids U.S. companies from bribing foreign officials to close deals.
+An anonymous tipster who helped Microsoft make sales in China passed along the allegations of sales misconduct to U.S. government regulators last year, according to the Journal. The tipster alleged an executive working at Microsoft's China subsidiary authorized paying bribes to close sales, the Journal reported.
+Microsoft had hired an outside law firm to look into the same allegations during a 10-month investigation that concluded in 2010 without finding any wrongdoing, according to the Journal.
+U.S. regulators are also examining whether bribes were paid in exchange for software contacts in Romania and Italy, the newspaper said.
+In his blog post, Frank said Microsoft is committed "to the highest legal and ethical standards wherever we do business." Nevertheless, he conceded that lapses may be inevitable in a company as large as Microsoft, which employs nearly 98,000 people and has ties to 640,000 business partners scattered across 112 countries.
+About 170 of Microsoft's employees work on compliance issues, including more than 50 who primarily investigate allegations of misconduct.
+___
+Online:
+Microsoft blog post:  http://blogs.technet.com/b/microsoft_on_the_issues/archive/2013/03/19/our-commitment-to-compliance.aspx
+.
