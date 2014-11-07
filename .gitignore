@@ -41,3 +41,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Binary directory that eclipse generate during compilation
+IR-Project/bin/
+# Ignore the project and classpath files. We should have our own copies of that
+IR-Project/.project
+IR-Project/.classpath
