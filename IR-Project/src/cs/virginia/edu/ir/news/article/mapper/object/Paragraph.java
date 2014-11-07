@@ -22,4 +22,14 @@ public class Paragraph {
 	public void addSentence(String sentence) {
 		sentences.add(sentence);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder buffer = new StringBuilder();
+		for (String sentence : sentences) {
+			buffer.append(sentence).append(' ');
+		}
+		buffer.append("\n");
+		return buffer.toString();
+	}
 }

@@ -9,6 +9,7 @@ public class NewsArticle {
 	private String category;
 	private String url;
 	private String title;
+	private String subTitle;
 	private String author;
 	private List<Paragraph> paragraphs;
 	private List<Comment> comments;
@@ -45,6 +46,14 @@ public class NewsArticle {
 		this.title = title;
 	}
 
+	public String getSubTitle() {
+		return subTitle;
+	}
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
+	}
+
 	public String getAuthor() {
 		return author;
 	}
@@ -52,7 +61,7 @@ public class NewsArticle {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-
+	
 	public List<Paragraph> getParagraphs() {
 		return paragraphs;
 	}
@@ -67,5 +76,23 @@ public class NewsArticle {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("title: ").append(title).append("\n");
+		if (subTitle != null) buffer.append("sub-title: ").append(subTitle).append("\n");
+		if (category != null) buffer.append("category: ").append(category).append("\n");
+		if (url != null) buffer.append("url: ").append(url).append("\n");
+		buffer.append("Content:......................................................... ").append("\n");
+		for (Paragraph paragraph : paragraphs) {
+			buffer.append(paragraph.toString());
+		}
+		buffer.append("\n\nComments:......................................................... ").append("\n");
+		for (Comment comment : comments) {
+			buffer.append(comment.toString());
+		}
+		return buffer.toString();
 	}
 }

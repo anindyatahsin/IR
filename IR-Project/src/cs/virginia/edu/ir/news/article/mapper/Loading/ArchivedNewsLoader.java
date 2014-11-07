@@ -1,11 +1,15 @@
 package cs.virginia.edu.ir.news.article.mapper.Loading;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.Gson;
 
 import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
@@ -52,6 +56,25 @@ public class ArchivedNewsLoader {
 		return newsList;
 	}
 	
+	public static List<NewsArticle> loadArchivedAlzajeeraNewsArticles() throws Exception {
+		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
+		Gson gson = new Gson();
+		File newsDirectory = new File(Configuration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY);
+		for (File topicSubDirectory : newsDirectory.listFiles()) {
+			if (topicSubDirectory.isFile()) continue;
+			else {
+				for (File articleFile : topicSubDirectory.listFiles()) {
+					BufferedReader br = new BufferedReader(new FileReader(articleFile));
+					NewsArticle article = gson.fromJson(br, NewsArticle.class);
+					System.out.println(article.toString());
+					articleList.add(article);
+					System.exit(0);
+				}
+			}
+		}
+		return articleList;
+	}
+	
 	public static int getArticleId(File articleFile) {
 		String fileName = articleFile.getName();
 		int articleIdIndex = ArticleFileNamePrefix.length();
@@ -69,9 +92,10 @@ public class ArchivedNewsLoader {
 	}
 	
 	public static void main(String args[]) throws Throwable {
-		List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();
-		for (NewsArticle article : yahooNewsList) {
-			System.out.println(article.getTitle());
-		}
+		loadArchivedAlzajeeraNewsArticles();
+//		List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();
+//		for (NewsArticle article : yahooNewsList) {
+//			System.out.println(article.getTitle());
+//		}
 	}
 }

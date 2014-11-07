@@ -1,15 +1,63 @@
 package cs.virginia.edu.ir.news.article.mapper.crawling;
 
+import java.util.Set;
+
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+
+import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
+import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
+import cs.virginia.edu.ir.news.article.mapper.utility.CrawledNewsUtils;
 
 public class NewsListVisitor {
 	
-	public static void main(String args[]) throws Exception {	
-		Document page = Jsoup.connect("http://query.nytimes.com/search/sitesearch/?action=click&contentCollection&region=TopBar&WT.nav=searchWidget&module=SearchSubmit&pgtype=Homepage#/politics/365days/").get();
-		Element element = page.select(".searchResults").first();
-		Elements elements = element.select(".element2");
+	public static void main(String args[]) throws Exception {		
+		crawlNewsFromAlzajeera();
+	}
+
+	private static void crawlNewsFromAlzajeera() throws Exception {
+		
+		int examinedNewsCount = 0;
+		int pageIndex = Configuration.ALJAZEERA_PAGE_BEGIN_INDEX;
+		Set<String> alreadyReadNewsSet = CrawledNewsUtils.getUrlsOfAlreadyCrawledArticles("alzajeera");
+		examinedNewsCount = alreadyReadNewsSet.size();
+		
+		while (examinedNewsCount < Configuration.MAXIMUM_NEWS_COUNT_PER_SITE) {
+			String nextPageURL = Configuration.ALJAZEERA_SEARCH_URL + "&p=" + pageIndex;
+			Connection connection = Jsoup.connect(nextPageURL);
+			Document page = connection.timeout(Configuration.REQUEST_TIMEOUT).get();
+			String searchContent = page.toString();
+			int nextSearchResult = 0;
+			while (true) {
+				nextSearchResult = searchContent.indexOf("indexText-Bold2", nextSearchResult);
+				if (nextSearchResult == -1) break;
+				int newsURLEnd = searchContent.indexOf("html", nextSearchResult);
+				String htmlContent = searchContent.substring(nextSearchResult, newsURLEnd + 4);
+				int newsUrlBegin = htmlContent.indexOf("http://");
+				String newsUrl = htmlContent.substring(newsUrlBegin);
+				if (!alreadyReadNewsSet.contains(newsUrl)) {
+					try {
+						NewsArticle article = ArticleInterpreter.ReadNewsArticle(newsUrl);
+						if (article != null) {
+							System.out.println("Read: " + article.getTitle());
+							CrawledNewsUtils.storeNewsArticleInFile(
+									Configuration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY, article);
+							CrawledNewsUtils.logNewsArticleRead("alzajeera", article);
+							examinedNewsCount++;
+							alreadyReadNewsSet.add(newsUrl);
+						} else {
+							System.out.println("Discarded: " + newsUrl);
+						}
+					} catch (Exception ex) {
+						alreadyReadNewsSet.add(newsUrl);
+					}
+				}
+				nextSearchResult = newsURLEnd;
+			};
+			
+			pageIndex += Configuration.ALJAZEERA_PAGE_INCREMENT;
+			Thread.sleep(Configuration.DELAY_PER_LIST_PAGE_VISIT);
+		}
 	}
 }

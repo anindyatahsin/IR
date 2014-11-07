@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
 import opennlp.tools.cmdline.PerformanceMonitor;
-import opennlp.tools.parser.PosSampleStream;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
+import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
 
 public class CommonUtils {
 
@@ -102,12 +101,12 @@ public class CommonUtils {
 		VBD Verb, past tense
 		VBG Verb, gerund or present participle
 		VBN Verb, past participle
-		VBP Verb, non­3rd person singular present
+		VBP Verb, nonï¿½3rd person singular present
 		VBZ Verb, 3rd person singular present
-		WDT Wh­determiner
-		WP Wh­pronoun
-		WP$ Possessive wh­pronoun
-		WRB Wh­adverb
+		WDT Whï¿½determiner
+		WP Whï¿½pronoun
+		WP$ Possessive whï¿½pronoun
+		WRB Whï¿½adverb
 
 	 * 
 	 */

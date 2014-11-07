@@ -1,6 +1,5 @@
 package cs.virginia.edu.ir.news.article.mapper.object;
 
-import java.util.List;
 
 public class Words {
 	private String name;

@@ -37,7 +37,6 @@ public class ArchiveNewsUtils {
 		List<Comment> comments = new ArrayList<Comment>();
 		while ((line = reader.readLine()) != null) {
 			Comment comment = new Comment();
-			comment.setArticle(article);
 			comment.setText(line);
 			comments.add(comment);
 		}

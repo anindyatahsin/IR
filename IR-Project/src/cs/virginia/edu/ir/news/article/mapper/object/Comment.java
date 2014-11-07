@@ -3,7 +3,6 @@ package cs.virginia.edu.ir.news.article.mapper.object;
 public class Comment {	
 	
 	private String id;
-	private NewsArticle article;
 	private String author;
 	private String text;
 
@@ -13,14 +12,6 @@ public class Comment {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public NewsArticle getArticle() {
-		return article;
-	}
-
-	public void setArticle(NewsArticle article) {
-		this.article = article;
 	}
 
 	public String getAuthor() {
@@ -37,5 +28,10 @@ public class Comment {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	@Override
+	public String toString() {
+		return "comment:---------" + text + "\n\n";
 	}
 }
