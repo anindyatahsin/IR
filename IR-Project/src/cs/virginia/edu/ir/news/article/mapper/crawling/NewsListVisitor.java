@@ -47,7 +47,7 @@ public class NewsListVisitor {
 							examinedNewsCount++;
 							alreadyReadNewsSet.add(newsUrl);
 						} else {
-							System.out.println("Discarded: " + newsUrl);
+							//System.out.println("Discarded: " + newsUrl);
 						}
 					} catch (Exception ex) {
 						alreadyReadNewsSet.add(newsUrl);
