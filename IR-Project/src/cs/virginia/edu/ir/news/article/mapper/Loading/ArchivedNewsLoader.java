@@ -13,7 +13,10 @@ import com.google.gson.Gson;
 
 import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
+import cs.virginia.edu.ir.news.article.mapper.object.Paragraph;
+import cs.virginia.edu.ir.news.article.mapper.output.Output;
 import cs.virginia.edu.ir.news.article.mapper.utility.ArchiveNewsUtils;
+import cs.virginia.edu.ir.news.article.mapper.utility.CommonUtils;
 
 public class ArchivedNewsLoader {
 	
@@ -66,11 +69,12 @@ public class ArchivedNewsLoader {
 				for (File articleFile : topicSubDirectory.listFiles()) {
 					BufferedReader br = new BufferedReader(new FileReader(articleFile));
 					NewsArticle article = gson.fromJson(br, NewsArticle.class);
-					System.out.println(article.toString());
+					//System.out.println(article.toString());
 					articleList.add(article);
-					System.exit(0);
+					break;
 				}
 			}
+			break;
 		}
 		return articleList;
 	}
@@ -92,7 +96,23 @@ public class ArchivedNewsLoader {
 	}
 	
 	public static void main(String args[]) throws Throwable {
-		loadArchivedAlzajeeraNewsArticles();
+		Output out = new Output();
+		out.delete("./test.txt");
+		out.delete("./sentence.txt");
+		List<NewsArticle> yahooNewsList = loadArchivedAlzajeeraNewsArticles();
+		NewsArticle article = yahooNewsList.get(0);
+		CommonUtils.initialize();
+		CommonUtils.tagSentences(article.getTitle(), true, 0, 0);
+		int i = 1;
+		for(Paragraph par: article.getParagraphs()){
+			int j = 1;
+			for(String line:par.getSentences()){
+				CommonUtils.tagSentences(line, false, i, j++);
+			}
+			i++;
+		}
+		out.writeToFile("./test.txt", CommonUtils.printHashmap() + "\n");
+		out.writeToFile("./sentence.txt", CommonUtils.printHashmap2() + "\n");
 //		List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();
 //		for (NewsArticle article : yahooNewsList) {
 //			System.out.println(article.getTitle());
