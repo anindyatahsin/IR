@@ -96,23 +96,11 @@ public class ArchivedNewsLoader {
 	}
 	
 	public static void main(String args[]) throws Throwable {
-		Output out = new Output();
-		out.delete("./test.txt");
-		out.delete("./sentence.txt");
+		
 		List<NewsArticle> yahooNewsList = loadArchivedAlzajeeraNewsArticles();
 		NewsArticle article = yahooNewsList.get(0);
-		CommonUtils.initialize();
-		CommonUtils.tagSentences(article.getTitle(), true, 0, 0);
-		int i = 1;
-		for(Paragraph par: article.getParagraphs()){
-			int j = 1;
-			for(String line:par.getSentences()){
-				CommonUtils.tagSentences(line, false, i, j++);
-			}
-			i++;
-		}
-		out.writeToFile("./test.txt", CommonUtils.printHashmap() + "\n");
-		out.writeToFile("./sentence.txt", CommonUtils.printHashmap2() + "\n");
+		WordWeighting ww = new WordWeighting();
+		ww.weightArticle(article);
 //		List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();
 //		for (NewsArticle article : yahooNewsList) {
 //			System.out.println(article.getTitle());
