@@ -11,12 +11,9 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
+import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
-import cs.virginia.edu.ir.news.article.mapper.object.Paragraph;
-import cs.virginia.edu.ir.news.article.mapper.output.Output;
 import cs.virginia.edu.ir.news.article.mapper.utility.ArchiveNewsUtils;
-import cs.virginia.edu.ir.news.article.mapper.utility.CommonUtils;
 
 public class ArchivedNewsLoader {
 	
@@ -26,7 +23,7 @@ public class ArchivedNewsLoader {
 	public static List<NewsArticle> loadArchivedYahooNewsList() throws Throwable {
 		
 		List<NewsArticle> newsList = new ArrayList<NewsArticle>();
-		File newsDirectory = new File(Configuration.ARCHIVED_YAHOO_NEWS_DIRECTORY);
+		File newsDirectory = new File(DeploymentConfiguration.ARCHIVED_YAHOO_NEWS_DIRECTORY);
 		
 		if (newsDirectory.exists()) {
 			Map<Integer, NewsArticle> articleMap = new HashMap<Integer, NewsArticle>();
@@ -62,7 +59,7 @@ public class ArchivedNewsLoader {
 	public static List<NewsArticle> loadArchivedAlzajeeraNewsArticles() throws Exception {
 		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
 		Gson gson = new Gson();
-		File newsDirectory = new File(Configuration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY);
+		File newsDirectory = new File(DeploymentConfiguration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY);
 		for (File topicSubDirectory : newsDirectory.listFiles()) {
 			if (topicSubDirectory.isFile()) continue;
 			else {

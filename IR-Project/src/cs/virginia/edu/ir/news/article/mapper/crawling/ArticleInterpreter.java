@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
+import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.Comment;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
 import cs.virginia.edu.ir.news.article.mapper.object.Paragraph;
@@ -23,12 +23,12 @@ public class ArticleInterpreter {
 	public static NewsArticle ReadNewsArticle(String articleURL) throws Exception {
 		
 		List<String> commentList = retrieveComments(articleURL);
-		if (commentList.size() < Configuration.MINIMUM_COMMENTS_PER_ARTICLE) {
+		if (commentList.size() < DeploymentConfiguration.MINIMUM_COMMENTS_PER_ARTICLE) {
 			return null;
 		}
 		
 		Connection connection = Jsoup.connect(articleURL);
-		Document page = connection.timeout(Configuration.REQUEST_TIMEOUT).get();
+		Document page = connection.timeout(DeploymentConfiguration.REQUEST_TIMEOUT).get();
 		Element titleElement = page.getElementById("DetailedTitle");
 		String title = titleElement.childNode(0).toString().trim();
 		Elements subTitleElement = page.getElementsByClass("articleSumm");

@@ -1,6 +1,7 @@
 package cs.virginia.edu.ir.news.article.mapper.object;
 
 public class WordPosition {
+	
 	private int sentenceNo;
 	private int paragraphNo;
 	private int wordNo;
@@ -14,22 +15,28 @@ public class WordPosition {
 	public int getSentenceNo() {
 		return sentenceNo;
 	}
+	
 	public void setSentenceNo(int sentenceNo) {
 		this.sentenceNo = sentenceNo;
 	}
+	
 	public int getParagraphNo() {
 		return paragraphNo;
 	}
+	
 	public void setParagraphNo(int paragraphNo) {
 		this.paragraphNo = paragraphNo;
 	}
+	
 	public int getwordNo() {
 		return wordNo;
 	}
+	
 	public void setwordNo(int wordNo) {
 		this.wordNo = wordNo;
 	}
 	
-	
-	
+	public SentencePosition getSentencePosition() {
+		return new SentencePosition(paragraphNo, sentenceNo);
+	}
 }

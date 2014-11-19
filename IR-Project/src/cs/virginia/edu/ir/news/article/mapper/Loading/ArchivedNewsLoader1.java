@@ -10,24 +10,21 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import cs.virginia.edu.ir.news.article.mapper.object.Comment;
-import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
+
+import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
 import cs.virginia.edu.ir.news.article.mapper.utility.ArchiveNewsUtils;
-import edu.illinois.cs.index.*;
+import edu.illinois.cs.index.Indexer;
 
 public class ArchivedNewsLoader1 {
 	
 	private static final String ArticleFileNamePrefix = "Article";
 	private static final String CommentFileNamePrefix = "Comments";
-	private static String _indexPath = "data/yahoo-news/IndexYahoo/";
-	private static String _prefix = "data/";
-	private static String _file = "npl.txt";
     
 	public static List<NewsArticle> loadArchivedYahooNewsList() throws Throwable {
 		
 		List<NewsArticle> newsList = new ArrayList<NewsArticle>();
-		File newsDirectory = new File(Configuration.ARCHIVED_YAHOO_NEWS_DIRECTORY);
+		File newsDirectory = new File(DeploymentConfiguration.ARCHIVED_YAHOO_NEWS_DIRECTORY);
 		
 		if (newsDirectory.exists()) {
 			Map<Integer, NewsArticle> articleMap = new HashMap<Integer, NewsArticle>();
@@ -65,7 +62,7 @@ public class ArchivedNewsLoader1 {
 	public static List<NewsArticle> loadArchivedAlzajeeraNewsArticles() throws Exception {
 		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
 		Gson gson = new Gson();
-		File newsDirectory = new File(Configuration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY);
+		File newsDirectory = new File(DeploymentConfiguration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY);
 		for (File topicSubDirectory : newsDirectory.listFiles()) {
 			if (topicSubDirectory.isFile()) continue;
 			else {
@@ -102,7 +99,7 @@ public class ArchivedNewsLoader1 {
 		List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();
 		
 		for (NewsArticle article : yahooNewsList) {
-			StringBuilder buffer = new StringBuilder(Configuration.INDEX_DIRECTORY);
+			StringBuilder buffer = new StringBuilder(DeploymentConfiguration.INDEX_DIRECTORY);
 			buffer.append(article.getSource()).append("/");
 			if (article.getCategory() != null) {
 				buffer.append(article.getCategory()).append("/");
@@ -116,7 +113,6 @@ public class ArchivedNewsLoader1 {
 			directory.mkdirs();
 			Indexer.index(buffer.toString(), article);
 			break;
-
 		}
 	}
 }

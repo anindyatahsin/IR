@@ -13,6 +13,8 @@ public class NewsArticle {
 	private String author;
 	private List<Paragraph> paragraphs;
 	private List<Comment> comments;
+	private String source;
+	private String fileName;
 	
 	public Date getPublicationDate() {
 		return publicationDate;
@@ -76,6 +78,22 @@ public class NewsArticle {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}	
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Override

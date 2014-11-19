@@ -10,7 +10,7 @@ import java.util.Set;
 
 import com.google.gson.Gson;
 
-import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
+import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
 
 public class CrawledNewsUtils {
@@ -20,7 +20,7 @@ public class CrawledNewsUtils {
 		int identiferEnd = articleUrl.lastIndexOf('.');
 		String articleId = articleUrl.substring(identifierBegin + 1, identiferEnd);
 		StringBuilder builder = new StringBuilder();
-		builder.append(Configuration.DISQUS_URL_PREFIX);
+		builder.append(DeploymentConfiguration.DISQUS_URL_PREFIX);
 		builder.append("&t_i=").append(articleId);
 		builder.append("&t_u=").append((new URL(articleUrl)).toString());
 		return builder.toString();
@@ -41,7 +41,7 @@ public class CrawledNewsUtils {
 	
 	public static Set<String> getUrlsOfAlreadyCrawledArticles(String newsSourceName) throws Exception {
 		Set<String> retrievedNewsSet = new HashSet<String>();
-		String logFileName = Configuration.LOG_DIRECTORY + newsSourceName + ".log";
+		String logFileName = DeploymentConfiguration.LOG_DIRECTORY + newsSourceName + ".log";
 		File logFile = new File(logFileName);
 		if (!logFile.exists()) {
 			logFile.createNewFile();
@@ -59,7 +59,7 @@ public class CrawledNewsUtils {
 	
 	public static void logNewsArticleRead(String newsSourceName, NewsArticle article) throws Exception {
 		String newsUrl = article.getUrl();
-		String logFileName = Configuration.LOG_DIRECTORY + newsSourceName + ".log";
+		String logFileName = DeploymentConfiguration.LOG_DIRECTORY + newsSourceName + ".log";
 		FileWriter writer = new FileWriter(logFileName , true);
 		String message = newsUrl + "\n";
 		writer.write(message);

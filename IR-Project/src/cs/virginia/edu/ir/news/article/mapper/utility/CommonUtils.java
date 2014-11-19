@@ -5,11 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 import opennlp.tools.cmdline.PerformanceMonitor;
 import opennlp.tools.postag.POSModel;
@@ -18,11 +14,7 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
-import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
-import cs.virginia.edu.ir.news.article.mapper.object.SentencePosition;
-import cs.virginia.edu.ir.news.article.mapper.object.WordLevel;
-import cs.virginia.edu.ir.news.article.mapper.object.WordPosition;
-import cs.virginia.edu.ir.news.article.mapper.object.WordProperties;
+import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.output.Output;
 
 public class CommonUtils {
@@ -38,7 +30,7 @@ public class CommonUtils {
 		InputStream posModelFile = null;
 		
 		try {
-			sentenceModelFile = new FileInputStream(Configuration.SENTENCE_MODEL_FILE);
+			sentenceModelFile = new FileInputStream(DeploymentConfiguration.SENTENCE_MODEL_FILE);
 			SentenceDetectionModel = new SentenceModel(sentenceModelFile);
 		}
 		catch (IOException e) {
@@ -55,7 +47,7 @@ public class CommonUtils {
 		}
 		
 		try {
-			posModelFile = new FileInputStream(Configuration.POS_MODEL_FILE);
+			posModelFile = new FileInputStream(DeploymentConfiguration.POS_MODEL_FILE);
 			POSDetectionModel = new POSModel(posModelFile);
 		}
 		catch (IOException e) {
@@ -70,8 +62,6 @@ public class CommonUtils {
 				}
 			}
 		}
-		
-		
 	}
 	
 	public static List<String> extractSentences(String paragraphContent) {
@@ -81,7 +71,7 @@ public class CommonUtils {
 		return sentences;
 	}
 	
-	public static String tagSentences(String line){
+	public static String tagSentences(String line) {
 		PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
 		POSTaggerME tagger = new POSTaggerME(POSDetectionModel);
 		String posTaggedSentence = null;
@@ -102,16 +92,11 @@ public class CommonUtils {
 	
 	
 	public static void main(String args[]) {
-		CommonUtils cmn = new CommonUtils();
 		List<String> sentences = extractSentences("This is Yan. May I know your name? Oh, Sally!");
 		out.delete("./test.txt");
-		boolean title = true;
-		int par = 0, sen = 0;
 		for (String line : sentences){ 
 			System.out.println(line);	
 			tagSentences(line);
-			title = false;
 		}
-		//out.writeToFile("./test.txt", printHashmap() + "\n");
 	}
 }

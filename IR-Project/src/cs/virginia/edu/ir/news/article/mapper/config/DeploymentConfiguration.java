@@ -1,6 +1,6 @@
 package cs.virginia.edu.ir.news.article.mapper.config;
 
-public class Configuration {
+public class DeploymentConfiguration {
 
 	public static final int MAXIMUM_NEWS_COUNT_PER_SITE = 1000; 
 	
@@ -25,6 +25,7 @@ public class Configuration {
 	public static final String ARCHIVED_ALZAJEERA_NEWS_DIRECTORY = "./data/alzajeera/";
 	
 	public static final String LOG_DIRECTORY = "./data/logs/";
+	public static final String INDEX_DIRECTORY = "./data/index/";
 	
 	public static final int REQUEST_TIMEOUT = 10000;
 }

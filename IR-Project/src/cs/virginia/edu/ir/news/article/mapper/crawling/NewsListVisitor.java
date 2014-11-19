@@ -6,7 +6,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import cs.virginia.edu.ir.news.article.mapper.config.Configuration;
+import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
 import cs.virginia.edu.ir.news.article.mapper.utility.CrawledNewsUtils;
 
@@ -19,14 +19,14 @@ public class NewsListVisitor {
 	private static void crawlNewsFromAlzajeera() throws Exception {
 		
 		int examinedNewsCount = 0;
-		int pageIndex = Configuration.ALJAZEERA_PAGE_BEGIN_INDEX;
+		int pageIndex = DeploymentConfiguration.ALJAZEERA_PAGE_BEGIN_INDEX;
 		Set<String> alreadyReadNewsSet = CrawledNewsUtils.getUrlsOfAlreadyCrawledArticles("alzajeera");
 		examinedNewsCount = alreadyReadNewsSet.size();
 		
-		while (examinedNewsCount < Configuration.MAXIMUM_NEWS_COUNT_PER_SITE) {
-			String nextPageURL = Configuration.ALJAZEERA_SEARCH_URL + "&p=" + pageIndex;
+		while (examinedNewsCount < DeploymentConfiguration.MAXIMUM_NEWS_COUNT_PER_SITE) {
+			String nextPageURL = DeploymentConfiguration.ALJAZEERA_SEARCH_URL + "&p=" + pageIndex;
 			Connection connection = Jsoup.connect(nextPageURL);
-			Document page = connection.timeout(Configuration.REQUEST_TIMEOUT).get();
+			Document page = connection.timeout(DeploymentConfiguration.REQUEST_TIMEOUT).get();
 			String searchContent = page.toString();
 			int nextSearchResult = 0;
 			while (true) {
@@ -42,7 +42,7 @@ public class NewsListVisitor {
 						if (article != null) {
 							System.out.println("Read: " + article.getTitle());
 							CrawledNewsUtils.storeNewsArticleInFile(
-									Configuration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY, article);
+									DeploymentConfiguration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY, article);
 							CrawledNewsUtils.logNewsArticleRead("alzajeera", article);
 							examinedNewsCount++;
 							alreadyReadNewsSet.add(newsUrl);
@@ -56,8 +56,8 @@ public class NewsListVisitor {
 				nextSearchResult = newsURLEnd;
 			};
 			
-			pageIndex += Configuration.ALJAZEERA_PAGE_INCREMENT;
-			Thread.sleep(Configuration.DELAY_PER_LIST_PAGE_VISIT);
+			pageIndex += DeploymentConfiguration.ALJAZEERA_PAGE_INCREMENT;
+			Thread.sleep(DeploymentConfiguration.DELAY_PER_LIST_PAGE_VISIT);
 		}
 	}
 }
