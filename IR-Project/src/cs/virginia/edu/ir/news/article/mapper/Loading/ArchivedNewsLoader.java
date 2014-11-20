@@ -66,7 +66,8 @@ public class ArchivedNewsLoader {
 				for (File articleFile : topicSubDirectory.listFiles()) {
 					BufferedReader br = new BufferedReader(new FileReader(articleFile));
 					NewsArticle article = gson.fromJson(br, NewsArticle.class);
-					//System.out.println(article.toString());
+					article.setFileName(articleFile.getName());
+					article.setSource("alzajeera");
 					articleList.add(article);
 					break;
 				}
@@ -74,6 +75,22 @@ public class ArchivedNewsLoader {
 			break;
 		}
 		return articleList;
+	}
+	
+	public static NewsArticle loadOneAlzajeeraNewsArticle(int articleNo, String category) throws Exception {
+		String directoryStr = DeploymentConfiguration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY + category + "/";
+		File topicDirectory = new File(directoryStr);
+		if (!topicDirectory.exists()) return null;
+		String fileName = "Article" + articleNo + ".txt";
+		String filePath = directoryStr + fileName;
+		File articleFile = new File(filePath);
+		if (!articleFile.exists()) return null;
+		Gson gson = new Gson();
+		BufferedReader br = new BufferedReader(new FileReader(articleFile));
+		NewsArticle article = gson.fromJson(br, NewsArticle.class);
+		article.setSource("alzajeera");
+		article.setFileName(fileName);
+		return article;
 	}
 	
 	public static int getArticleId(File articleFile) {
@@ -91,16 +108,10 @@ public class ArchivedNewsLoader {
 		String stringId = fileName.substring(articleIdIndex, idIndexEnd);
 		return articleMap.get(Integer.parseInt(stringId));
 	}
-	
-	public static void main(String args[]) throws Throwable {
 		
-		List<NewsArticle> yahooNewsList = loadArchivedAlzajeeraNewsArticles();
-		NewsArticle article = yahooNewsList.get(0);
+	public static void main(String args[]) throws Throwable {
+		NewsArticle article = loadOneAlzajeeraNewsArticle(0, "americas");
 		WordWeighting ww = new WordWeighting();
 		ww.weightArticle(article);
-//		List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();
-//		for (NewsArticle article : yahooNewsList) {
-//			System.out.println(article.getTitle());
-//		}
 	}
 }

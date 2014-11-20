@@ -5,11 +5,13 @@ public class WordPosition {
 	private int sentenceNo;
 	private int paragraphNo;
 	private int wordNo;
+	private boolean analyzed;
 	
 	public WordPosition(int par, int sen, int word){
 		paragraphNo = par;
 		sentenceNo = sen;
 		wordNo = word;
+		analyzed = false;
 	}
 	 
 	public int getSentenceNo() {
@@ -38,5 +40,13 @@ public class WordPosition {
 	
 	public SentencePosition getSentencePosition() {
 		return new SentencePosition(paragraphNo, sentenceNo);
+	}
+
+	public boolean isAnalyzed() {
+		return analyzed;
+	}
+
+	public void setAnalyzed(boolean analyzed) {
+		this.analyzed = analyzed;
 	}
 }

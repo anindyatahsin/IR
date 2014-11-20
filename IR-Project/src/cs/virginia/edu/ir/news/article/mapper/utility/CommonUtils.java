@@ -14,6 +14,9 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
+
+import org.tartarus.snowball.ext.porterStemmer;
+
 import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.output.Output;
 
@@ -90,6 +93,14 @@ public class CommonUtils {
 		return posTaggedSentence;
 	}
 	
+	public String normalizeTocken(String token) {
+		porterStemmer stemmer = new porterStemmer();
+		stemmer.setCurrent(token.toLowerCase());
+		if (stemmer.stem())
+			return stemmer.getCurrent();
+		else
+			return token.toLowerCase();
+	}
 	
 	public static void main(String args[]) {
 		List<String> sentences = extractSentences("This is Yan. May I know your name? Oh, Sally!");

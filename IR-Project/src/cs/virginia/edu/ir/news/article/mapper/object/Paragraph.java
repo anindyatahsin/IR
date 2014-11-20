@@ -22,6 +22,10 @@ public class Paragraph {
 	public void addSentence(String sentence) {
 		sentences.add(sentence);
 	}
+	
+	public int getLength() {
+		return sentences.size();
+	}
 
 	@Override
 	public String toString() {
