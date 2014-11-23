@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.tartarus.snowball.ext.porterStemmer;
+
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
 import cs.virginia.edu.ir.news.article.mapper.object.Paragraph;
 import cs.virginia.edu.ir.news.article.mapper.object.SentencePosition;
@@ -96,6 +98,15 @@ public class WordWeighting {
 	public void setOut(Output out) {
 		this.out = out;
 	}
+	
+	public String PorterStemming(String token){
+		porterStemmer stemmer = new porterStemmer();
+		stemmer.setCurrent(token);
+		if(stemmer.stem())
+			return stemmer.getCurrent();
+		else
+			return token;
+	}
 
 	public void weightArticle(NewsArticle article){
 		String title = CommonUtils.tagSentences(article.getTitle());
@@ -121,6 +132,7 @@ public class WordWeighting {
 			if(isTitle){
 				while(st1.hasMoreTokens()){
 					String s = st1.nextToken().toLowerCase().replaceAll("\\p{P}", "");
+					s = PorterStemming(s);	
 					String pos = st1.nextToken();
 					if(postag.containsKey(pos)){
 						if(!postag.get(pos)){
@@ -143,6 +155,7 @@ public class WordWeighting {
 			else{
 				while(st1.hasMoreTokens()){
 					String s = st1.nextToken().toLowerCase().replaceAll("\\p{P}", "");
+					s = PorterStemming(s);
 					String pos = st1.nextToken();
 					if(postag.containsKey(pos)){
 						if(!postag.get(pos)){

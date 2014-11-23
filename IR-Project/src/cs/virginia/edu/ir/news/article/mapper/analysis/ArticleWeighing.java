@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.tartarus.snowball.ext.porterStemmer;
+
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
@@ -37,6 +39,15 @@ public class ArticleWeighing {
 
 	public List<PassageModel> getPassageModels() {
 		return passageModels;
+	}
+	
+	public String PorterStemming(String token){
+		porterStemmer stemmer = new porterStemmer();
+		stemmer.setCurrent(token);
+		if(stemmer.stem())
+			return stemmer.getCurrent();
+		else
+			return token;
 	}
 	
 	public void initializePassageModels() {
@@ -79,11 +90,13 @@ public class ArticleWeighing {
 		Set<String> rootWords = new HashSet<String>();
 		String[] tokens = tokenizer.tokenize(title);
 		for (String token : tokens) {
+			token = PorterStemming(token);
 			rootWords.add(token.toLowerCase());
 		}
 		if (article.getSubTitle() != null) {
 			tokens = tokenizer.tokenize(article.getSubTitle());
 			for (String token : tokens) {
+				token = PorterStemming(token);
 				rootWords.add(token.toLowerCase());
 			}
 		}

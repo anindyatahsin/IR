@@ -27,7 +27,7 @@ public class SpecialAnalyzer extends Analyzer {
         Tokenizer source = new StandardTokenizer(Version.LUCENE_46, reader);
         TokenStream filter = new StandardFilter(Version.LUCENE_46, source);
         filter = new LowerCaseFilter(Version.LUCENE_46, filter);
-        filter = new LengthFilter(Version.LUCENE_46, filter, 2, 35);
+        //filter = new LengthFilter(Version.LUCENE_46, filter, 2, 35);
         filter = new StopFilter(Version.LUCENE_46, filter,
                 StopFilter.makeStopSet(Version.LUCENE_46, Stopwords.STOPWORDS));
         filter = new PorterStemFilter(filter);
