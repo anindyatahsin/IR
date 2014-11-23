@@ -68,6 +68,7 @@ public class ArchivedNewsLoader {
 					NewsArticle article = gson.fromJson(br, NewsArticle.class);
 					article.setFileName(articleFile.getName());
 					article.setSource("alzajeera");
+					article.setCategory(topicSubDirectory.getName());
 					articleList.add(article);
 					break;
 				}

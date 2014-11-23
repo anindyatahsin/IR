@@ -69,11 +69,16 @@ public class ArchivedNewsLoader1 {
 				for (File articleFile : topicSubDirectory.listFiles()) {
 					BufferedReader br = new BufferedReader(new FileReader(articleFile));
 					NewsArticle article = gson.fromJson(br, NewsArticle.class);
-					System.out.println(article.toString());
+					//System.out.println(article.toString());
+					article.setSource("alzajeera");
+					article.setFileName(articleFile.getName());
+					article.setCategory(topicSubDirectory.getName());
 					articleList.add(article);
-					System.exit(0);
+					//break;
+					//System.exit(0);
 				}
 			}
+			
 		}
 		return articleList;
 	}
@@ -96,8 +101,36 @@ public class ArchivedNewsLoader1 {
 	
 	public static void main(String args[]) throws Throwable {
 		//loadArchivedAlzajeeraNewsArticles();    //data/yahoo-news/IndexYahoo/
-		List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();
+		//List<NewsArticle> yahooNewsList = loadArchivedYahooNewsList();  loadArchivedAlzajeeraNewsArticles
+		List<NewsArticle> yahooNewsList = loadArchivedAlzajeeraNewsArticles();
+		for (NewsArticle article : yahooNewsList) {
 		
+			
+			StringBuilder buffer = new StringBuilder(DeploymentConfiguration.INDEX_DIRECTORY);
+			buffer.append(article.getSource()).append("/");
+			if (article.getCategory() != null) {
+				buffer.append(article.getCategory()).append("/");
+			}
+			String fileName = article.getFileName();
+			int extension = fileName.lastIndexOf('.');
+			String fileNameWithoutExtension = fileName.substring(0, extension);
+			buffer.append(fileNameWithoutExtension).append('/');
+			
+			//System.out.println(buffer.toString());
+			
+			File directory = new File(buffer.toString());
+			if (directory.exists()) continue;
+			directory.mkdirs();
+			Indexer.index(buffer.toString(), article);			
+			
+			
+		}
+		
+		
+		
+		
+		
+		/*
 		for (NewsArticle article : yahooNewsList) {
 			StringBuilder buffer = new StringBuilder(DeploymentConfiguration.INDEX_DIRECTORY);
 			buffer.append(article.getSource()).append("/");
@@ -113,6 +146,6 @@ public class ArchivedNewsLoader1 {
 			directory.mkdirs();
 			Indexer.index(buffer.toString(), article);
 			break;
-		}
+		}*/
 	}
 }

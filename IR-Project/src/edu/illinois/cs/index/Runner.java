@@ -43,7 +43,7 @@ public class Runner {
     	//NOTE: you have to create the index before searching!
     	String method = "--ok";//specify the ranker you want to test
     	String path="data/yahoo-news/IndexYahoo/";
-        interactiveSearch(path, method);
+        //interactiveSearch(path, method);
     }
 
     /**
@@ -51,30 +51,30 @@ public class Runner {
      *
      * @throws IOException
      */
-    private static void interactiveSearch(String index_path, String method) throws IOException {
-        Searcher searcher = new Searcher(index_path);
+    public static void interactiveSearch(String index_path, String query) throws IOException {
+        String method= "--ok";
+    	Searcher searcher = new Searcher(index_path);
         setSimilarity(searcher, method);
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Type text to search, blank to quit.");
-        System.out.print("> ");
-        String input;
-        while ((input = br.readLine()) != null && !input.equals("")) {
-            SearchResult result = searcher.search(input);
-            ArrayList<ResultDoc> results = result.getDocs();
-            int rank = 1;
-            if (results.size() == 0)
-                System.out.println("No results found!");
-            for (ResultDoc rdoc : results) {
-                System.out.println("\n------------------------------------------------------");
-                System.out.println(rank + ". " + rdoc.title());
-                System.out.println("------------------------------------------------------");
-                System.out.println(result.getSnippet(rdoc)
-                        .replaceAll("\n", " "));
-                ++rank;
-            }
-            System.out.print("> ");
+        //System.out.println("Type text to search, blank to quit.");
+        //System.out.print("> ");
+        String input=query;
+        //while ((input = br.readLine()) != null && !input.equals("")) {
+        SearchResult result = searcher.search(input);
+        ArrayList<ResultDoc> results = result.getDocs();
+        int rank = 1;
+        if (results.size() == 0)
+            System.out.println("No results found!");
+        for (ResultDoc rdoc : results) {
+            System.out.println("\n------------------------------------------------------");
+            System.out.println(rank + ". " + rdoc.title());
+            System.out.println("------------------------------------------------------");
+            System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
+            ++rank;
         }
+        //    System.out.print("> ");
+        //}
     }
 
     public static void setSimilarity(Searcher searcher, String method) {

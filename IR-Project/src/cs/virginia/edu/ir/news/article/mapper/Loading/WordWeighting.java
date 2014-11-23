@@ -143,7 +143,7 @@ public class WordWeighting {
 						WordProperties wp = new WordProperties();
 						wp.setPOS_tag(pos);
 						WordPosition wpos = new WordPosition(0,0,0);
-						ArrayList<WordPosition> wordpos = new ArrayList<>();
+						ArrayList<WordPosition> wordpos = new ArrayList<WordPosition>();
 						wordpos.add(wpos);
 						wp.setWordPos(wordpos);
 						level.put(s, wp);
@@ -166,7 +166,7 @@ public class WordWeighting {
 						WordProperties wp = new WordProperties();
 						wp.setPOS_tag(pos);
 						WordPosition wpos = new WordPosition(par,sen,i++);
-						ArrayList<WordPosition> wordpos = new ArrayList<>();
+						ArrayList<WordPosition> wordpos = new ArrayList<WordPosition>();
 						wordpos.add(wpos);
 						wp.setWordPos(wordpos);
 						level.put(s, wp);
