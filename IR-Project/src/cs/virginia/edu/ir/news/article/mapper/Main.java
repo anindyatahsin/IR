@@ -1,13 +1,11 @@
 package cs.virginia.edu.ir.news.article.mapper;
 
-import java.io.File;
-
 import cs.virginia.edu.ir.news.article.mapper.Loading.ArchivedNewsLoader;
 import cs.virginia.edu.ir.news.article.mapper.analysis.ArticleWeighing;
 import cs.virginia.edu.ir.news.article.mapper.analysis.PassageModel;
 import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
-import edu.illinois.cs.index.*;
+import edu.illinois.cs.index.Runner;
 
 public class Main {
 

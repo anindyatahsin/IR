@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.google.gson.Gson;
 
@@ -78,6 +79,23 @@ public class ArchivedNewsLoader {
 		return articleList;
 	}
 	
+	public static NewsArticle loadOneYahooNewsArticle(int articleNo) throws Exception {
+		File newsDirectory = new File(DeploymentConfiguration.ARCHIVED_YAHOO_NEWS_DIRECTORY);
+		if (!newsDirectory.exists()) return null;
+		String articleFileName = "Article" + articleNo + ".txt";
+		String filePath = DeploymentConfiguration.ARCHIVED_YAHOO_NEWS_DIRECTORY + articleFileName;
+		File articleFile = new File(filePath);
+		if (!articleFile.exists()) return null;
+		NewsArticle article = ArchiveNewsUtils.readNewsArticleFromFile(articleFile);
+		article.setSource("yahoo-news");
+		article.setFileName(articleFileName);
+		String commentsFileName = "Comments" + articleNo + ".txt";
+		filePath = DeploymentConfiguration.ARCHIVED_YAHOO_NEWS_DIRECTORY + commentsFileName;
+		File commentsFile = new File(filePath);
+		ArchiveNewsUtils.readCommentsForAnArticleFromFile(commentsFile, article);
+		return article;
+	}
+	
 	public static NewsArticle loadOneAlzajeeraNewsArticle(int articleNo, String category) throws Exception {
 		String directoryStr = DeploymentConfiguration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY + category + "/";
 		File topicDirectory = new File(directoryStr);
@@ -92,6 +110,36 @@ public class ArchivedNewsLoader {
 		article.setSource("alzajeera");
 		article.setFileName(fileName);
 		return article;
+	}
+	
+	public static List<NewsArticle> loadRandomNewsArticles(int newsCount, String newsSource) throws Exception {
+		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
+		int attempts = 0;
+		int maxAttempts = 1000;
+		Random rand = new Random();
+		if ("alzajeera".equalsIgnoreCase(newsSource)) {
+			File newsDirectory = new File(DeploymentConfiguration.ARCHIVED_ALZAJEERA_NEWS_DIRECTORY);
+			while (articleList.size() < newsCount && attempts < maxAttempts) {
+				int topics = newsDirectory.listFiles().length;
+				int nextTopic = rand.nextInt(topics);
+				File topicDirectory = newsDirectory.listFiles()[nextTopic];
+				int articles = topicDirectory.listFiles().length;
+				int nextArticle = rand.nextInt(articles);
+				NewsArticle article = loadOneAlzajeeraNewsArticle(nextArticle, topicDirectory.getName());
+				articleList.add(article);
+				attempts++;
+			}
+		} else {
+			File newsDirectory = new File(DeploymentConfiguration.ARCHIVED_YAHOO_NEWS_DIRECTORY);
+			while (articleList.size() < newsCount && attempts < maxAttempts) {
+				int articles = newsDirectory.listFiles().length / 2;
+				int nextArticle = rand.nextInt(articles) + 1;
+				NewsArticle article = loadOneYahooNewsArticle(nextArticle);
+				articleList.add(article);
+				attempts++;
+			}	
+		}
+		return articleList;
 	}
 	
 	public static int getArticleId(File articleFile) {
@@ -111,8 +159,14 @@ public class ArchivedNewsLoader {
 	}
 		
 	public static void main(String args[]) throws Throwable {
-		NewsArticle article = loadOneAlzajeeraNewsArticle(0, "americas");
-		WordWeighting ww = new WordWeighting();
-		ww.weightArticle(article);
+//		NewsArticle article = loadOneAlzajeeraNewsArticle(0, "americas");
+//		NewsArticle article = loadOneYahooNewsArticle(10);
+//		System.out.println(article);
+//		WordWeighting ww = new WordWeighting();
+//		ww.weightArticle(article);
+		List<NewsArticle> newsList = loadRandomNewsArticles(10, "yahoo-news");
+		for (NewsArticle article : newsList) {
+			System.out.println(article.getTitle());
+		}
 	}
 }
