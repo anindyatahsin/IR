@@ -99,14 +99,7 @@ public class WordWeighting {
 		this.out = out;
 	}
 	
-	public String PorterStemming(String token){
-		porterStemmer stemmer = new porterStemmer();
-		stemmer.setCurrent(token);
-		if(stemmer.stem())
-			return stemmer.getCurrent();
-		else
-			return token;
-	}
+	
 
 	public void weightArticle(NewsArticle article){
 		String title = CommonUtils.tagSentences(article.getTitle());
@@ -132,7 +125,7 @@ public class WordWeighting {
 			if(isTitle){
 				while(st1.hasMoreTokens()){
 					String s = st1.nextToken().toLowerCase().replaceAll("\\p{P}", "");
-					s = PorterStemming(s);	
+					s = CommonUtils.normalizeToken(s);	
 					String pos = st1.nextToken();
 					if(postag.containsKey(pos)){
 						if(!postag.get(pos)){
@@ -155,7 +148,7 @@ public class WordWeighting {
 			else{
 				while(st1.hasMoreTokens()){
 					String s = st1.nextToken().toLowerCase().replaceAll("\\p{P}", "");
-					s = PorterStemming(s);
+					s = CommonUtils.normalizeToken(s);
 					String pos = st1.nextToken();
 					if(postag.containsKey(pos)){
 						if(!postag.get(pos)){
