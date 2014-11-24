@@ -1,6 +1,7 @@
 package cs.virginia.edu.ir.news.article.mapper;
 
 import java.io.File;
+import java.util.Random;
 
 import cs.virginia.edu.ir.news.article.mapper.Loading.ArchivedNewsLoader;
 import cs.virginia.edu.ir.news.article.mapper.analysis.ArticleWeighing;
@@ -12,27 +13,33 @@ import edu.illinois.cs.index.*;
 public class Main {
 
 	public static void main(String args[]) throws Exception {
-		
-		NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(0, "americas");
-		if (article == null) {
-			System.out.println("No article found for the provided configuration.");
-			System.exit(-1);
+		Random rand =  new Random();
+		for(int i = 1; i < 10; i++){
+			
+			int randInt = rand.nextInt(160);
+			NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(randInt, "europe");
+			if (article == null) {
+				System.out.println("No article found for the provided configuration.");
+				System.exit(-1);
+			}
+			
+			ArticleWeighing weightingConfig = new ArticleWeighing(article);
+			weightingConfig.initializePassageModels();
+			System.out.println("Passage Count: " + weightingConfig.getPassageModels().size());
+			weightingConfig.weighTerms();
+			for (PassageModel model : weightingConfig.getPassageModels()) {
+				//model.describeModel();
+				String Query = model.getTopWords(10);
+				System.out.println("The article no is: " + randInt);
+				System.out.println("The Query is: " + Query);
+				String FILE_PATH=GetIndexFolder(article);
+				//Suppose String Query
+				
+				Runner.interactiveSearch(FILE_PATH, Query);
+			}
+			
+			System.out.println("\n\n************************************************************************************************************\n\n");
 		}
-		
-		ArticleWeighing weightingConfig = new ArticleWeighing(article);
-		weightingConfig.initializePassageModels();
-		System.out.println("Passage Count: " + weightingConfig.getPassageModels().size());
-		weightingConfig.weighTerms();
-		for (PassageModel model : weightingConfig.getPassageModels()) {
-			model.describeModel();
-		}
-		
-		//****ASIF PART******//
-		String FILE_PATH=GetIndexFolder(article);
-		//Suppose String Query
-		String Query="";
-		Runner.interactiveSearch(FILE_PATH, Query);
-	
 	}
 	public static String GetIndexFolder(NewsArticle article){
 		

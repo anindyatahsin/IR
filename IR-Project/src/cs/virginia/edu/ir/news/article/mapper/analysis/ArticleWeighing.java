@@ -22,6 +22,7 @@ import cs.virginia.edu.ir.news.article.mapper.object.Paragraph;
 import cs.virginia.edu.ir.news.article.mapper.object.SentencePosition;
 import cs.virginia.edu.ir.news.article.mapper.object.WordPosition;
 import cs.virginia.edu.ir.news.article.mapper.object.WordProperties;
+import cs.virginia.edu.ir.news.article.mapper.utility.CommonUtils;
 
 public class ArticleWeighing {
 	
@@ -41,14 +42,6 @@ public class ArticleWeighing {
 		return passageModels;
 	}
 	
-	public String PorterStemming(String token){
-		porterStemmer stemmer = new porterStemmer();
-		stemmer.setCurrent(token);
-		if(stemmer.stem())
-			return stemmer.getCurrent();
-		else
-			return token;
-	}
 	
 	public void initializePassageModels() {
 		List<Paragraph> paragraphList = article.getParagraphs();
@@ -90,13 +83,13 @@ public class ArticleWeighing {
 		Set<String> rootWords = new HashSet<String>();
 		String[] tokens = tokenizer.tokenize(title);
 		for (String token : tokens) {
-			token = PorterStemming(token);
+			token = CommonUtils.normalizeToken(token);
 			rootWords.add(token.toLowerCase());
 		}
 		if (article.getSubTitle() != null) {
 			tokens = tokenizer.tokenize(article.getSubTitle());
 			for (String token : tokens) {
-				token = PorterStemming(token);
+				token = CommonUtils.normalizeToken(token);
 				rootWords.add(token.toLowerCase());
 			}
 		}

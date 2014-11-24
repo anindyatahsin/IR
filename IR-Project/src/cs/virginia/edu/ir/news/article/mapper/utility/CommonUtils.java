@@ -89,11 +89,11 @@ public class CommonUtils {
 			posTaggedSentence = sample.toString();
 			perfMon.incrementCounter();
 		}
-		perfMon.stopAndPrintFinalResult();
+		//perfMon.stopAndPrintFinalResult();
 		return posTaggedSentence;
 	}
 	
-	public String normalizeTocken(String token) {
+	public static String normalizeToken(String token) {
 		porterStemmer stemmer = new porterStemmer();
 		stemmer.setCurrent(token.toLowerCase());
 		if (stemmer.stem())

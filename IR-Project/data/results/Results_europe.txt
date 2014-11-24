@@ -1,0 +1,370 @@
+Passage Count: 1
+The article no is: 106
+The Query is: ukrainian guard attack forc air raid said had respond peopl 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 1
+------------------------------------------------------
+ ... They must frequent these ****air**** ****raids**** in those key positions. It will minimise the collateral damage and push the terrorists away from cities. ... 
+
+------------------------------------------------------
+2. 46
+------------------------------------------------------
+ ...  the next day after receiving those orders?\n\n\nKiev kept ordering ****Ukrainian**** troops to ****attack**** in Crimea ... . they now have ****people**** that will actually follow the orders to use ****force**** against their own ****people****. That is the main ... . Such as that case of surrender by commander of all military ****forces**** in the region the day after his appointment ...  of orders to kill ****people**** was the element that allowed for bloodless annexation. Orders ... 
+
+------------------------------------------------------
+3. 24
+------------------------------------------------------
+ ... It seems they have hit this word 'junta' hard inside your head with nails. That is the problem with ****people**** like you who do not understand the value of civilised dialog and go on killing and ****attacking**** with guns. And you expect the law of the land to go soft ? ... 
+
+------------------------------------------------------
+4. 42
+------------------------------------------------------
+ ... We have many separatist movements in Europe. None of them get violent until government ****attacks**** them either. ... 
+
+------------------------------------------------------
+5. 29
+------------------------------------------------------
+ ... You can't speak of culture when Maidan has turned into a gathering for homeless, your own army is shooting your own ****people****, police kills far-right leader and states that he fell onto his own rifle, and instead of one corrupt president, you pick another corrupt president but this time with corporate ties. ****Ukrainian**** culture, what's that? ... 
+
+------------------------------------------------------
+6. 25
+------------------------------------------------------
+ ... Hey hey, dumboy, if there is a fan of killing and ****attacking**** ****people**** around here, that is you. Naturally, as a blasted hypocrite retard, you may not be able to acknowledge that.\n\nThey are using the \"kill everyone who doesn't conform\" tactic - which is JUNTA by definition. It is no one else hitting the term but Kiev. If it looks like a duck, swims like a duck, and quacks like a duck ... 
+
+------------------------------------------------------
+7. 44
+------------------------------------------------------
+ ... There are many ways to ****attack**** ****people**** from government perspective. Most of them aren't violent. Take a look at Basque country and Catalonia for good examples.\n\nThe difference is that Spanish government choses not to escalate oppression to the point where it would trigger systemic violence on scale we're seeing in Ukraine. Basque country came pretty close at times though. ... 
+
+------------------------------------------------------
+8. 26
+------------------------------------------------------
+ ... And who does not conform ? The terrorists. What do they do to not conform.??.oho..they kill,threaten ,****attack**** and more than that they want to join Russia splitting Ukraine..Are you nuts ? Are you even have a iota of grey matter inside ? ... 
+
+------------------------------------------------------
+9. 17
+------------------------------------------------------
+ ... He also holds a ****Ukrainian**** passport, making him a ****Ukrainian**** citizen. Double citizenship is common in the area, as many families in the region are split on two sides of the border, and holding dual citizenship makes visitations easy. ... 
+
+------------------------------------------------------
+10. 18
+------------------------------------------------------
+ ... Sorry dude but Ukraine doesn't allow dual citizenships ****Ukrainian**** Russian specifically\nRussia does allow dual citizenships but not Ukraine ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 116
+The Query is: said wednesdai had build control countri east fatigu have offici 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 11
+------------------------------------------------------
+ ... It sure is like watching a slow motion train wreck, interesting to see how the logistics of a May 11 election will happen as no one has regional ****control****, it's not like Crimea.\n\n\"A leader of the self-declared Donetsk People's Republic said ****Wednesday**** that the eastern Ukraine region will not take ...  in all the ****east****. ... 
+
+------------------------------------------------------
+2. 9
+------------------------------------------------------
+ ... Well the referendum hasn't happened yet and neither side has ****control**** of any region. ... 
+
+------------------------------------------------------
+3. 10
+------------------------------------------------------
+ ... The events in Ukraine are increasingly like watching the proverbial \ntrain wreck in slow motion. Acting puppet President Olexander Turchynov's admission that the government is \"helpless\" and has lost ****control**** over large parts of the country's ****east**** only solidifies the widespread view that even rump Ukraine has collapsed and ethnic Russians will get their freedom via the referendum on May 11.\n ... 
+
+------------------------------------------------------
+4. 17
+------------------------------------------------------
+ ... When you consider the state of the ****countries**** finances and the non competitiveness of the ****east**** then the party was going to end soon anyway.\n\n\nPoland looks to be pushing for an energy union in order to create a single buying bloc for Europe rather than the fragmented market it is now, this will help push down the price of gas in itself of which Ukraine will benefit. You can see how China ... 
+
+------------------------------------------------------
+5. 38
+------------------------------------------------------
+ ...  policy\". This is about specific issue - certain ****countries**** have gone to great lengths to cause significant political and financial harm to another ****country****, and now that as a result they were unable to negotiate preferential terms on certain deals. Now they are asking those other ****countries**** ...  that with Eurobonds, ****countries**** like Germany share at least some responsbility for the crisis. In case of Poland ... 
+
+------------------------------------------------------
+6. 37
+------------------------------------------------------
+ ... The the other ****countries**** should not join such a gas union. ... 
+
+------------------------------------------------------
+7. 20
+------------------------------------------------------
+ ... ****East**** is competitive as long as its allowed to sell to Russia. It's in fact so competitive, that Russia cannot source much of what it produces elsewhere.\n\nAnd US cannot source what Russia produces for them with parts made in the Eastern Ukraine either.\n\n\nAs for Poland's \"pushing\", I don't think most of us in EU really care. Poland, Baltics and UK are generally seen as US stooges in the EU ... 
+
+------------------------------------------------------
+8. 31
+------------------------------------------------------
+ ... How does stating that Russia tying price to political stance deny that any other ****country**** might do the same.\n\n\nIf Europe is doing the same price to political stance linkage on a strategic resource to a ****country**** or group of ****countries**** then it would also be a threat to them.\n\n\nThe affected ****countries**** would also most likely get together in order to reduce that threat by leveraging aggregate buying ... 
+
+------------------------------------------------------
+9. 36
+------------------------------------------------------
+ ... Because this isn't about any of those things. The sole purpose of such union is to remove consequences of \"belligerent acts\" as you put it, of Poland and several others from them and distribute them across other ****countries****.\n\nAnd other ****countries**** with saner policies would have to pay more, not less as a result. ... 
+
+------------------------------------------------------
+10. 3
+------------------------------------------------------
+ ... Yes Russia has nothing to do with it at initial stages but Western ****countries**** forced Russia to take part in the destruction of Ukraine ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 122
+The Query is: ministri said ha have servicemen adher been consequ defenc exit 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 30
+------------------------------------------------------
+ ... And NATOGCC bombing campaign and the terrorists they unleashed in Libya has nothing to do with failures in Libya. \n\nBy the way, It's not like American and British ****servicemen**** are raping one another, it's just middle eastern ones. ... 
+
+------------------------------------------------------
+2. 22
+------------------------------------------------------
+ ... \u003ci>\"Three of the Libyan soldiers were due in court in Cambridge on Tuesday.\nTwo of them have each admitted two counts of sexual assault.\nThe third has been charged with three counts of sexual assault but has yet to enter a plea\nTwo other ****servicemen**** have been charged with raping a man\"\u003c/i>\n\n\nObviously the words \"self control\" are not part of their culture.\nNo bloody wonder ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 44
+The Query is: were i complaint down follow shut be sverdlovsk open wa 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 35
+------------------------------------------------------
+ ... Do you ever ****shut**** up? Clearly a failed abortion you were. ... 
+
+------------------------------------------------------
+2. 9
+------------------------------------------------------
+ ... Too bad they don't ****shut**** them down for dietary concerns. ... 
+
+------------------------------------------------------
+3. 42
+------------------------------------------------------
+ ... about time all Mcdonalds are ****shut**** down in ASIA\nthey serve tainted  toxic meat ... 
+
+------------------------------------------------------
+4. 48
+------------------------------------------------------
+ ... Why so much fuss about McD? It's just trash-food (like most fast-food chains) - how did they become a symbol of capitalism? Seems that capitalists don't have anything better to propose to people than plastic \"food\"!\nIn my country, Greece, McDonald's & KFC's & Wendy's FAILED spectecularly (and repeatedly) to be established as regular food joints and 90% of them ****shut**** down, due to competition ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 108
+The Query is: battl rebel armi be observ have told cooperationâ europ immin 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 41
+------------------------------------------------------
+ ... This is without doubt the worst ****army**** in the world. 80 of their soldiers surrendered to a bunch of pensioners ... 
+
+------------------------------------------------------
+2. 3
+------------------------------------------------------
+ ... Most likely they are having problems motivating the ****army**** to kill their own people again. At least that is what appeared to be the reason last times they had to do the same thing. ... 
+
+------------------------------------------------------
+3. 35
+------------------------------------------------------
+ ... why didnt you mention that the ukranian ****army**** was using a \"RUSSIAN\" bulit helicopter, or that their entire arsenal is \"RUSSIAN\" built ... 
+
+------------------------------------------------------
+4. 36
+------------------------------------------------------
+ ... The Kiev's gang claims victory on various directions in the Southeast.\nI believe a few more such victories & the Kiev's gang will be left without an ****army****. ... 
+
+------------------------------------------------------
+5. 42
+------------------------------------------------------
+ ... Or the best ****army**** in the world - one that understands that it should not fight its own people.\n\nThe angle depends on whether you're the type to enjoy death tolls of civil wars or not I guess. ... 
+
+------------------------------------------------------
+6. 44
+------------------------------------------------------
+ ... One must understand that much of ****army**** simply refused to do so. In fact, Mariupol's massacres were committed by armed militia known as \"national guard donbass battalion\", rather than the ****army****.\n\nWhat is happening in Ukraine and been happening for last few months was purge of the ****army**** to ensure that only the most racist and psychopathic individuals willing to slaughter their own people ... 
+
+------------------------------------------------------
+7. 33
+------------------------------------------------------
+ ... \"...the Ukrainian ****army**** is shelling schools filled with children...\"   You left out the shelling of hospitals, nursing homes, old age homes, orphanages, soup kitchens, kindergartens, pre-school facilities, and the infrastructure of all charitable organizations. ... 
+
+------------------------------------------------------
+8. 2
+------------------------------------------------------
+ ...  Ukrainian ****army**** soldiers have been killed during a special operation in Slaviansk, and eight ...  said Thursday.\n\n\"According to our information, the Ukrainian ****army**** has the following losses and damages ...  has no problem not admitting to its loses, because those are not legit ****army**** troops but mercs, foreigners and right-sector radicals. Technically not the ****army**** but the newly formed \"national guard\" unit ... 
+
+------------------------------------------------------
+9. 1
+------------------------------------------------------
+ ... , we would read about 80 self-defense fighters executed by the Ukrainian ****army****. \"terrorist\" would either execute them (like the Ukrainian ****army**** executed an entire truck load of wounded) or take them hostage ...  for their rights. Meanwhile in Donetsk, the Ukrainian ****army**** is shelling schools filled with children... like I've ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 20
+The Query is: ha right been leak document livelihood secur 2014 agenc altern 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 3
+------------------------------------------------------
+ ... UD, with head Carl Bildt, has refused to give Edward Snowden the price and instead banned the ****Right**** ****Livelihood**** Award Foundation from the ceremony.\n\nOle von Uxekull, the head of ****Right**** ****Livelihood**** Award Foundation, says Carl Bildt is acting like a coward for not recognizing acts for the Human ****Right**** ...  well with the fact that undercover ****agencys**** is all okay in Sweden as long as it is driven by left-wing extremists ... 
+
+------------------------------------------------------
+2. 2
+------------------------------------------------------
+ ... Very true, Hassan ... it is hilarious the hypocrisy of the American government, blaming Snowden for ****leaking**** secrets rather than explaining why they had these secrets to begin with ... few if any had to do with 'national ****security****' ... most were the stuff of paranoid little minds unable to cope with the stresses of a level playing field - cheating by any other name. The American government cheats ... 
+
+------------------------------------------------------
+3. 4
+------------------------------------------------------
+ ... It's not an award for promoters of human ****rights****, but for promoters of peace. ... 
+
+------------------------------------------------------
+4. 5
+------------------------------------------------------
+ ... human ****rights**** and peace are intertwined, complementing each other.\nNot easy to separate one from the other. ... 
+
+------------------------------------------------------
+5. 1
+------------------------------------------------------
+ ... Snowden, the ****alternative**** Nobel prize winner, was earlier challenged by the 'real Nobel prize winner' to return to the states, if he was 'man enough'. \n\nBut, he had to run away from states because he had already proved he was man enough.\nAnother 'man enough', Chelsea Manning is in the prison in USA now. \n\nThey brought out information the common man also must know, which are otherwise hidden ... 
+
+------------------------------------------------------
+6. 38
+------------------------------------------------------
+ ... A well deserved prize for a man who stood up for individualism, the ****right**** of the privacy of a citizen and the words of our Constitution stated in the first amendment and a strike against big government, the intrusive nature of surveillance and the power to use it.  A holy trinity against the evil trinity. ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 81
+The Query is: been ha follow fridai london month possibl prison pronounc wa 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 16
+------------------------------------------------------
+ ... I wish to be on as many lists as ****possible**** as they make me feel as though I am important enough to notice, a flea on the back of a dog!\nYou haven't answered my question, Why would anyone who pretends to be someone they are not , wish to be taken seriously? Or actually be taken seriously? Do I have to take you seriously to be a punk? I will if it makes you feel good but it is all so insincere ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 148
+The Query is: were expert have start serbian atroc conflict evid hide hundr 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 47
+------------------------------------------------------
+ ... Hate to disappoint ya, but I don't take sides in a ****conflict****. Not that I lack morals. ... 
+
+------------------------------------------------------
+2. 29
+------------------------------------------------------
+ ...  on top to ****hide**** what's under.\n\nIt's not a matter of 'picking sides' but of seeing the obvious.\n\nNo one transports bodies to ****hide**** the ****evidence**** if the bodies were combatant casualties. ... 
+
+------------------------------------------------------
+3. 34
+------------------------------------------------------
+ ... NATO is a fascist regime that ****starts**** wars. Enough.\n\nTime to stop that evil protection racket. ... 
+
+------------------------------------------------------
+4. 49
+------------------------------------------------------
+ ... The fascist  ****serbian**** chetniks in Croatia, and fascist Serbs from Nazi Serbia murdered so many Yugoslav citizens, it's unbelivably evil... ... 
+
+------------------------------------------------------
+5. 50
+------------------------------------------------------
+ ...  of the Croatian Generals accused of ****atrocities**** (and ****atrocities**** witnessed by the Canadian UN officers ... 
+
+------------------------------------------------------
+6. 11
+------------------------------------------------------
+ ... They've only found 2 bodies. That is all. They haven't revealed their names, sex or any info on them. There is a lot of drug trafficking, people smuggling, and mafia and their killings may have not necessarily been ethnic related.  This is just propaganda headlines claiming ****hundreds**** when it is not proven at all. ... 
+
+------------------------------------------------------
+7. 15
+------------------------------------------------------
+ ... It was the Albanians who ****started**** the killing and terror. They were kidnapping civilians (and torturing and killing them) as well as shooting at police and planting landmines in the roads. \nThe Albanian KLA leaders all had torture camps: they could only advance their ranks if they had these camps ...  about ****Serbian**** police meeting with UN and NATO Kosovo administrators due to a recent shooting of a young ... 
+
+------------------------------------------------------
+8. 26
+------------------------------------------------------
+ ... They've actually only found 2 bodies at this point which means it isn't a confirmed \"mass grave site\". I think it takes 3 bodies or more to be qualified as a \"mass grave\". This is pure speculation and this same site has repeatedly been in the news with the claim of ****hundreds**** of bodies even though they have only found 2.\nWe will see after the 2 months they are going to explore ... 
+
+
+************************************************************************************************************
+
+
+Passage Count: 1
+The article no is: 91
+The Query is: ar border flow weapon europ prepar stop wednesdai impos presid 
+
+Scoring documents with Okapi BM25
+
+------------------------------------------------------
+1. 50
+------------------------------------------------------
+ ... ****Europe**** is A OK but USA has a CIVIL WAR IN USA. ... 
+
+------------------------------------------------------
+2. 41
+------------------------------------------------------
+ ... US militarization of ****Europe**** and using NATO as a puppet mercenary force will only destroy ****Europe**** again and create more conflict in the world. NATO needs to be disbanded if ****Europe**** is to remain at peace. ... 
+
+------------------------------------------------------
+3. 12
+------------------------------------------------------
+ ... a very few isolated incidents by American forces vs mass rape being as a common ****weapon**** in Muslim countries and in Chechnya by Russians and their Chechen proxies ... 
+
+------------------------------------------------------
+4. 38
+------------------------------------------------------
+ ... Hello! Shouldn't the Boku EU HAR\u20ac\u20acM be arrested? #BringBackOurGirls\n\nThere is an alternative to World War Three which is World Peace.\n\nJoin us at UK=OK! ****STOP**** the NATO war and leave Egypt & Iraq alone. ... 
+
+------------------------------------------------------
+5. 1
+------------------------------------------------------
+ ...  criminal organization and nothing more. Forcing nations to spend more on ****weapons**** in a world ... 
+
+------------------------------------------------------
+6. 20
+------------------------------------------------------
+ ...  and ****weapons**** (just like they always do), in the heat of the chaos, USA puts troops around the construction site ... 
+
+
+************************************************************************************************************
+
+
