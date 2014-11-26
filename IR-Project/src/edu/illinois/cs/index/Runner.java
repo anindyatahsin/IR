@@ -70,7 +70,8 @@ public class Runner {
             System.out.println("\n------------------------------------------------------");
             System.out.println(rank + ". " + rdoc.title());
             System.out.println("------------------------------------------------------");
-            System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
+            //System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
+            System.out.println(rdoc.content());
             ++rank;
         }
         //    System.out.print("> ");

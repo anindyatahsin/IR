@@ -96,6 +96,16 @@ public class NewsArticle {
 		this.fileName = fileName;
 	}
 
+	public String getContent() {
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("title: ").append(title).append("\n");
+		buffer.append("Content:......................................................... ").append("\n");
+		for (Paragraph paragraph : paragraphs) {
+			buffer.append(paragraph.toString());
+		}
+		return buffer.toString();
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder buffer = new StringBuilder();

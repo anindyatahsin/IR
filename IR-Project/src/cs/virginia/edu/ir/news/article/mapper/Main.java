@@ -13,7 +13,7 @@ public class Main {
 
 	public static void main(String args[]) throws Exception {
 		Random rand =  new Random();
-		for(int i = 1; i < 10; i++){
+		for(int i = 0; i < 10; i++){
 			
 			int randInt = rand.nextInt(160);
 			NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(randInt, "europe");
@@ -26,10 +26,12 @@ public class Main {
 			weightingConfig.initializePassageModels();
 			System.out.println("Passage Count: " + weightingConfig.getPassageModels().size());
 			weightingConfig.weighTerms();
+			System.out.println("The article no is: " + randInt);
+			System.out.println(article.getContent());
 			for (PassageModel model : weightingConfig.getPassageModels()) {
 				//model.describeModel();
-				String Query = model.getTopWords(10);
-				System.out.println("The article no is: " + randInt);
+				String Query = model.getTitleWords(); 
+				Query += model.getTopWords(10);
 				System.out.println("The Query is: " + Query);
 				String FILE_PATH=GetIndexFolder(article);
 				//Suppose String Query

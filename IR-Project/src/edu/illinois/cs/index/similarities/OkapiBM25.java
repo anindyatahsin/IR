@@ -18,7 +18,7 @@ public class OkapiBM25 extends SimilarityBase {
         int df=(int)stats.getDocFreq();
         float k1=(float)1.6;
         float k2=999;
-        float b=1;
+        float b=0.1f;
         float c=termFreq;
         double temp1=Math.log((N-df+0.5)/(df+0.5));
         float navg=stats.getAvgFieldLength();

@@ -29,6 +29,15 @@ public class PassageModel {
 		return wordWeights;
 	}
 	
+	public String getTitleWords(){
+		StringBuilder buffer = new StringBuilder();
+		for(WordWeight weight : wordWeights.values()){
+			if(weight.getSignificanceLevel() == 1 && weight.getFrequency() > 0)
+				buffer.append(weight.getWord()).append(" ");
+		}
+		return buffer.toString();
+	}
+	
 	public String getTopWords(int x){
 		StringBuilder buffer = new StringBuilder();
 		List<WordWeight> weights = new ArrayList<WordWeight>(wordWeights.values());
@@ -36,12 +45,6 @@ public class PassageModel {
 		for(int i = 0; i < x; i++){
 			WordWeight weight = weights.get(i);	
 			buffer.append(weight.getWord()).append(" ");
-			//buffer.append("Relevance: ").append((float) weight.getRelevanceWeight()).append(" ");
-			//buffer.append("Frequency: ").append(weight.getFrequency());
-			//if (weight.getSignificanceLevel() > 0) {
-			//	buffer.append(" Level: ").append(weight.getSignificanceLevel());
-			//}
-			//System.out.println(buffer);
 		}
 		return buffer.toString();
 	}
