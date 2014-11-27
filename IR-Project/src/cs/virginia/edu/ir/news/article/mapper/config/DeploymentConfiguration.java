@@ -8,6 +8,8 @@ public class DeploymentConfiguration {
 	public static final String POS_MODEL_FILE = "./data/configuration/model/en-pos-perceptron.bin";
 	public static final String TOKEN_MODEL_FILE = "./data/configuration/model/en-token.bin";
 	
+	public static final String COLLECTION_MODELS_DIRECTORY = "./data/configuration/collection/";
+	
 	public static final String ARCHIVED_YAHOO_NEWS_DIRECTORY = "./data/yahoo-news/Yahoo/";
 	
 	public static final String ALJAZEERA_SEARCH_URL = "http://ajnsearch.aljazeera.net/SearchProxy.aspx?"

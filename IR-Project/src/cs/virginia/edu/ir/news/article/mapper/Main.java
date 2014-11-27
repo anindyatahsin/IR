@@ -4,6 +4,7 @@ import java.util.Random;
 
 import cs.virginia.edu.ir.news.article.mapper.Loading.ArchivedNewsLoader;
 import cs.virginia.edu.ir.news.article.mapper.analysis.ArticleWeighing;
+import cs.virginia.edu.ir.news.article.mapper.analysis.CollectionModel;
 import cs.virginia.edu.ir.news.article.mapper.analysis.PassageModel;
 import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
@@ -12,6 +13,11 @@ import edu.illinois.cs.index.Runner;
 public class Main {
 
 	public static void main(String args[]) throws Exception {
+		
+//		CollectionModel.reloadCollectionModel("alzajeera");
+//		CollectionModel.reloadCollectionModel("yahoo-news");		
+		CollectionModel  collectionModel = CollectionModel.getModel("alzajeera");
+		
 		Random rand =  new Random();
 //		for(int i = 0; i < 10; i++){
 			
@@ -30,18 +36,18 @@ public class Main {
 			System.out.println(article.getContent());
 			
 			for (PassageModel model : weightingConfig.getPassageModels()) {
-				String Query = model.getTopWords(10);
+				String Query = model.getTopWords(10, collectionModel);
 				System.out.println("The Query is: " + Query);
 				String FILE_PATH=GetIndexFolder(article);
 				//Suppose String Query
-		
 				Runner.interactiveSearch(FILE_PATH, Query);
 				
+				System.out.println("\n\n*************************************************************");
 				model.describeModel();
 
 			}
 			
-			System.out.println("\n\n************************************************************************************************************\n\n");
+			System.out.println("\n\n**************************************************************\n\n");
 //		}
 	}
 	

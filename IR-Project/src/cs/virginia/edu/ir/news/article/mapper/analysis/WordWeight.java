@@ -70,8 +70,13 @@ public class WordWeight {
 	public void normalizeFrequencyWeight(double normalizationFactor) {
 		frequencyWeight = frequencyWeight / normalizationFactor;
 	}
-
-	public double getWeight() {
+	
+	public double getFinalWeight() {
 		return WeighingConfiguration.getFinalWeight(relevanceWeight, frequencyWeight);
+	}
+
+	public double getProbability(CollectionModel model) {
+		return WeighingConfiguration.getFinalWeight(word, 
+				relevanceWeight, frequencyWeight, model);
 	}
 }

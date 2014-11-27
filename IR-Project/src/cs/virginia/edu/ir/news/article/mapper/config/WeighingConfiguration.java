@@ -1,5 +1,7 @@
 package cs.virginia.edu.ir.news.article.mapper.config;
 
+import cs.virginia.edu.ir.news.article.mapper.analysis.CollectionModel;
+
 public class WeighingConfiguration {
 
 	// passage length in number of paragraphs.
@@ -16,6 +18,9 @@ public class WeighingConfiguration {
 	// a parameter to control the relative impact of relevance and frequency weights of a term
 	public static final float ALPHA = 0.5f;
 	
+	// a smoothing parameter to smooth using collection probabilities
+	public static final float BETA = 0.9f;
+	
 	// equation for calculating relevance weight
 	public static final double getRelevanceWeight(int level) {
 		return Math.max(0, 1 - Math.log10(level));
@@ -28,8 +33,18 @@ public class WeighingConfiguration {
 		return frequency * multiplyingFactor;
 	}
 	
-	// equation for calculating the final weight
-	public static final double getFinalWeight(double relevanceWeight, double frequencyWeight) {
+	// equation for calculating the final weight of a term as a probability measure
+	public static final double getFinalWeight(String term, double relevanceWeight, 
+			double frequencyWeight, CollectionModel collectionModel) {
+		
+		double articleProb = (1 - ALPHA) * relevanceWeight + ALPHA * frequencyWeight;
+		double collectionProb = collectionModel.getCollectionProbabilityOfTerm(term);
+		return (1 - BETA) * articleProb + BETA * collectionProb;
+	}
+	
+	// equation that does not use smoothing
+	public static final double getFinalWeight(double relevanceWeight, 
+			double frequencyWeight) {
 		return (1 - ALPHA) * relevanceWeight + ALPHA * frequencyWeight;
 	}
 }

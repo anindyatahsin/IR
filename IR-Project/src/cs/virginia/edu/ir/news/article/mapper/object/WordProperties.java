@@ -22,4 +22,8 @@ public class WordProperties {
 	public void setPOS_tag(String pOS_tag) {
 		POS_tag = pOS_tag;
 	}
+	
+	public int getOccuranceCount() { 
+		return wordPos.size(); 
+	}
 }

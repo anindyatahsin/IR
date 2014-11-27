@@ -38,10 +38,10 @@ public class PassageModel {
 		return buffer.toString();
 	}
 	
-	public String getTopWords(int count){
+	public String getTopWords(int count, CollectionModel collectionModel){
 		StringBuilder buffer = new StringBuilder();
 		List<WordWeight> weights = new ArrayList<WordWeight>(wordWeights.values());
-		Collections.sort(weights, new WeightComparator());
+		Collections.sort(weights, new WeightComparator(collectionModel));
 		for(int i = 0; i < count; i++){
 			WordWeight weight = weights.get(i);	
 			buffer.append(weight.getWord()).append(" ");
@@ -88,7 +88,7 @@ public class PassageModel {
 				buffer.append(" Level: ").append(weight.getSignificanceLevel());
 			}
 			buffer.append(" TF Weight: ").append((float) weight.getFrequencyWeight());
-			buffer.append(" Final Weight: ").append((float) weight.getWeight());
+			buffer.append(" Final Weight: ").append((float) weight.getFinalWeight());
 			System.out.println(buffer);
 		}
 	}
