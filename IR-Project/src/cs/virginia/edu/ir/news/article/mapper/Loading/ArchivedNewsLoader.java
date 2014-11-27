@@ -159,14 +159,15 @@ public class ArchivedNewsLoader {
 	}
 		
 	public static void main(String args[]) throws Throwable {
-//		NewsArticle article = loadOneAlzajeeraNewsArticle(0, "americas");
-//		NewsArticle article = loadOneYahooNewsArticle(10);
+		NewsArticle article = loadOneAlzajeeraNewsArticle(0, "africa");
+//		NewsArticle article = loadOneYahooNewsArticle(410);
+		System.out.println(article);
 //		System.out.println(article);
 //		WordWeighting ww = new WordWeighting();
 //		ww.weightArticle(article);
-		List<NewsArticle> newsList = loadRandomNewsArticles(10, "yahoo-news");
-		for (NewsArticle article : newsList) {
-			System.out.println(article.getTitle());
-		}
+//		List<NewsArticle> newsList = loadRandomNewsArticles(10, "yahoo-news");
+//		for (NewsArticle article : newsList) {
+//			System.out.println(article.getTitle());
+//		}
 	}
 }

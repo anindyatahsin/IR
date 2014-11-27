@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.tartarus.snowball.ext.porterStemmer;
-
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
@@ -131,18 +129,34 @@ public class ArticleWeighing {
 				visitedWordSet.add(word);
 			}
 			
-			// assign frequency weight to words occurring in current passage
+			// normalize relevance weights of all terms
+			model.normalizeRelevanceWeights();
+			
+			// the words that did not have any association with title words should have a default
+			// non-zero significance level.
+			int maxSignificanceLevel = 0;
+			for (WordWeight weight : wordWeightMap.values()) {
+				if (weight.getSignificanceLevel() > maxSignificanceLevel) {
+					maxSignificanceLevel = weight.getSignificanceLevel();
+				}
+			}
+			maxSignificanceLevel++;
+			
+			// assign frequencies to words occurring in current passage
 			for (Map.Entry<SentencePosition, List<String>> entry : ww.getWordMap().entrySet()) {
 				if (!paragraphIds.contains(entry.getKey().getParagraphNo())) continue;
 				for (String word: entry.getValue()) {
 					if (!wordWeightMap.containsKey(word)) {
 						WordWeight weight = new WordWeight(word);
+						weight.setSignificanceLevel(maxSignificanceLevel);
 						wordWeightMap.put(word, weight);
 					}
 					wordWeightMap.get(word).addOccurrance();
 				}
 			}
 			
+			// calculate and normalize frequency weights of all terms
+			model.calculateNormalizedFrequencyWeights();
 		}
 	}
 	

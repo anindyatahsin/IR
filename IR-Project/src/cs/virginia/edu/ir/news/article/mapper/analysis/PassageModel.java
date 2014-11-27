@@ -38,15 +38,44 @@ public class PassageModel {
 		return buffer.toString();
 	}
 	
-	public String getTopWords(int x){
+	public String getTopWords(int count){
 		StringBuilder buffer = new StringBuilder();
 		List<WordWeight> weights = new ArrayList<WordWeight>(wordWeights.values());
-		Collections.sort(weights,new WeightComparator());
-		for(int i = 0; i < x; i++){
+		Collections.sort(weights, new WeightComparator());
+		for(int i = 0; i < count; i++){
 			WordWeight weight = weights.get(i);	
 			buffer.append(weight.getWord()).append(" ");
 		}
 		return buffer.toString();
+	}
+	
+	public void normalizeRelevanceWeights() {
+		double maxRelevanceWeight = 0.0;
+		for (WordWeight wordWeight : wordWeights.values()) {
+			double relevanceWeight = wordWeight.getRelevanceWeight();
+			if (relevanceWeight > maxRelevanceWeight) {
+				maxRelevanceWeight = relevanceWeight;
+			}
+		}
+		for (WordWeight wordWeight : wordWeights.values()) {
+			wordWeight.normalizeRelevanceWeight(maxRelevanceWeight);
+		}
+	}
+	
+	public void calculateNormalizedFrequencyWeights() {
+		double maxFrequencyWeight = 0.0;
+		for (WordWeight wordWeight : wordWeights.values()) {
+			int frequency = wordWeight.getFrequency();
+			int significance = wordWeight.getSignificanceLevel();
+			double frequencyWeight = WeighingConfiguration.getFrequencyWeight(significance, frequency);
+			wordWeight.setFrequencyWeight(frequencyWeight);
+			if (frequencyWeight > maxFrequencyWeight) {
+				maxFrequencyWeight = frequencyWeight;
+			}
+		}
+		for (WordWeight wordWeight : wordWeights.values()) {
+			wordWeight.normalizeFrequencyWeight(maxFrequencyWeight);
+		}
 	}
 	
 	public void describeModel() {
@@ -58,6 +87,8 @@ public class PassageModel {
 			if (weight.getSignificanceLevel() > 0) {
 				buffer.append(" Level: ").append(weight.getSignificanceLevel());
 			}
+			buffer.append(" TF Weight: ").append((float) weight.getFrequencyWeight());
+			buffer.append(" Final Weight: ").append((float) weight.getWeight());
 			System.out.println(buffer);
 		}
 	}

@@ -1,11 +1,15 @@
 package cs.virginia.edu.ir.news.article.mapper.analysis;
 
+import cs.virginia.edu.ir.news.article.mapper.config.WeighingConfiguration;
+
+
 public class WordWeight {
 
 	private String word;
 	private boolean visited;
 	private double relevanceWeight;
 	private int frequency;
+	private double frequencyWeight;
 	private int significanceLevel;
 	
 	public WordWeight(String word) {
@@ -30,6 +34,10 @@ public class WordWeight {
 	public double getRelevanceWeight() {
 		return relevanceWeight;
 	}
+	
+	public void normalizeRelevanceWeight(double normalizationFactor) {
+		relevanceWeight = relevanceWeight / normalizationFactor;
+	}
 
 	public void addRelevanceWeight(double relevanceWeight) {
 		this.relevanceWeight += relevanceWeight;
@@ -49,5 +57,21 @@ public class WordWeight {
 
 	public void setSignificanceLevel(int significanceLevel) {
 		this.significanceLevel = significanceLevel;
+	}
+	
+	public double getFrequencyWeight() {
+		return frequencyWeight;
+	}
+
+	public void setFrequencyWeight(double frequencyWeight) {
+		this.frequencyWeight = frequencyWeight;
+	}
+	
+	public void normalizeFrequencyWeight(double normalizationFactor) {
+		frequencyWeight = frequencyWeight / normalizationFactor;
+	}
+
+	public double getWeight() {
+		return WeighingConfiguration.getFinalWeight(relevanceWeight, frequencyWeight);
 	}
 }

@@ -13,10 +13,10 @@ public class Main {
 
 	public static void main(String args[]) throws Exception {
 		Random rand =  new Random();
-		for(int i = 0; i < 10; i++){
+//		for(int i = 0; i < 10; i++){
 			
 			int randInt = rand.nextInt(160);
-			NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(randInt, "europe");
+			NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(159, "europe");
 			if (article == null) {
 				System.out.println("No article found for the provided configuration.");
 				System.exit(-1);
@@ -28,20 +28,23 @@ public class Main {
 			weightingConfig.weighTerms();
 			System.out.println("The article no is: " + randInt);
 			System.out.println(article.getContent());
+			
 			for (PassageModel model : weightingConfig.getPassageModels()) {
-				//model.describeModel();
-				String Query = model.getTitleWords(); 
-				Query += model.getTopWords(10);
+				String Query = model.getTopWords(10);
 				System.out.println("The Query is: " + Query);
 				String FILE_PATH=GetIndexFolder(article);
 				//Suppose String Query
-				
+		
 				Runner.interactiveSearch(FILE_PATH, Query);
+				
+				model.describeModel();
+
 			}
 			
 			System.out.println("\n\n************************************************************************************************************\n\n");
-		}
+//		}
 	}
+	
 	public static String GetIndexFolder(NewsArticle article){
 		
 		StringBuilder buffer = new StringBuilder(DeploymentConfiguration.INDEX_DIRECTORY);
