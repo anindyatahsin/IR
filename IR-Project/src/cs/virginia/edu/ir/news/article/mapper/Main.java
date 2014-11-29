@@ -15,14 +15,14 @@ public class Main {
 	public static void main(String args[]) throws Exception {
 		
 //		CollectionModel.reloadCollectionModel("alzajeera");
-//		CollectionModel.reloadCollectionModel("yahoo-news");		
+		CollectionModel.reloadCollectionModel("yahoo-news");		
 		CollectionModel  collectionModel = CollectionModel.getModel("alzajeera");
 		
 		Random rand =  new Random();
 //		for(int i = 0; i < 10; i++){
 			
 			int randInt = rand.nextInt(160);
-			NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(159, "europe");
+			NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(89, "americas");
 			if (article == null) {
 				System.out.println("No article found for the provided configuration.");
 				System.exit(-1);

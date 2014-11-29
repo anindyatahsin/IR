@@ -125,7 +125,8 @@ public class WordWeighting {
 			if(isTitle){
 				while(st1.hasMoreTokens()){
 					String s = st1.nextToken().toLowerCase().replaceAll("\\p{P}", "");
-					s = CommonUtils.normalizeToken(s);	
+					s = CommonUtils.normalizeToken(s);
+					if(!st1.hasMoreElements()) break;
 					String pos = st1.nextToken();
 					if(postag.containsKey(pos)){
 						if(!postag.get(pos)){
@@ -149,7 +150,9 @@ public class WordWeighting {
 				while(st1.hasMoreTokens()){
 					String s = st1.nextToken().toLowerCase().replaceAll("\\p{P}", "");
 					s = CommonUtils.normalizeToken(s);
+					if(!st1.hasMoreElements()) break;
 					String pos = st1.nextToken();
+					
 					if(postag.containsKey(pos)){
 						if(!postag.get(pos)){
 							continue;
