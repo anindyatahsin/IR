@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ir-report.aux
+The style file: abbrv.bst
+Database file #1: bibliography.bib
+Warning--I didn't find a database entry for "titov2008modeling"
+Warning--I didn't find a database entry for "ma2012topic"
+Warning--I didn't find a database entry for "das2014going"
+Warning--I didn't find a database entry for "blei2003modeling"
+Warning--empty booktitle in Robertson96okapiat
+You've used 6 entries,
+            2118 wiz_defined-function locations,
+            549 strings with 5282 characters,
+and the built_in function-call counts, 3058 in all, are:
+= -- 335
+> -- 113
+< -- 6
++ -- 44
+- -- 38
+* -- 194
+:= -- 444
+add.period$ -- 23
+call.type$ -- 6
+change.case$ -- 37
+chr.to.int$ -- 0
+cite$ -- 7
+duplicate$ -- 139
+empty$ -- 238
+format.name$ -- 38
+if$ -- 704
+int.to.chr$ -- 0
+int.to.str$ -- 6
+missing$ -- 6
+newline$ -- 33
+num.names$ -- 12
+pop$ -- 41
+preamble$ -- 1
+purify$ -- 31
+quote$ -- 0
+skip$ -- 120
+stack$ -- 0
+substring$ -- 230
+swap$ -- 62
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 24
+warning$ -- 1
+while$ -- 30
+width$ -- 7
+write$ -- 82
+(There were 5 warnings)

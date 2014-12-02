@@ -1,0 +1,112 @@
+\documentclass[article]{IEEEtran}
+\usepackage{cite}
+\usepackage{color}
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
+\usepackage{array} 
+\usepackage{colortbl}
+\usepackage{ctable}
+\newcounter{tmpc}
+
+\begin{document}
+\title{Mapping Readers' Comments Back to Newspaper Articles}
+\author{
+        \IEEEauthorblockN{Asif Salekin, Md Anindya Prodhan, Muhammad Nur Yanhaona}
+        \IEEEauthorblockA{	\\University of Virginia\\
+                       		Email: \{as3df, mtp5cx, mny9md\}@virginia.edu}}
+\maketitle
+
+
+\maketitle
+\begin{abstract}
+Publishing readers' comments has long been an integral part of maintaining integrity in journalism. The evolution of electronic newspapers has greatly enhanced the scope and limit for these comments. So much so that now it is common to have hundreds of comments on popular issues in popular newspapers. The sheer volume of comments, however, introduces new challenges. For general readers it has become nearly impossible to go through all these comments. At the same time, for the newspaper editor it has become difficult highlighting discussions most relevant to an article. 
+
+In this project we worked on automatically filtering and mapping comments that are most relevant to a newspaper article or a portion of the article using information retrieval techniques. To be able to do that we analyse a newspaper article and construct query language models for terms that occurred in its passages. Then we generate queries from those passages and match them against readers' comments treating the latter as candidate relevant documents.
+
+This report describes the logic and implementation of our solution, presents the first set of results we got from analysing articles from two online newspapers, and discusses the problems we faced and possible future research directions.   
+\end{abstract}
+
+
+\section{Introduction}
+Publishing readers' comments on newspaper articles has been a long-standing tradition in good journalism since the early days of newspaper. Sometimes such  comments convey readers' feelings about the original article, sometimes they provide complementary information that help other readers to get a holistic understanding of the discussed topics, sometimes they expose errors, omissions, or subtle bias on the part of the reporter, and so on. Publication of readers' comments has, therefore, become an integral part of transparency in journalism.
+
+During the era of printed newspapers, these comments used to appear as follow-up  discussions in days following the date of original article publishing. Because of space constraints, follow-up comments tend to be limited to only a few interesting news and furthermore limited in their numbers. The advent of electronic newspapers, however, has fundamentally altered that pre-existing culture. Currently, comments can be written on every published articles, by anyone interested,  and there is no limits in the number of comments either. Now it is quite common to see several hundreds of comments on popular news articles of papers like New York Times, BBC News, etc.
+
+In regards to fact finding and ensuring transparency this is an encouraging trends. The sheer volume of such comments, however, introduces several important  challenges. On one hand, it can be overwhelming or completely unreasonable for a common reader to go through all the comments. On the other hand, for the editor it is difficult to highlight comments that may be most relevant to the  original article or purge comments that are simply vile. To the best of our  knowledge, so far little has been tried to aid both parties in this regard by automatic highlighting, filtering, and classification of readers' comments.
+
+Although our broad objective for this research was to address all of the above, as part of the class project we focus on filtering relevant comments only. The central idea behind our solution is to view an article title as a query and the article itself as a feedback document for constructing the language model for the query intended by the title. Then to judge relevance of comments to the article or passages in the article, we automatically generate queries from the constructed model and rank comments against them.       
+
+For our experiment we crawled about 1000 articles each having at least 20 comments from Alzajeera News and collected 780 more similarly comment-rich articles from Yahoo-News gathered by authors of \cite{Das:2014:GBC:2556195.2556231}. Language models for articles are uni-gram models that we generated using our own algorithm that relies on a notion of term significance which depends on both frequency and proximity of terms related to terms in the article title. Then a corpus based smoothing is applied to determine final term significance rankings. In short, a model in our case is not just a collection of terms; rather a probability estimate is associated with each term regarding its chance to be included in a query representing the information need served by the article or a part of that article. 
+
+Ranking of comments against generated queries are done using Okapi BM25 \cite{Robertson96okapiat}. We varied different parameters of the ranking function as well as of our significance calculation to identify the best configuration. The ground truth for comments' relevance measurement is gathered through human evaluation of a small random sample of news from our crawled database.
+
+The results are mixed. We identified several challenges regarding improving our solution further. Some problems were implementation specific issues that arose from simplifications we have to made to save time. Nevertheless, there are reasons to be optimistic and we hope to enhance our solution in the future.
+
+The rest of the report is organized as follows. Section \ref{rw} discusses some related work; Section \ref{pf} discusses how we model our domain as an information retrieval problem; Section \ref{imp} elaborates on aspects of our solution; Section \ref{ev} presents the results of the experiments done on a small sample of articles; Section \ref{fw} ponders over possible routes for future work; finally, Section \ref{con} concludes the report.                
+
+\section{Related Work}
+\label{rw}
+There have been a few works done on matching comments with News Article segments. Sil et. al. \cite{Sil:2011:SMC:2063576.2063906} used supervised and unsupervised techniques to create structural classifier to match comments with News article segments. This paper used explicit semantic analysis and co-reference features to represent the text in article and text and showed that accuracy of discriminative approaches depend largely on effective feature selection. They used prior data to detect article segment and comment match in articles of a related topic.
+
+To detect article segment and comment matching we need to extract topics from a News article using topic modeling. Several works have been done in topic modeling. MG-LDA \cite{Blei:2003:MAD:860435.860460, Titov:2008:MOR:1367497.1367513} is used to model local topics in a text. However, In a news article every segment may not be related to a comment. Also in this model, local topics scatter across the corpus which is not often the case in news articles. Hence, MG-LDA is not appropriate for our system. Also, Corr-LDA \cite{Titov:2008:MOR:1367497.1367513} is a topic model to understand correspondence. Since, Corr-LDA work with single vector model, a specific comment on a small segment of an article can show small correlation with the article using this model. To overcome this limitation Das et. al. \cite{Das:2014:GBC:2556195.2556231} developed a correspondence topic model (SCTM) that uses multiple topic vectors. Hence, for each comment-article segment pair there would be number of topic vectors, which would enable comments to match with more correspondence segments of article. In \cite{Ma:2012:TRC:2396761.2396798} the authors focused on comments summarization. This paper selects few most representative comments from comment cluster for an article. They used Master-Slave Topic model (MSTM) and Extended Master-Slave Topic model (EXTM) where News articles is treated as master and comment text as slave. Using this topic models they cluster the comments based on their topics and rank the most representative comments from each comment clusters. 
+
+\section{Problem Formulation}
+\label{pf}
+This section describes how we model the problem of finding relevant readers' comments as an information retrieval problem.
+
+We view components of a news comprising the article and associated comments serve to satisfy a single information need that can be thought of as represented by a query that is similar to the title of the article. In our formulation, the comments are of interest only because the original article is by itself insufficient in conveying all information necessary to fully satisfy a reader's information need. 
+
+Given this formation, the comments of interest are those comments that address topics covered in the article but augment article's author arguments. These comments broadly fall into to categories.  
+
+\begin{enumerate}
+\item Comments that support article author's arguments with additional information and insights, and
+\item Comments that contradict the article with contrasting evidences and insights
+\setcounter{tmpc}{\theenumi}
+\end{enumerate}
+
+Given the unregulated nature of comments publishing, the comments section is cluttered with several other kinds of comments such as (as we observed)
+
+\begin{enumerate}
+\setcounter{enumi}{\thetmpc}
+\item Comments that express nothing but the sentiment of a particular reader about discussed topics
+\item Arguments exchanging among readers about each other's comments
+\item Elaborate discussion on some offshoot topic that has minute relevance to the article itself
+\end{enumerate} 
+
+An abundance of comments of latter categories makes it difficult to for an unbiased reader to identify and consequently satisfy his partially fulfilled information need. Although distinguishing between the former and latter kinds of comments is often a subjective decision, henceforth difficult, we hold that comments of former categories are more likely to have the following characteristic that will distinguish them from the latter.
+\bigskip
+
+\textit{There is significantly larger overlapping between principal issues discussed in an article and in a relevant comment than between the article and a non-relevant comment.}    
+\bigskip
+
+Given this assumption, the problem of filtering relevant comments can be designed as a standard information retrieval problem that has two parts.
+
+\begin{enumerate}
+\item Construct query language models from passages of an article 
+\item Generate queries from these models and rank comments against individual queries
+\end{enumerate}
+
+Here we consider passage specific models as for articles having many passages, there may be jump in the topics been discussed. Consequently, a comment may also have passage specific complementary discussions. In the general case, the article presents a composite language model that is a mixture of the models of individual passages; and in the degenerative base case, it represents a single passage itself.  
+
+Before we dive into a discussion about our implementation, we should emphasize that our language model should not be equate to a topic model similar to some related work discussed previously. Rather, it is intended to generate queries. To clarify the difference with an example if ``Obama decided to go alone in the Immigration reform issue" is a title of a news article then from the topic modelling perspective ``Immigration Reform'' is the primary -- and arguably the sole -- topic but from the query generation perspective ``Obama's Decision'' alongside ``Immigration Reform'' should construe the crux of the discussion.    
+
+\section{Implementation}
+\label{imp}
+\subsection{Query Model Generation}
+\subsection{Ranking Evaluation}
+
+\section{Evaluation}
+\label{ev}
+
+\section{Future Work}
+\label{fw}
+ 
+\section{Conclusion}
+\label{con}
+
+\nocite{titov2008modeling, ma2012topic, das2014going, blei2003modeling}
+\bibliographystyle{abbrv}
+\bibliography{bibliography} 
+
+\end{document}
