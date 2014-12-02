@@ -15,6 +15,12 @@ M.~K. Das, T.~Bansal, and C.~Bhattacharyya.
   Search and Data Mining}, WSDM '14, pages 483--492, New York, NY, USA, 2014.
   ACM.
 
+\bibitem{1371580}
+F.~Jelinek and R.~L. Mercer.
+\newblock {Interpolated Estimation of Markov Source Parameters from Sparse
+  Data}.
+\newblock 1980.
+
 \bibitem{Ma:2012:TRC:2396761.2396798}
 Z.~Ma, A.~Sun, Q.~Yuan, and G.~Cong.
 \newblock Topic-driven reader comments summarization.

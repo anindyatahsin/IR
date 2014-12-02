@@ -3,50 +3,55 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: ir-report.aux
 The style file: abbrv.bst
 Database file #1: bibliography.bib
+Illegal end of database file---line 103 of file bibliography.bib
+ : masid = {1371580}
+ :                  
+I'm skipping whatever remains of this entry
 Warning--I didn't find a database entry for "titov2008modeling"
 Warning--I didn't find a database entry for "ma2012topic"
 Warning--I didn't find a database entry for "das2014going"
 Warning--I didn't find a database entry for "blei2003modeling"
+Warning--empty journal in 1371580
 Warning--empty booktitle in Robertson96okapiat
-You've used 6 entries,
+You've used 7 entries,
             2118 wiz_defined-function locations,
-            549 strings with 5282 characters,
-and the built_in function-call counts, 3058 in all, are:
-= -- 335
-> -- 113
+            553 strings with 5401 characters,
+and the built_in function-call counts, 3297 in all, are:
+= -- 357
+> -- 126
 < -- 6
-+ -- 44
-- -- 38
-* -- 194
-:= -- 444
-add.period$ -- 23
-call.type$ -- 6
-change.case$ -- 37
++ -- 49
+- -- 42
+* -- 206
+:= -- 488
+add.period$ -- 26
+call.type$ -- 7
+change.case$ -- 42
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 139
-empty$ -- 238
-format.name$ -- 38
-if$ -- 704
+cite$ -- 9
+duplicate$ -- 149
+empty$ -- 255
+format.name$ -- 42
+if$ -- 751
 int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 6
-newline$ -- 33
-num.names$ -- 12
-pop$ -- 41
+int.to.str$ -- 7
+missing$ -- 7
+newline$ -- 38
+num.names$ -- 14
+pop$ -- 48
 preamble$ -- 1
-purify$ -- 31
+purify$ -- 35
 quote$ -- 0
-skip$ -- 120
+skip$ -- 128
 stack$ -- 0
-substring$ -- 230
+substring$ -- 235
 swap$ -- 62
 text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 24
-warning$ -- 1
-while$ -- 30
-width$ -- 7
-write$ -- 82
-(There were 5 warnings)
+type$ -- 28
+warning$ -- 2
+while$ -- 32
+width$ -- 8
+write$ -- 91
+(There was 1 error message)

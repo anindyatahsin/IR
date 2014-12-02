@@ -8,6 +8,7 @@
 \usepackage{colortbl}
 \usepackage{ctable}
 \newcounter{tmpc}
+\usepackage{mathtools}
 
 \begin{document}
 \title{Mapping Readers' Comments Back to Newspaper Articles}
@@ -43,7 +44,7 @@ Ranking of comments against generated queries are done using Okapi BM25 \cite{Ro
 
 The results are mixed. We identified several challenges regarding improving our solution further. Some problems were implementation specific issues that arose from simplifications we have to made to save time. Nevertheless, there are reasons to be optimistic and we hope to enhance our solution in the future.
 
-The rest of the report is organized as follows. Section \ref{rw} discusses some related work; Section \ref{pf} discusses how we model our domain as an information retrieval problem; Section \ref{imp} elaborates on aspects of our solution; Section \ref{ev} presents the results of the experiments done on a small sample of articles; Section \ref{fw} ponders over possible routes for future work; finally, Section \ref{con} concludes the report.                
+The rest of the report is organized as follows. Section \ref{rw} discusses some related work; Section \ref{pf} discusses how we model our domain as an information retrieval problem; Section \ref{des} elaborates on aspects of our solution; Section \ref{si} briefs on the actual implementation; Section \ref{ev} presents the results of the experiments done on a small sample of articles; Section \ref{fw} ponders over possible routes for future work; finally, Section \ref{con} concludes the report.                
 
 \section{Related Work}
 \label{rw}
@@ -91,10 +92,88 @@ Here we consider passage specific models as for articles having many passages, t
 
 Before we dive into a discussion about our implementation, we should emphasize that our language model should not be equate to a topic model similar to some related work discussed previously. Rather, it is intended to generate queries. To clarify the difference with an example if ``Obama decided to go alone in the Immigration reform issue" is a title of a news article then from the topic modelling perspective ``Immigration Reform'' is the primary -- and arguably the sole -- topic but from the query generation perspective ``Obama's Decision'' alongside ``Immigration Reform'' should construe the crux of the discussion.    
 
-\section{Implementation}
-\label{imp}
+\section{Design}
+\label{des}
+The center piece of our solution is the algorithm for developing query language models for individual passages of a newspaper article. Next we discuss the algorithm and. Afterwords we discuss how these models can be used to generate queries that would be used for ranking evaluation.   
+
 \subsection{Query Model Generation}
+Given that we treat an article title to be equivalent to a query representing readers' information needs, we have a mechanism to interpret the significance of the content of the article. We believe a reasonable interpretation for any article is that each passage provides a partial information about the issue underlying the title and each sentence within a passage works on building up the arguments of its passage. To summarize, their is no term in the article that is not relevant to readers' information need.     
+
+The relevance of these terms are, however, different and based on several parameters given below. 
+
+\begin{enumerate}
+\item Term Frequency
+\item Significance Level: minimum distance of a term from terms occurring in the title
+\item Relevance Weight: the number of co-occurrences of a term with other significant terms in the article 
+\item Smoothing Factor: general likelihood of the term within the corpus      
+\end{enumerate}
+
+Among these the first and the last are self explanatory. So we focus on explaining the remaining two.
+
+To calculate both significance level and relevance weight of terms we construct a graph ${G = (V, E)}$ for each passage $P$ where the vertex set $V = \{w_i | w_i \in P\}$ and the edge set $E = \{(w_i, w_j) | w_i, w_j \in s_k, s_k \in P\}$. That is there is an edge between two words if they occur in the same sentence in anywhere in the passage.  
+
+Then the formula for the significance level of a word $w_i$ is as follows, 
+\begin{equation}
+\begin{array}{lr}
+s_i = 1 : w_i \in title \\
+s_i = 1 + distance_{min}(w_i, w_j) | w_j \in title) : w_i \notin title
+\end{array}
+\end{equation}
+Here distance is measured as the number of edges between the concerned words pair.  
+
+The formula for the relevance weight of a word $w_i$ is as follows, 
+\begin{equation}
+\label{rwEq}
+rWeight_i = \sum_{\substack{(w_i, w_j) \in E\\s_j < s_i}} max\big(0, 1 - \log(s_j)\big)
+\end{equation}
+ 
+
+If we reason about aforementioned formulas, we see that terms that occurred at close proximity of any terms in the title have more significance than terms that appeared further. Then terms that occurred more often and with more significant terms have more relevance weight than terms that occurred less often.  
+
+The rationale for this treatment lies in the assumption about the logical flow of arguments that we expect to present in a newspaper article. Sentences making statements about elements of the title should compose the main agenda. Then there will be sentences providing supporting evidences and so on. Consequently, terms occurring in different kind of sentences should have varying degrees of importance in the constructed model.   
+
+Note that in Equation \ref{rwEq} only terms with lesser significance, $w_i$, get the benefit of co-occurrence -- not the term with greater significance, $w_j$. This apparent lacking is balanced by the frequency weight of individual term which has the following formula.
+
+\begin{equation}
+fWeight_i = tf \times {\frac{s_i + k}{s_i (k + 1)}}
+\end{equation}   
+Here $k$ is a scaling parameter used to exponentially decrease the importance of a term's occurrences with increase of its significance level.
+The likelihood of a term to contribute to a query representing the information need satisfied by the concerned passage of the article is calculated as a mixture of normalized relevance and frequency weight as captured by the following equation.
+
+\begin{equation}
+\label{docW}
+weight_i = \alpha \times rWeight_i + (1 - \alpha) \times fWeight_i
+\end{equation}
+
+Equation \ref{docW} is combined with the collection probability of a terms $p(w_i, C)$ using the Jelinek-Mercer interpolated smoothing method \cite{1371580} to give the final smoothed probability as follows.   
+
+\begin{equation}
+\label{wProb}
+p_q(w_i) = (1 - \lambda) \times weight_i + \lambda \times p(w_i, C) 
+\end{equation}
+
 \subsection{Ranking Evaluation}
+If we remember the discussion of Section \ref{pf}, we see the criteria for judging relevance of a comment to the discussion presented in the article or a passage of the article is the degree of overlapping of comment's language model with that of the former. Here \textit{overlapping} deserves careful attention.
+
+Note that we expect from a relevant comment to complement the discussion of of the article with supporting or contradictory arguments. We do not expect the comment to say the same thing the article does. So there should be significant overlapping in principal terms of the comment and the article, but there should be also considerable distinction in their auxiliary terms. Therefore, ideally the goal of comments ranking should not be to maximize overlapping. Rather it should be to balance similarity in principal terms with dissimilarity in auxiliary terms.
+
+If we define a cut-off threshold for partitioning the query language model of a passage $P$ into a principal $\theta_{pri}$ and an auxiliary part $\theta_{aux}$ then the relevance judgement for a comment $D$ with respect to the passage can be expressed as a harmonic mean as follows.
+
+\begin{equation}
+\label{relMes}
+relevance(P,D) = \frac{1}{\frac{\beta}{sim(\theta_{pri}, \theta_d)} - \frac{1 - \beta}{sim(\theta_{aux}, \theta_d)}}
+\end{equation}           
+
+This is a generic equation and any standard metric -- for example KL-divergence -- can be substituted as the similarity measure to calculate the relevance in the above.
+
+A reasonable simplification to Equation \ref{relMes} is to consider only the similarity between the comment model and passage model in the principal terms. This is practical as it is highly unlikely that a comment will only reiterate the argument presented in an article. Hence we can ignore the dissimilarity term and rank comments based on the following formula.
+
+\begin{equation}
+rank(P,D) \sim sim(\theta_{pri}, \theta_d)
+\end{equation} 
+
+\section{Implementation}
+\label{si}
 
 \section{Evaluation}
 \label{ev}
