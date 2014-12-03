@@ -169,11 +169,25 @@ This is a generic equation and any standard metric -- for example KL-divergence 
 A reasonable simplification to Equation \ref{relMes} is to consider only the similarity between the comment model and passage model in the principal terms. This is practical as it is highly unlikely that a comment will only reiterate the argument presented in an article. Hence we can ignore the dissimilarity term and rank comments based on the following formula.
 
 \begin{equation}
+\label{rank}
 rank(P,D) \sim sim(\theta_{pri}, \theta_d)
 \end{equation} 
 
 \section{Implementation}
 \label{si}
+We made a few modifications to the solution described in the previous section for practical considerations and -- particularly -- to save time. As we will discuss actual implementation in this section, these deviations will become apparent.   
+
+We use Apache OpenNLP parser \cite{openNLP} to extract sentences from the article then to determine the parts of speech of all words in the article. Then we keep only the nouns and verbs for later analysis. We make this decision as our observation indicates that conjunctions, prepositions, and adverbs usually have little to contribute to the central arguments of an article; and our collection of articles is not large enough to discard their influence applying smoothing alone. We are uncertain about the import of adjectives and currently leave them out. Our he system is configurable though and different parts of speech can be enabled and disabled as deemed useful.
+
+For passage identification, we adopt the simple strategy that a paragraph with a minimum $n$ sentences portrays a holistic argument/evidence and a sequence of $m$ such paragraphs form a passage. If a paragraph is less than $n$ sentences than we consider it automatically included in the current passage without increasing its paragraph count. Our plan was to try different combinations of $n$ and $m$ and determine what performs best. To our surprise, the vast majority of news articles seem to have paragraphs that are mostly one or two sentences long. Hence in most cases, we get only one passage, consequently one query model, per article. There are exceptions though.                     
+
+The query language model is implemented exactly according to the formulas given in the previous section using our own data structure and algorithms. The for pairwise term association graph is implemented using two map data structures using words tagged and filtered by during parsing phase. Then frequency and relevance weights are measured concurrently by traversing the graph starting from the title words. Finally they are normalized. The time and space complexities for the algorithm are $\mathcal{O}(|E|)$ and $\mathcal{O}(|V| + |E|)$ respectively.
+
+Computing the collection model is the costliest part because we have to analyse all articles. That is however computed only once and the model is been stored in a file. Before ranking the model is been loaded in memory and used as many times as required.
+
+The biggest sacrifice that we have to make is about ranking evaluation. This is regrettably because time constraint due to our engagement in other research. We use Apache Lucene \cite{McCandless:2010:LAS:1893016} for indexing comments of an article and ranking them against our generated query model. Since we could not manage time to study and implement a language model based ranking process over Lucene as that would be required by Equation \ref{rank}, we directly generate a query from the model selecting the terms with highest weight and rank comments against this query using Okapi BM25 \cite{Robertson96okapiat}.
+
+This adjustment has the shortcoming that the probabilities for principal terms available in the query model have been used during query generation, but the advantage of their presence has not been taken during ranking comments as the ranking function treated all query terms as equal. We suspect this has a significant adverse effect in our solution's performance. We hope to correct this problem in the future -- depending on the feedback we may get regarding the future prospect of this work.          
 
 \section{Evaluation}
 \label{ev}
