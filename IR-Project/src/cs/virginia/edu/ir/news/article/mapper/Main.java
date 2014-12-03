@@ -7,6 +7,7 @@ import cs.virginia.edu.ir.news.article.mapper.analysis.ArticleWeighing;
 import cs.virginia.edu.ir.news.article.mapper.analysis.CollectionModel;
 import cs.virginia.edu.ir.news.article.mapper.analysis.PassageModel;
 import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
+import cs.virginia.edu.ir.news.article.mapper.config.RunTimeConfiguration;
 import cs.virginia.edu.ir.news.article.mapper.object.NewsArticle;
 import edu.illinois.cs.index.Runner;
 
@@ -17,6 +18,7 @@ public class Main {
 //		CollectionModel.reloadCollectionModel("alzajeera");
 		CollectionModel.reloadCollectionModel("yahoo-news");		
 		CollectionModel  collectionModel = CollectionModel.getModel("alzajeera");
+		RunTimeConfiguration.CURRENTCOLLECTIONMODEL = collectionModel;
 		
 		Random rand =  new Random();
 //		for(int i = 0; i < 10; i++){
@@ -36,6 +38,7 @@ public class Main {
 			System.out.println(article.getContent());
 			
 			for (PassageModel model : weightingConfig.getPassageModels()) {
+				RunTimeConfiguration.CURRENTPASSAGEMODEL = model;
 				String Query = model.getTopWords(10, collectionModel);
 				System.out.println("The Query is: " + Query);
 				String FILE_PATH=GetIndexFolder(article);
