@@ -1,5 +1,6 @@
 package edu.illinois.cs.index;
 
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +51,43 @@ public class Runner {
         //interactiveSearch(path, method);
     }
 
+    public static ArrayList<ResultDoc> interactiveSearchpost(String index_path, String query) throws IOException {
+        String method= "--ok";
+    	Searcher searcher = new Searcher(index_path);
+        setSimilarity(searcher, method);
+        //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        //System.out.println("Type text to search, blank to quit.");
+        //System.out.print("> ");
+        String input=query;
+        //while ((input = br.readLine()) != null && !input.equals("")) {
+        SearchResult result = searcher.search(input);
+        
+        ArrayList<ResultDoc> results = result.getDocs();
+        int rank = 1;
+        if (results.size() == 0){
+        	RunTimeConfiguration.writer.write("\n"+"No results found!");
+        	return null;
+        }
+        
+        return results;
+        /*
+        for (ResultDoc rdoc : results) {
+        	
+            System.out.println("\n------------------------------------------------------");
+            System.out.println(rank + ". " + rdoc.title());
+            System.out.println("------------------------------------------------------");
+            // System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
+            System.out.println(rdoc.content());
+            ++rank;
+        }
+        
+        */
+        //    System.out.print("> ");
+        //}
+
+    }    
+    
     /**
      * Feel free to modify this function, if you want different display!
      *
@@ -69,7 +107,7 @@ public class Runner {
         ArrayList<ResultDoc> results = result.getDocs();
         int rank = 1;
         if (results.size() == 0)
-            System.out.println("No results found!");
+        	RunTimeConfiguration.writer.write("\n"+"No results found!");
         /*for (ResultDoc rdoc : results) {
             System.out.println("\n------------------------------------------------------");
             System.out.println(rank + ". " + rdoc.title());
@@ -121,20 +159,41 @@ public class Runner {
 			if (relevance.get(Integer.parseInt(rdoc.title()) - 1) == 1) {
 				avgp += numRel / i;
 				++numRel;
-				System.out.print("  ");
+				try {
+					RunTimeConfiguration.writer.write("\n"+"  ");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
-				System.out.print("X ");
+				try {
+					RunTimeConfiguration.writer.write("\n"+"X ");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			 System.out.println("\n------------------------------------------------------");
-	         System.out.println(i + ". " + rdoc.title());
-	         System.out.println("------------------------------------------------------");
+			try{
+				RunTimeConfiguration.writer.write("\n"+"\n------------------------------------------------------");
+				RunTimeConfiguration.writer.write("\n"+i + ". " + rdoc.title());
+				RunTimeConfiguration.writer.write("\n"+"------------------------------------------------------");
 	         // System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
-	         System.out.println(rdoc.content());
+				RunTimeConfiguration.writer.write("\n"+rdoc.content());
+			} catch(IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			 ++i;
 		}
-    	System.out.println("\n*************************************************************\n");
-    	System.out.println("Average Precision: " + (avgp / num_rel));
-    	System.out.println("\n***************************************************************");
+    	try{
+    	RunTimeConfiguration.writer.write("\n"+"\n*************************************************************\n");
+    	RunTimeConfiguration.writer.write("\n"+"Average Precision: " + (avgp / num_rel));
+    	RunTimeConfiguration.writer.write("\n"+"\n***************************************************************\n");
+    	RunTimeConfiguration.writer.write("\n"+"P@K: " + ((numRel-1) / (i-1)));
+    	RunTimeConfiguration.writer.write("\n"+"\n***************************************************************\n");
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
     }
 
     public static void setSimilarity(Searcher searcher, String method) {

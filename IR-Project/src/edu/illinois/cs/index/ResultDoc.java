@@ -4,6 +4,7 @@ public class ResultDoc {
     private int _id;
     private String _title = "[no title]";
     private String _content = "[no content]";
+    public float score;
 
     public ResultDoc(int id) {
         _id = id;

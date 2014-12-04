@@ -133,14 +133,26 @@ public class Searcher
             String field = searchQuery.fields().get(0);
 
             SearchResult searchResult = new SearchResult(searchQuery, docs.totalHits);
+            int first_flag=0;
+            float score_base=0;
             for(ScoreDoc hit : hits)
             {
                 Document doc = indexSearcher.doc(hit.doc);
                 ResultDoc rdoc = new ResultDoc(hit.doc);
-
+                //System.out.println(hit.score);
+                if(first_flag==0){
+                	first_flag=1;
+                	rdoc.score=1;
+                	score_base=hit.score;
+                }
+                else{
+                	rdoc.score=hit.score/score_base;
+                }
+                
                 String highlighted = null;
                 try
                 {
+                	rdoc.score=hit.score;
                     Highlighter highlighter = new Highlighter(formatter, new QueryScorer(luceneQuery));
                     rdoc.title("" + (hit.doc + 1));
                     String contents = doc.getField(field).stringValue();

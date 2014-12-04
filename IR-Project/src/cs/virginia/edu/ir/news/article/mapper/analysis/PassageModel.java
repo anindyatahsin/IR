@@ -1,5 +1,5 @@
 package cs.virginia.edu.ir.news.article.mapper.analysis;
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +48,19 @@ public class PassageModel {
 		}
 		return buffer.toString();
 	}
+
+	public List<WordWeight> getTopWordsPost(int count, CollectionModel collectionModel){
+		List<WordWeight> Querywords=new ArrayList<WordWeight>(count);
+		StringBuilder buffer = new StringBuilder();
+		List<WordWeight> weights = new ArrayList<WordWeight>(wordWeights.values());
+		Collections.sort(weights, new WeightComparator(collectionModel));
+		for(int i = 0; i < count; i++){
+			WordWeight weight = weights.get(i);	
+			buffer.append(weight.getWord()).append(" ");
+			Querywords.add(weight);
+		}
+		return Querywords;
+	}	
 	
 	public void normalizeRelevanceWeights() {
 		double maxRelevanceWeight = 0.0;
