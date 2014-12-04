@@ -1,4 +1,4 @@
-package cs.virginia.edu.ir.news.article.mapper.output;
+package cs.virginia.edu.ir.news.article.mapper.io;
 
 //import java.io.BufferedWriter;
 import java.io.BufferedWriter;

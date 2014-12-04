@@ -30,6 +30,7 @@ public class DeploymentConfiguration {
 	
 	public static final String LOG_DIRECTORY = "./data/logs/";
 	public static final String INDEX_DIRECTORY = "./data/index/";
+	public static final String FEEDBACK_DIRECTORY = "./data/feedback/";
 	
 	public static final int REQUEST_TIMEOUT = 10000;
 }

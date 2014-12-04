@@ -1,10 +1,14 @@
 package edu.illinois.cs.index;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
+import cs.virginia.edu.ir.news.article.mapper.config.RunTimeConfiguration;
+import cs.virginia.edu.ir.news.article.mapper.io.FileInput;
 import edu.illinois.cs.index.similarities.*;
 
 public class Runner {
@@ -66,16 +70,71 @@ public class Runner {
         int rank = 1;
         if (results.size() == 0)
             System.out.println("No results found!");
-        for (ResultDoc rdoc : results) {
+        /*for (ResultDoc rdoc : results) {
             System.out.println("\n------------------------------------------------------");
             System.out.println(rank + ". " + rdoc.title());
             System.out.println("------------------------------------------------------");
-            //System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
+            // System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
             System.out.println(rdoc.content());
             ++rank;
-        }
+        }*/
         //    System.out.print("> ");
         //}
+        calculateMAP(results);
+    }
+    
+    public static void calculateMAP(ArrayList<ResultDoc> results){
+    	File folder = new File(DeploymentConfiguration.FEEDBACK_DIRECTORY);
+    	File[] listOfFiles = folder.listFiles();
+    	FileInput in = new FileInput();
+    	String prefix = "";
+    	ArrayList<Integer> relevance = new ArrayList<Integer>();
+    	int num_rel = 0;
+    	if(RunTimeConfiguration.CURRENTARTICLESOURCE.equals("alzajeera")){
+    		prefix += RunTimeConfiguration.CURRENTARTICLESOURCE + "-" 
+    				+ RunTimeConfiguration.CURRENTARTICLECATEGORY + "-article-"
+    				+ RunTimeConfiguration.CURRENTARTICLEID + "-";
+    	} else{
+    		prefix += RunTimeConfiguration.CURRENTARTICLESOURCE + "-article-"
+    				+ RunTimeConfiguration.CURRENTARTICLEID + "-";
+    	}
+    	for (int i = 0; i < listOfFiles.length; i++) {
+    		if(listOfFiles[i].getName().startsWith(prefix)){
+    			ArrayList<String> lines = in.readFromFile(listOfFiles[i].getAbsolutePath());
+    			for(String line : lines){
+    				String val[] = line.split("\\s+");
+    				if(val.length == 7){
+    					if(val[6].equals("Relevant")){
+    						relevance.add(1);
+    						num_rel++;
+    					} else{
+    						relevance.add(0);
+    					}
+    				}
+    			}
+    		}
+    	}
+    	int i = 1;
+    	double avgp = 0.0;
+		double numRel = 1;
+    	for (ResultDoc rdoc : results) {
+			if (relevance.get(Integer.parseInt(rdoc.title()) - 1) == 1) {
+				avgp += numRel / i;
+				++numRel;
+				System.out.print("  ");
+			} else {
+				System.out.print("X ");
+			}
+			 System.out.println("\n------------------------------------------------------");
+	         System.out.println(i + ". " + rdoc.title());
+	         System.out.println("------------------------------------------------------");
+	         // System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
+	         System.out.println(rdoc.content());
+			 ++i;
+		}
+    	System.out.println("\n*************************************************************\n");
+    	System.out.println("Average Precision: " + (avgp / num_rel));
+    	System.out.println("\n***************************************************************");
     }
 
     public static void setSimilarity(Searcher searcher, String method) {

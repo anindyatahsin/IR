@@ -13,7 +13,7 @@ import cs.virginia.edu.ir.news.article.mapper.object.Paragraph;
 import cs.virginia.edu.ir.news.article.mapper.object.SentencePosition;
 import cs.virginia.edu.ir.news.article.mapper.object.WordPosition;
 import cs.virginia.edu.ir.news.article.mapper.object.WordProperties;
-import cs.virginia.edu.ir.news.article.mapper.output.Output;
+import cs.virginia.edu.ir.news.article.mapper.io.Output;
 import cs.virginia.edu.ir.news.article.mapper.utility.CommonUtils;
 
 public class WordWeighting {

@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String args[]) throws Exception {
 		
 //		CollectionModel.reloadCollectionModel("alzajeera");
-		CollectionModel.reloadCollectionModel("yahoo-news");		
+		//CollectionModel.reloadCollectionModel("yahoo-news");		
 		CollectionModel  collectionModel = CollectionModel.getModel("alzajeera");
 		RunTimeConfiguration.CURRENTCOLLECTIONMODEL = collectionModel;
 		
@@ -24,7 +24,17 @@ public class Main {
 //		for(int i = 0; i < 10; i++){
 			
 			int randInt = rand.nextInt(160);
-			NewsArticle article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(89, "americas");
+			RunTimeConfiguration.CURRENTARTICLESOURCE = "alzajeera";
+			//RunTimeConfiguration.CURRENTARTICLESOURCE = "yahoo-news";
+			RunTimeConfiguration.CURRENTARTICLECATEGORY = "americas";
+			RunTimeConfiguration.CURRENTARTICLEID = 89;
+			NewsArticle article = null;
+			if(RunTimeConfiguration.CURRENTARTICLESOURCE.equals("alzajeera")){
+				article = ArchivedNewsLoader.loadOneAlzajeeraNewsArticle(RunTimeConfiguration.CURRENTARTICLEID, RunTimeConfiguration.CURRENTARTICLECATEGORY);
+			}
+			else{
+				article = ArchivedNewsLoader.loadOneYahooNewsArticle(RunTimeConfiguration.CURRENTARTICLEID);
+			}
 			if (article == null) {
 				System.out.println("No article found for the provided configuration.");
 				System.exit(-1);
@@ -45,12 +55,12 @@ public class Main {
 				//Suppose String Query
 				Runner.interactiveSearch(FILE_PATH, Query);
 				
-				System.out.println("\n\n*************************************************************");
-				model.describeModel();
+				
+				//model.describeModel();
 
 			}
 			
-			System.out.println("\n\n**************************************************************\n\n");
+			
 //		}
 	}
 	

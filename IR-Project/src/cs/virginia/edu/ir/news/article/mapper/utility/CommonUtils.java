@@ -18,7 +18,7 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 import org.tartarus.snowball.ext.porterStemmer;
 
 import cs.virginia.edu.ir.news.article.mapper.config.DeploymentConfiguration;
-import cs.virginia.edu.ir.news.article.mapper.output.Output;
+import cs.virginia.edu.ir.news.article.mapper.io.Output;
 
 public class CommonUtils {
 
