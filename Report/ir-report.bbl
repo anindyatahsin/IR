@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{openNLP}
 Apache opennlp.
@@ -36,6 +36,11 @@ Z.~Ma, A.~Sun, Q.~Yuan, and G.~Cong.
 M.~McCandless, E.~Hatcher, and O.~Gospodnetic.
 \newblock {\em Lucene in Action, Second Edition: Covers Apache Lucene 3.0}.
 \newblock Manning Publications Co., Greenwich, CT, USA, 2010.
+
+\bibitem{Miller:1995:WLD:219717.219748}
+G.~A. Miller.
+\newblock Wordnet: A lexical database for english.
+\newblock {\em Commun. ACM}, 38(11):39--41, Nov. 1995.
 
 \bibitem{Robertson96okapiat}
 S.~Robertson, S.~Walker, S.~Jones, M.~Hancock-Beaulieu, and M.~Gatford.

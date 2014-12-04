@@ -21,61 +21,66 @@
 
 \maketitle
 \begin{abstract}
-Publishing readers' comments has long been an integral part of maintaining integrity in journalism. The evolution of electronic newspapers has greatly enhanced the scope and limit for these comments. So much so that now it is common to have hundreds of comments on popular issues in popular newspapers. The sheer volume of comments, however, introduces new challenges. For general readers it has become nearly impossible to go through all these comments. At the same time, for the newspaper editor it has become difficult highlighting discussions most relevant to an article. 
+Publishing readers' comments has long been an integral part of maintaining integrity in journalism. The evolution of electronic newspapers has greatly enhanced the scope and limit for these comments. So much so that now it is common to have hundreds of comments on popular issues in popular newspapers. The sheer volume of comments, however, introduces new challenges. For general readers it has become nearly impossible to go through all these comments. At the same time, for the newspaper editor it has become difficult highlighting comments most relevant to an article. 
 
-In this project we worked on automatically filtering and mapping comments that are most relevant to a newspaper article or a portion of the article using information retrieval techniques. To be able to do that we analyse a newspaper article and construct query language models for terms that occurred in its passages. Then we generate queries from those passages and match them against readers' comments treating the latter as candidate relevant documents.
+In this project we worked on automatically filtering and mapping comments that are most relevant to a newspaper article or a portion of the article using information retrieval techniques. To be able to do that we analyse a newspaper article and construct query language models for terms that occurred in its passages. Then we generate queries from these passages and match them against readers' comments treating the latter as candidate relevant documents.
 
-This report describes the logic and implementation of our solution, presents the first set of results we got from analysing articles from two online newspapers, and discusses the problems we faced and possible future research directions.   
+This report describes the logic and implementation of our solution, presents the first set of results we got from analysing some articles from two online newspapers, and discusses the problems we faced and possible future research directions.   
 \end{abstract}
 
 
 \section{Introduction}
-Publishing readers' comments on newspaper articles has been a long-standing tradition in good journalism since the early days of newspaper. Sometimes such  comments convey readers' feelings about the original article, sometimes they provide complementary information that help other readers to get a holistic understanding of the discussed topics, sometimes they expose errors, omissions, or subtle bias on the part of the reporter, and so on. Publication of readers' comments has, therefore, become an integral part of transparency in journalism.
+Publishing readers' comments on newspaper articles has been a long-standing tradition in good journalism since the early days of newspaper. Sometimes such  comments convey readers' feelings about the original article; sometimes they provide complementary information that help other readers to get a holistic understanding of the discussed topics; sometimes they expose errors, omissions, or subtle bias on the part of the reporter; and so on. Publication of readers' comments has, therefore, become an integral part of transparency in journalism.
 
-During the era of printed newspapers, these comments used to appear as follow-up  discussions in days following the date of original article publishing. Because of space constraints, follow-up comments tend to be limited to only a few interesting news and furthermore limited in their numbers. The advent of electronic newspapers, however, has fundamentally altered that pre-existing culture. Currently, comments can be written on every published articles, by anyone interested,  and there is no limits in the number of comments either. Now it is quite common to see several hundreds of comments on popular news articles of papers like New York Times, BBC News, etc.
+During the era of printed newspapers, these comments used to appear as follow-up  discussions in days following the date of original article publishing. Because of space constraints, follow-up comments tend to be limited to only a few interesting news and furthermore limited in their numbers. The advent of electronic newspapers, however, has fundamentally altered that pre-existing culture. Currently, comments can be written on every published articles, by anyone interested,  and there is no limit in the number of comments either. Now it is quite common to see several hundreds of comments on popular news articles in papers, like, New York Times and BBC News.
 
-In regards to fact finding and ensuring transparency this is an encouraging trends. The sheer volume of such comments, however, introduces several important  challenges. On one hand, it can be overwhelming or completely unreasonable for a common reader to go through all the comments. On the other hand, for the editor it is difficult to highlight comments that may be most relevant to the  original article or purge comments that are simply vile. To the best of our  knowledge, so far little has been tried to aid both parties in this regard by automatic highlighting, filtering, and classification of readers' comments.
+In regards to fact finding and ensuring transparency this is an encouraging trend. The sheer volume of such comments, however, introduces several important  challenges. On one hand, it can be overwhelming or completely unreasonable for a common reader to go through all the comments. On the other hand, for the editor it is difficult to highlight comments that may be most relevant to the  original article or purge comments that are simply vile. To the best of our  knowledge, so far little has been tried to aid both parties in this regard by automatic highlighting, filtering, and classification of readers' comments.
 
 Although our broad objective for this research was to address all of the above, as part of the class project we focus on filtering relevant comments only. The central idea behind our solution is to view an article title as a query and the article itself as a feedback document for constructing the language model for the query intended by the title. Then to judge relevance of comments to the article or passages in the article, we automatically generate queries from the constructed model and rank comments against them.       
 
 For our experiment we crawled about 1000 articles each having at least 20 comments from Alzajeera News and collected 780 more similarly comment-rich articles from Yahoo-News gathered by authors of \cite{Das:2014:GBC:2556195.2556231}. Language models for articles are uni-gram models that we generated using our own algorithm that relies on a notion of term significance which depends on both frequency and proximity of terms related to terms in the article title. Then a corpus based smoothing is applied to determine final term significance rankings. In short, a model in our case is not just a collection of terms; rather a probability estimate is associated with each term regarding its chance to be included in a query representing the information need served by the article or a part of that article. 
 
-Ranking of comments against generated queries are done using Okapi BM25 \cite{Robertson96okapiat}. We varied different parameters of the ranking function as well as of our significance calculation to identify the best configuration. The ground truth for comments' relevance measurement is gathered through human evaluation of a small random sample of news from our crawled database.
+Ranking of comments against generated queries is done using Okapi BM25 \cite{Robertson96okapiat}. We varied different parameters of the ranking function as well as of our term significance calculation algorithm to identify the best configuration. The ground truth for comments' relevance is gathered through human evaluation of a small random sample of news from our crawled database.
 
-The results are mixed. We identified several challenges regarding improving our solution further. Some problems were implementation specific issues that arose from simplifications we have to made to save time. Nevertheless, there are reasons to be optimistic and we hope to enhance our solution in the future.
+The results are encouraging. Nevertheless, we identified several challenges regarding improving our solution further. Some problems were implementation specific issues that arose from simplifications we had to make to save time. There are good reasons to be optimistic and we hope to enhance our solution in the future.  
 
-The rest of the report is organized as follows. Section \ref{rw} discusses some related work; Section \ref{pf} discusses how we model our domain as an information retrieval problem; Section \ref{des} elaborates on aspects of our solution; Section \ref{si} briefs on the actual implementation; Section \ref{ev} presents the results of the experiments done on a small sample of articles; Section \ref{fw} ponders over possible routes for future work; finally, Section \ref{con} concludes the report.                
+\subsection*{Report Organization}
+The rest of the report is organized as follows. Section \ref{rw} discusses some related work; Section \ref{pf} describes how we model our domain as an information retrieval problem; Section \ref{des} elaborates on fundamental design aspects of our solution; Section \ref{si} briefs on the actual implementation; Section \ref{ev} presents the results of the experiment done on a small sample of articles; Section \ref{fw} ponders over possible routes for future work; finally, Section \ref{con} concludes the report.                
 
 \section{Related Work}
 \label{rw}
-There have been a few works done on matching comments with News Article segments. Sil et. al. \cite{Sil:2011:SMC:2063576.2063906} used supervised and unsupervised techniques to create structural classifier to match comments with News article segments. This paper used explicit semantic analysis and co-reference features to represent the text in article and text and showed that accuracy of discriminative approaches depend largely on effective feature selection. They used prior data to detect article segment and comment match in articles of a related topic.
+There have been a few works done on matching comments with news article segments. Sil et. al. \cite{Sil:2011:SMC:2063576.2063906} used supervised and unsupervised techniques to create structural classifiers to match comments with news article segments. Their paper used explicit semantic analysis and co-reference features to represent the text in article and showed that the accuracy of discriminative approaches depends largely on effective feature selection. They used prior data to detect article segments and matched comments in articles based on related topics.
 
-To detect article segment and comment matching we need to extract topics from a News article using topic modeling. Several works have been done in topic modeling. MG-LDA \cite{Blei:2003:MAD:860435.860460, Titov:2008:MOR:1367497.1367513} is used to model local topics in a text. However, In a news article every segment may not be related to a comment. Also in this model, local topics scatter across the corpus which is not often the case in news articles. Hence, MG-LDA is not appropriate for our system. Also, Corr-LDA \cite{Titov:2008:MOR:1367497.1367513} is a topic model to understand correspondence. Since, Corr-LDA work with single vector model, a specific comment on a small segment of an article can show small correlation with the article using this model. To overcome this limitation Das et. al. \cite{Das:2014:GBC:2556195.2556231} developed a correspondence topic model (SCTM) that uses multiple topic vectors. Hence, for each comment-article segment pair there would be number of topic vectors, which would enable comments to match with more correspondence segments of article. In \cite{Ma:2012:TRC:2396761.2396798} the authors focused on comments summarization. This paper selects few most representative comments from comment cluster for an article. They used Master-Slave Topic model (MSTM) and Extended Master-Slave Topic model (EXTM) where News articles is treated as master and comment text as slave. Using this topic models they cluster the comments based on their topics and rank the most representative comments from each comment clusters. 
+Our algorithm for generating language models from an article has some parallel to topic modelling of documents. Several works have been done regarding topic modelling. MG-LDA \cite{Blei:2003:MAD:860435.860460, Titov:2008:MOR:1367497.1367513} is used to model local topics in a text. In a news article every segment may not be related to a comment. Also in this model, local topics scatter across the corpus which is not often the case in news articles. Hence, MG-LDA is not appropriate for our system. 
+
+Corr-LDA \cite{Titov:2008:MOR:1367497.1367513} is another topic model to understand correspondence. Since, Corr-LDA work with single vector model, a specific comment on a small segment of an article can show small correlation with the article using this model. To overcome this limitation Das et. al. \cite{Das:2014:GBC:2556195.2556231} developed a correspondence topic model (SCTM) that uses multiple topic vectors. Hence, for each comment-article segment pair there would be a number of topic vectors, which would enable comments to match with more correspondence segments of article. In \cite{Ma:2012:TRC:2396761.2396798} the authors focused on summarizing comments. This paper selects few most representative comments from comment cluster for an article. They used Master-Slave Topic model (MSTM) and Extended Master-Slave Topic model (EXTM) where News articles is treated as master and comment text as slave. Using this topic models they cluster the comments based on their topics and rank the most representative comments from each comment clusters.
+
+Since our criteria for filtering and categorizing comments under article segments significantly differ from the objectives of aforementioned works, there is considerable novelty in our solution. We are unaware of any previous work that uses query generation techniques to match comments against their underlying newspaper articles.       
 
 \section{Problem Formulation}
 \label{pf}
 This section describes how we model the problem of finding relevant readers' comments as an information retrieval problem.
 
-We view components of a news comprising the article and associated comments serve to satisfy a single information need that can be thought of as represented by a query that is similar to the title of the article. In our formulation, the comments are of interest only because the original article is by itself insufficient in conveying all information necessary to fully satisfy a reader's information need. 
+We view components of a news -- consisting the article and associated comments --  to serve a single information need. This information need can be thought of as represented by a query that is similar to the title of the article. In our formulation, comments are of interest only because the original article is insufficient in conveying all information necessary to fully satisfy a reader's information need all by itself. 
 
-Given this formation, the comments of interest are those comments that address topics covered in the article but augment article's author arguments. These comments broadly fall into to categories.  
+Given this formation, comments of interest are those comments that address topics covered in the article but augment article's author arguments in some way. These comments broadly fall into two categories.  
 
 \begin{enumerate}
 \item Comments that support article author's arguments with additional information and insights, and
-\item Comments that contradict the article with contrasting evidences and insights
+\item Comments that contradict the article with contradictory evidences and insights
 \setcounter{tmpc}{\theenumi}
 \end{enumerate}
 
-Given the unregulated nature of comments publishing, the comments section is cluttered with several other kinds of comments such as (as we observed)
+Given the unregulated nature of comments publishing, the Comments Section of the news is often cluttered with several other kinds of comments such as (as we observed)
 
 \begin{enumerate}
 \setcounter{enumi}{\thetmpc}
-\item Comments that express nothing but the sentiment of a particular reader about discussed topics
-\item Arguments exchanging among readers about each other's comments
+\item Comments that express nothing but readers' sentiments about discussed topics
+\item Exchange of arguments among readers about each other's comments
 \item Elaborate discussion on some offshoot topic that has minute relevance to the article itself
 \end{enumerate} 
 
-An abundance of comments of latter categories makes it difficult to for an unbiased reader to identify and consequently satisfy his partially fulfilled information need. Although distinguishing between the former and latter kinds of comments is often a subjective decision, henceforth difficult, we hold that comments of former categories are more likely to have the following characteristic that will distinguish them from the latter.
+An abundance of comments of latter categories makes it difficult for an unbiased reader to identify and consequently satisfy his partially fulfilled information need. Although distinguishing between the former and latter kinds of comments is often a subjective decision, henceforth difficult, we hold that comments of former categories are more likely to have the following characteristic that will separate them out from the latter.
 \bigskip
 
 \textit{There is significantly larger overlapping between principal issues discussed in an article and in a relevant comment than between the article and a non-relevant comment.}    
@@ -88,29 +93,29 @@ Given this assumption, the problem of filtering relevant comments can be designe
 \item Generate queries from these models and rank comments against individual queries
 \end{enumerate}
 
-Here we consider passage specific models as for articles having many passages, there may be jump in the topics been discussed. Consequently, a comment may also have passage specific complementary discussions. In the general case, the article presents a composite language model that is a mixture of the models of individual passages; and in the degenerative base case, it represents a single passage itself.  
+Here we consider passage specific models as for articles having many passages, there may be jump in the topics been discussed. Consequently, a comment may also have passage specific complementary discussions. In the general case, the article represents a composite language model that is a mixture of the models of individual passages; and in the degenerative base case, it represents a single passage itself.  
 
-Before we dive into a discussion about our implementation, we should emphasize that our language model should not be equate to a topic model similar to some related work discussed previously. Rather, it is intended to generate queries. To clarify the difference with an example if ``Obama decided to go alone in the Immigration reform issue" is a title of a news article then from the topic modelling perspective ``Immigration Reform'' is the primary -- and arguably the sole -- topic but from the query generation perspective ``Obama's Decision'' alongside ``Immigration Reform'' should construe the crux of the discussion.    
+Before we dive into a discussion about our implementation, we should emphasize that our language model should not be equated to a topic model present in some related work discussed previously. Rather, it is intended to generate queries. To clarify the difference with an example, if ``Obama decided to go alone in the Immigration reform issue" is a title of a news article then from the topic modelling perspective ``Immigration Reform'' is the primary -- and arguably the sole -- topic but from the query generation perspective ``Obama's Decision'' alongside ``Immigration Reform'' should construe the crux of the discussion.    
 
-\section{Design}
+\section{The Design}
 \label{des}
-The center piece of our solution is the algorithm for developing query language models for individual passages of a newspaper article. Next we discuss the algorithm and. Afterwords we discuss how these models can be used to generate queries that would be used for ranking evaluation.   
+The center piece of our solution is the algorithm for developing query language models for individual passages of a newspaper article. Next we discuss the algorithm. Afterwords we discuss how these models can be used to generate queries that would be used for ranking evaluation.   
 
 \subsection{Query Model Generation}
-Given that we treat an article title to be equivalent to a query representing readers' information needs, we have a mechanism to interpret the significance of the content of the article. We believe a reasonable interpretation for any article is that each passage provides a partial information about the issue underlying the title and each sentence within a passage works on building up the arguments of its passage. To summarize, their is no term in the article that is not relevant to readers' information need.     
+Given that we treat an article title to be equivalent to a query representing readers' information need, we have a mechanism to interpret the significance of the content of the article. We believe a reasonable interpretation for any article is that each passage provides a partial information about the issue underlying the title and each sentence within a passage works on building up the argument of its passage. To summarize, their is no term in the article that is not relevant to readers' information need.     
 
 The relevance of these terms are, however, different and based on several parameters given below. 
 
 \begin{enumerate}
 \item Term Frequency
-\item Significance Level: minimum distance of a term from terms occurring in the title
+\item Significance Level: the minimum distance of a term from terms occurring in the title
 \item Relevance Weight: the number of co-occurrences of a term with other significant terms in the article 
-\item Smoothing Factor: general likelihood of the term within the corpus      
+\item Smoothing Factor: general likelihood of appearance of the term within the corpus      
 \end{enumerate}
 
 Among these the first and the last are self explanatory. So we focus on explaining the remaining two.
 
-To calculate both significance level and relevance weight of terms we construct a graph ${G = (V, E)}$ for each passage $P$ where the vertex set $V = \{w_i | w_i \in P\}$ and the edge set $E = \{(w_i, w_j) | w_i, w_j \in s_k, s_k \in P\}$. That is there is an edge between two words if they occur in the same sentence in anywhere in the passage.  
+To calculate both significance level and relevance weight of terms we construct a graph ${G = (V, E)}$ for each passage $P$ where the vertex set is defined as, $V = \{w_i | w_i \in P\}$; and the edge set as, $E = \{(w_i, w_j) | w_i, w_j \in s_k, s_k \in P\}$. That is there is an edge between two words if they occur in the same sentence anywhere in the passage. Here co-occurrences in multiple sentences results in multiple edges. 
 
 Then the formula for the significance level of a word $w_i$ is as follows, 
 \begin{equation}
@@ -128,21 +133,21 @@ rWeight_i = \sum_{\substack{(w_i, w_j) \in E\\s_j < s_i}} max\big(0, 1 - \log(s_
 \end{equation}
  
 
-If we reason about aforementioned formulas, we see that terms that occurred at close proximity of any terms in the title have more significance than terms that appeared further. Then terms that occurred more often and with more significant terms have more relevance weight than terms that occurred less often.  
+If we reason about aforementioned formulas, we see that terms that occurred at close proximity of terms in the title have more significance than terms that appeared further. Then terms that occurred more often and with more significant terms have more relevance weight than terms that occurred less often.  
 
 The rationale for this treatment lies in the assumption about the logical flow of arguments that we expect to present in a newspaper article. Sentences making statements about elements of the title should compose the main agenda. Then there will be sentences providing supporting evidences and so on. Consequently, terms occurring in different kind of sentences should have varying degrees of importance in the constructed model.   
 
-Note that in Equation \ref{rwEq} only terms with lesser significance, $w_i$, get the benefit of co-occurrence -- not the term with greater significance, $w_j$. This apparent lacking is balanced by the frequency weight of individual term which has the following formula.
+Note that in Equation \ref{rwEq} only the term with lesser significance, $w_i$, gets the benefit of co-occurrence -- not the term with greater significance, $w_j$. This apparent lacking is balanced by the frequency weight of individual terms which has the following formula.
 
 \begin{equation}
 fWeight_i = tf \times {\frac{s_i + k}{s_i (k + 1)}}
 \end{equation}   
 Here $k$ is a scaling parameter used to exponentially decrease the importance of a term's occurrences with increase of its significance level.
-The likelihood of a term to contribute to a query representing the information need satisfied by the concerned passage of the article is calculated as a mixture of normalized relevance and frequency weight as captured by the following equation.
+The likelihood of a term to contribute to a query representing the information need satisfied by the concerned passage of the article is calculated as a mixture of normalized relevance and frequency weights as captured by the following equation.
 
 \begin{equation}
 \label{docW}
-weight_i = \alpha \times rWeight_i + (1 - \alpha) \times fWeight_i
+weight_i = \alpha \times rWeight_i^{norm} + (1 - \alpha) \times fWeight_i^{norm}
 \end{equation}
 
 Equation \ref{docW} is combined with the collection probability of a terms $p(w_i, C)$ using the Jelinek-Mercer interpolated smoothing method \cite{1371580} to give the final smoothed probability as follows.   
@@ -153,9 +158,9 @@ p_q(w_i) = (1 - \lambda) \times weight_i + \lambda \times p(w_i, C)
 \end{equation}
 
 \subsection{Ranking Evaluation}
-If we remember the discussion of Section \ref{pf}, we see the criteria for judging relevance of a comment to the discussion presented in the article or a passage of the article is the degree of overlapping of comment's language model with that of the former. Here \textit{overlapping} deserves careful attention.
+If we remember the discussion of Section \ref{pf}, we see that the criteria for judging relevance of a comment to the discussion presented in the article or a passage of the article is the degree of overlapping of comment's language model with that of the latter. Here \textit{overlapping} deserves careful attention.
 
-Note that we expect from a relevant comment to complement the discussion of of the article with supporting or contradictory arguments. We do not expect the comment to say the same thing the article does. So there should be significant overlapping in principal terms of the comment and the article, but there should be also considerable distinction in their auxiliary terms. Therefore, ideally the goal of comments ranking should not be to maximize overlapping. Rather it should be to balance similarity in principal terms with dissimilarity in auxiliary terms.
+Note that we expect from a relevant comment to complement the discussion of the article with supporting or contradictory arguments. We do not expect the comment to say the same thing the article does. So there should be significant overlapping in principal terms of the comment and the article, but there should also be considerable distinction in their auxiliary terms. Therefore, ideally the goal of comments ranking should not be to maximize overlapping. Rather it should be to balance similarity in principal terms with dissimilarity in auxiliary terms.
 
 If we define a cut-off threshold for partitioning the query language model of a passage $P$ into a principal $\theta_{pri}$ and an auxiliary part $\theta_{aux}$ then the relevance judgement for a comment $D$ with respect to the passage can be expressed as a harmonic mean as follows.
 
@@ -177,28 +182,47 @@ rank(P,D) \sim sim(\theta_{pri}, \theta_d)
 \label{si}
 We made a few modifications to the solution described in the previous section for practical considerations and -- particularly -- to save time. As we will discuss actual implementation in this section, these deviations will become apparent.   
 
-We use Apache OpenNLP parser \cite{openNLP} to extract sentences from the article then to determine the parts of speech of all words in the article. Then we keep only the nouns and verbs for later analysis. We make this decision as our observation indicates that conjunctions, prepositions, and adverbs usually have little to contribute to the central arguments of an article; and our collection of articles is not large enough to discard their influence applying smoothing alone. We are uncertain about the import of adjectives and currently leave them out. Our he system is configurable though and different parts of speech can be enabled and disabled as deemed useful.
+We use Apache OpenNLP parser \cite{openNLP} to extract sentences from the article then to determine parts of speech of all words in the article. Then we keep only the nouns and verbs for later analysis. We make this decision as our observation indicates that conjunctions, prepositions, and adverbs usually have little to contribute to the central arguments of an article; and our collection of articles is not large enough to nullify their influence by applying smoothing alone. We are uncertain about the import of adjectives and currently leave them out. Our system is configurable though and different parts of speech can be enabled and disabled in it if deemed useful.
 
-For passage identification, we adopt the simple strategy that a paragraph with a minimum $n$ sentences portrays a holistic argument/evidence and a sequence of $m$ such paragraphs form a passage. If a paragraph is less than $n$ sentences than we consider it automatically included in the current passage without increasing its paragraph count. Our plan was to try different combinations of $n$ and $m$ and determine what performs best. To our surprise, the vast majority of news articles seem to have paragraphs that are mostly one or two sentences long. Hence in most cases, we get only one passage, consequently one query model, per article. There are exceptions though.                     
+For passage identification, we adopt the simple strategy that a paragraph with a minimum $n$ sentences portrays a holistic argument/evidence and a sequence of $m$ such paragraphs form a passage. If a paragraph is less than $n$ sentences than we consider it to be automatically included in the current passage without increasing passage's paragraphs count. Our original plan was to try different combinations of $n$ and $m$ and determine what performs best. To our surprise, the vast majority of news articles seem to have paragraphs that are mostly one or two sentences long. Hence in most cases, we get only one passage, consequently one query model, per article. There are exceptions though.                     
 
-The query language model is implemented exactly according to the formulas given in the previous section using our own data structure and algorithms. The for pairwise term association graph is implemented using two map data structures using words tagged and filtered by during parsing phase. Then frequency and relevance weights are measured concurrently by traversing the graph starting from the title words. Finally they are normalized. The time and space complexities for the algorithm are $\mathcal{O}(|E|)$ and $\mathcal{O}(|V| + |E|)$ respectively.
+The query language model is implemented exactly according to the formulas given in the previous section using our own data structures and algorithms. The pairwise term association graph is implemented combining two map data structures that are generated using words tagged and filtered during parsing phase. Then frequency and relevance weights are measured concurrently by traversing the graph starting from the title words. Finally they are normalized. The time and space complexities for the algorithm are $\mathcal{O}(|E|)$ and $\mathcal{O}(|V| + |E|)$ respectively.
 
-Computing the collection model is the costliest part because we have to analyse all articles. That is however computed only once and the model is been stored in a file. Before ranking the model is been loaded in memory and used as many times as required.
+Computing the collection (or corpus) model is the costliest part because we have to analyse all articles. That is however computed only once and the model is been stored in a file. Before ranking, the model is been loaded in memory and used as many times as required. Note that we keep separate collection models for articles coming from different news websites. This is to capture the writing style and vocabulary differences that we observe when reading articles from different news sources. Our original plan was to further partition the collections based on news categories as it is reasonable to expect to see differences in frequent terms as we shift reading articles from, say, sports to politics. We did not do that at the end as our collections of news per category were not large enough.     
 
-The biggest sacrifice that we have to make is about ranking evaluation. This is regrettably because time constraint due to our engagement in other research. We use Apache Lucene \cite{McCandless:2010:LAS:1893016} for indexing comments of an article and ranking them against our generated query model. Since we could not manage time to study and implement a language model based ranking process over Lucene as that would be required by Equation \ref{rank}, we directly generate a query from the model selecting the terms with highest weight and rank comments against this query using Okapi BM25 \cite{Robertson96okapiat}.
+The biggest sacrifice that we have to make concerns about ranking evaluation. This happened regrettably because of time constraint due to our engagement in other research. We use Apache Lucene \cite{McCandless:2010:LAS:1893016} for indexing comments of an article and ranking them against our generated query model. Since we could not manage time to study and implement a language model based ranking process over Lucene as that would be required by Equation \ref{rank}, we directly generate a query from the model selecting terms with high weights and rank comments against this query using Okapi BM25 \cite{Robertson96okapiat}.
 
-This adjustment has the shortcoming that the probabilities for principal terms available in the query model have been used during query generation, but the advantage of their presence has not been taken during ranking comments as the ranking function treated all query terms as equal. We suspect this has a significant adverse effect in our solution's performance. We hope to correct this problem in the future -- depending on the feedback we may get regarding the future prospect of this work.          
+This adjustment has the shortcoming that the probabilities for principal terms available in the query model have been used during query generation, but the advantage of their presence has not been taken during ranking comments as the ranking function treats all query terms to be equal. We suspect this has a significant adverse effect in our solution's performance. We hope to correct this problem in the future -- depending on the feedback we may get regarding the future prospect of this work.          
 
 \section{Evaluation}
 \label{ev}
 
 \section{Future Work}
 \label{fw}
+As we expressed before that our broad objective for the research was to develop a mechanism for classifying, filtering, and highlighting readers' comments; and we restrict it to only filtering relevant comments to fit our work within the time frame of the class project. Given that none of us works in Information Retrieval and has his personal research to do, it seems unlikely that our initial plan will come to fruition.
+
+Nevertheless, we see several improvements possible in comments filtering alone that we could not address because of other engagements. We are interested to investigate these possibilities in the future if further work in this project seems worthwhile (depending on the feedback we may get). Below we discuss these potential improvements.       
+
+\subsubsection{Changes in Comments Filtering Criteria}
+Apart from doing a language based comments evaluation that we discussed before in Section \ref{si}, we can make two more changes that may change our solution's performance considerably. First, our observation suggests that comments filtering should be based on some minimum threshold of similarities instead of document ranking. This is because many news articles that we examined although having a lot of comments have only a few of them that are useful. The opposite is quite true also where there are few comments but all of make have meaningful contributions to the article. From the presentation perspective it might be better to remove incoherent comments altogether than doing just an ordering.
+
+Second, we observed in articles with a huge number of comments (e.g., in the scale of hundreds), later comments tend to diverge greatly from the discussion of the article. It seems to be a common trend that after a few comments readers start commenting on one another's comments and embroil in personal arguments instead of addressing the content of the article. Therefore, it might worth a try to consider a comment's position and nesting level during ranking evaluation.            
+
+\subsubsection{Get More Relevance Judgements}
+We collected over 730 Yahoo-News articles from \cite{Das:2014:GBC:2556195.2556231} and crawled over 850 articles from Alzajeera News. These articles are comment rich and there are minimum 20 comments per article. Our evaluation is, however, done over a minute sample having less than 40 articles. This is a place where we definitely need to improve.  
+
+We asked some friends and fellow researchers to read 5 to 10 random articles and provide relevance judgements for accompanying comments. Unfortunately, we got feedback for 1 or 2 articles per person -- sometimes we got none. We believe there was a lack of incentive in providing feedbacks as there was no accompanying reward. One good idea for collecting many relevance judgements can be to use something like Amazon Mechanical Turk with a reasonable remuneration per feedback. We will then need some funding to undertake that task though.    
+
+\subsubsection{Addressing Synonymy}
+One obvious thing to do to improve performance further is to apply a synonym analyser based on some lexical dictionary tool such as WordNet \cite{Miller:1995:WLD:219717.219748} during both query language model construction and comments ranking. We observed several cases where a minor difference in the terminology used such as `Britain' as opposed `British' resulting in unwanted expansion of the query language model and loss of efficiency in comment filtering.    
+
+\subsubsection{Further Experiment on Passage Determination} We could not do passage level comment filtering as our collection of articles seems to overwhelmingly lack any noticeable paragraph henceforth passage level decomposition. We suspect this is a characteristic of the two news sources we considered. Our experience of reading news from more renowned news sources such as New York Times and BBC News suggest that many interesting articles have good paragraph structures in them. 
+
+We initially spent considerable time trying to crawl news from New York Times but could not determine how to crawl readers' comments from its articles. BBC News, we did not try at all. An interesting next step is to investigate how to crawl from these two and some other popular news sources where articles tend to be more structured and measure performance of passage level comments filtering. We believe using more popular news sources for analysis will boost up the significance of our work also.     
  
 \section{Conclusion}
 \label{con}
 
-\nocite{titov2008modeling, ma2012topic, das2014going, blei2003modeling}
 \bibliographystyle{abbrv}
 \bibliography{bibliography} 
 
