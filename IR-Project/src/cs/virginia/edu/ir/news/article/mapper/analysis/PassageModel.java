@@ -42,7 +42,8 @@ public class PassageModel {
 		StringBuilder buffer = new StringBuilder();
 		List<WordWeight> weights = new ArrayList<WordWeight>(wordWeights.values());
 		Collections.sort(weights, new WeightComparator(collectionModel));
-		for(int i = 0; i < count; i++){
+		int min = Math.min(count, weights.size());
+		for(int i = 0; i < min; i++){
 			WordWeight weight = weights.get(i);	
 			buffer.append(weight.getWord()).append(" ");
 		}

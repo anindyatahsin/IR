@@ -111,7 +111,7 @@ public class Searcher
     {
         try
         {
-            System.out.println("\nScoring documents with " + indexSearcher.getSimilarity().toString());
+            //System.out.println("\nScoring documents with " + indexSearcher.getSimilarity().toString());
             Similarity sim = indexSearcher.getSimilarity();
 
             // have to do this to figure out query length in the LM scorers

@@ -3,6 +3,8 @@ package edu.illinois.cs.index.similarities;
 import org.apache.lucene.search.similarities.BasicStats;
 import org.apache.lucene.search.similarities.SimilarityBase;
 
+import cs.virginia.edu.ir.news.article.mapper.config.WeighingConfiguration;
+
 public class OkapiBM25 extends SimilarityBase {
     /**
      * Returns a score for a single term in the document.
@@ -16,9 +18,9 @@ public class OkapiBM25 extends SimilarityBase {
     protected float score(BasicStats stats, float termFreq, float docLength) {
         int N=(int)stats.getNumberOfDocuments();
         int df=(int)stats.getDocFreq();
-        float k1=(float)1.6;
+        float k1=WeighingConfiguration.BM25_K1;
         float k2=999;
-        float b=0.1f;
+        float b=WeighingConfiguration.BM25_B;
         float c=termFreq;
         double temp1=Math.log((N-df+0.5)/(df+0.5));
         float navg=stats.getAvgFieldLength();

@@ -93,7 +93,7 @@ public class Runner {
      *
      * @throws IOException
      */
-    public static void interactiveSearch(String index_path, String query) throws IOException {
+    public static double interactiveSearch(String index_path, String query) throws IOException {
         String method= "--ok";
     	Searcher searcher = new Searcher(index_path);
         setSimilarity(searcher, method);
@@ -108,20 +108,11 @@ public class Runner {
         int rank = 1;
         if (results.size() == 0)
         	RunTimeConfiguration.writer.write("\n"+"No results found!");
-        /*for (ResultDoc rdoc : results) {
-            System.out.println("\n------------------------------------------------------");
-            System.out.println(rank + ". " + rdoc.title());
-            System.out.println("------------------------------------------------------");
-            // System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
-            System.out.println(rdoc.content());
-            ++rank;
-        }*/
-        //    System.out.print("> ");
-        //}
-        calculateMAP(results);
+        
+        return calculateMAP(results);
     }
     
-    public static void calculateMAP(ArrayList<ResultDoc> results){
+    public static double calculateMAP(ArrayList<ResultDoc> results){
     	File folder = new File(DeploymentConfiguration.FEEDBACK_DIRECTORY);
     	File[] listOfFiles = folder.listFiles();
     	FileInput in = new FileInput();
@@ -159,33 +150,24 @@ public class Runner {
 			if (relevance.get(Integer.parseInt(rdoc.title()) - 1) == 1) {
 				avgp += numRel / i;
 				++numRel;
-				try {
-					RunTimeConfiguration.writer.write("\n"+"  ");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				//System.out.print("\n"+"  ");
 			} else {
-				try {
-					RunTimeConfiguration.writer.write("\n"+"X ");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				//System.out.print("\n"+"X ");
 			}
-			try{
-				RunTimeConfiguration.writer.write("\n"+"\n------------------------------------------------------");
-				RunTimeConfiguration.writer.write("\n"+i + ". " + rdoc.title());
-				RunTimeConfiguration.writer.write("\n"+"------------------------------------------------------");
-	         // System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
-				RunTimeConfiguration.writer.write("\n"+rdoc.content());
-			} catch(IOException e) {
+			//try{
+				//RunTimeConfiguration.writer.write("\n"+"\n------------------------------------------------------");
+				//RunTimeConfiguration.writer.write("\n"+i + ". " + rdoc.title());
+				//RunTimeConfiguration.writer.write("\n"+"------------------------------------------------------");
+				// System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
+			//System.out.println(i + ". " + rdoc.title());
+				//RunTimeConfiguration.writer.write("\n"+rdoc.content());
+			//} catch(IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//	e.printStackTrace();
+			//}
 			 ++i;
 		}
-    	try{
+    	/*try{
     	RunTimeConfiguration.writer.write("\n"+"\n*************************************************************\n");
     	RunTimeConfiguration.writer.write("\n"+"Average Precision: " + (avgp / num_rel));
     	RunTimeConfiguration.writer.write("\n"+"\n***************************************************************\n");
@@ -193,7 +175,9 @@ public class Runner {
     	RunTimeConfiguration.writer.write("\n"+"\n***************************************************************\n");
     	}catch(IOException e){
     		e.printStackTrace();
-    	}
+    	}*/
+    	return avgp / num_rel;  // returning AP
+    	//return (numRel-1) / (i-1); //returning p@k
     }
 
     public static void setSimilarity(Searcher searcher, String method) {
