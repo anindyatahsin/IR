@@ -101,7 +101,7 @@ Given this assumption, the problem of filtering relevant comments can be designe
 
 Here we consider passage specific models as for articles having many passages, there may be jump in the topics been discussed. Consequently, a comment may also have passage specific complementary discussions. In the general case, the article represents a composite language model that is a mixture of the models of individual passages; and in the degenerative base case, it represents a single passage itself.  
 
-Before we dive into a discussion about our implementation, we should emphasize that our language model should not be equated to a topic model present in some related work discussed previously. Rather, it is intended to generate queries. To clarify the difference with an example, if ``Obama decided to go alone in the Immigration reform issue" is a title of a news article then from the topic modelling perspective ``Immigration Reform'' is the primary -- and arguably the sole -- topic but from the query generation perspective ``Obama's Decision'' alongside ``Immigration Reform'' should construe the crux of the discussion.    
+Before we dive into a discussion about our implementation, we should emphasize that our language model should not be equated to a topic model present in some related work discussed previously. Rather, it is intended to generate queries. To clarify the difference with an example, if ``Obama decided to go alone in the Immigration reform issue" is a title of a news article then from the topic modeling perspective ``Immigration Reform'' is the primary -- and arguably the sole -- topic but from the query generation perspective ``Obama's Decision'' alongside ``Immigration Reform'' should construe the crux of the discussion.    
 
 \section{The Design}
 \label{des}
@@ -211,7 +211,7 @@ The query language model is implemented exactly according to the formulas given 
 
 Computing the collection (or corpus) model is the costliest part because we have to analyse all articles. That is however computed only once and the model is been stored in a file. Before ranking, the model is been loaded in memory and used as many times as required. Note that we keep separate collection models for articles coming from different news websites. This is to capture the writing style and vocabulary differences that we observe when reading articles from different news sources. Our original plan was to further partition the collections based on news categories as it is reasonable to expect to see differences in frequent terms as we shift reading articles from, say, sports to politics. We did not do that at the end as our collections of news per category were not large enough.     
 
-The biggest sacrifice that we have to make concerns about ranking evaluation. This happened regrettably because of time constraint due to our engagement in other research. We use Apache Lucene \cite{McCandless:2010:LAS:1893016} for indexing comments of an article and ranking them against our generated query model. Since we could not manage time to study and implement a language model based ranking process over Lucene as that would be required by Equation \ref{rank}, we directly generate a query from the model selecting terms with high weights and 
+The biggest sacrifice that we have to make concerns about ranking evaluation. This happened regrettably because of time constraint due to our engagement in other research. We used Apache Lucene \cite{McCandless:2010:LAS:1893016} for indexing comments of an article and ranking them against our generated query model. Since we could not manage time to study and implement a language model based ranking process over Lucene as that would be required by Equation \ref{rank}, we directly generate a query from the model selecting terms with high weights and 
 rank comments against this query using Okapi BM25 \cite{Robertson96okapiat}.
 
 \begin{figure*}[!ht]
@@ -224,7 +224,8 @@ rank comments against this query using Okapi BM25 \cite{Robertson96okapiat}.
 \end{figure*}
 
 
-This adjustment has the shortcoming that the probabilities for principal terms available in the query model have been used during query generation, but the advantage of their presence has not been taken during ranking comments as the ranking function treats all query terms to be equal. We suspect this has a significant adverse effect in our solution's performance. We hope to correct this problem in the future -- depending on the feedback we may get regarding the future prospect of this work.          
+This adjustment has the shortcoming that the probabilities for principal terms available in the query model have been used during query generation, but the advantage of their presence has not been taken during ranking comments as the ranking function treats all query terms to be equal. We suspect this has a significant adverse effect in our solution's performance. We hope to correct this problem in the future -- depending on the feedback we may get regarding the future prospect of this work.       
+     
 
 %\begin{figure*}[!ht]
 %\center{\subfigure[ An Article ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.25\textheight, angle=0]{snapshot1.png}%
@@ -237,7 +238,7 @@ This adjustment has the shortcoming that the probabilities for principal terms a
 \label{ev}
 In order to evaluate our system, we asked some of our peers to read a few articles from our crawled Alzajeera and Yahoo-news archive and requested them to provide feedback specifying which of the comments associated with the article are relevant. We implemented a web interface  to acquire user feedback. Figure \ref{feedback} presents a snap-shot of our user interface. We gathered 10 feedback for Alzajeera news articles and 10 feedback for Yahoo-news articles. These feedback were used as our ground truth for our evaluation.  
 
-We conducted our evaluation in two-phases. At the first phase, we used the feedback  for Alzajeera news articles as our test case to determine the optimal value for all the parameters discussed in the previous section. At the second phase, we used these parameters to evaluate the performance of our system with Yahoo-news articles.
+We conducted our evaluation in two-phases. At the first phase, we used the feedback  for Alzajeera news articles as our training set to determine the optimal value for all the parameters discussed in the previous section. At the second phase, we used these parameters to evaluate the performance of our system with Yahoo-news articles.
 
 We used two very well known performance measures for information retrieval: MAP (Mean Average Precision) and P@5 (Precision at position 5). As one of the motivation of the project was to present an editors' pick of comments (typically 5 of the best comments are selected as editors' pick), we choose to use P@5 to evaluate our system. MAP would present an overall performance of our system in terms of precision and recall.
 
@@ -249,6 +250,7 @@ In our proposed approach, we have used several different parameters, such as the
 Equation \ref{docW} is a mixture of normalized relevance and frequency weights. It gives the likelihood of a term to appear in the query for the concerned passage of the article. Figure \ref{alpha-map} and Figure \ref{alpha-p5} shows impact of change in $\alpha$ on MAP and P@5 respectively. For the experiment the value of the other parameters were fixed as $\lambda$ = 0.9, terms = 70, $b$ = 0.1.
 
 From Equation \ref{docW}, we see that, if the value of $\alpha$ is close to 0, relevance weight will have very low impact on term likelihood to appear in query. If value of $\alpha$ is close to 1, frequency weight of individual terms will have very low impact on likelihood to appear in query.  Figure \ref{alpha} shows that, both P@5 and MAP increase with increase of $\alpha$ which indicates that, relevance weight should have more significant impact on term likelihood to appear in query for the concerned passage of the article. So for the rest of the experiments we set the value of $\alpha$ as 1.0.
+
 
 \subsubsection{$\lambda$}
 \begin{figure*}[!ht]
@@ -307,6 +309,34 @@ In our System, from each passage of an article we generate a query representing 
 
 Figure \ref{terms-map} shows that, the MAP generally increases with the increased number of terms in query. And we get the highest MAP for query with 70 terms. This is quite expected because with the increase in the number of terms generally more relevant comments are pulled out. However, for much higher number of terms the query becomes more general and hence more irrelevant documents are also pulled out so with more than 80 terms MAP suffers a little bit.
 Figure \ref{terms-p5} shows that, the value of P@5 also generally increases with the increase in the number of terms in query. We get the highest value of P@5 when number of terms in query is 70 and 80. Also, the value of P@5 decreases for much higher number of terms in query for reasons mentioned above.  Hence, we chose the 70 terms for each query for the next set of experiments. 
+
+
+
+\subsection{Modification on Okapi BM25}
+One of the major drawback of using Okapi BM25 in our system, as described in the previous section, was that BM25 does not allow us to use the term probabilities of the query terms used for query generation. So, in this project along with normal BM25 algorithm we experimented with a little tweak on the Okapi BM25 equation. 
+
+To incorporate the query term probabilities into the ranking function, we proposed a modification on the Okapi BM25 relevance equation. Here, the probability of a term's contributing to the query generated by the passage $P$ replaces the query term frequency component in the standard BM25 ranking formula given in Equation \ref{bm25} and gives us Equation \ref{modBM25}. 
+
+\begin{widetext}
+\begin{equation*}
+\label{bm25}
+rank(P,D) = \sum_{\substack{w \in P,D}}\log{\frac{N - df + 0.5}{df + 0.5}} \times 
+{\frac{(k_1 + 1) \times c(w, D)}{k_1 \times (1 - b + b \frac{n}{n_{avg}}) + c(w,D)}} \times
+\frac{(k_2 + 1) \times {c(w, P)}}{k_2 + c(w, P)}
+\end{equation*}
+\end{widetext}
+
+
+\begin{widetext}
+\begin{equation*}
+\label{modBM25}
+rank(P,D) = \sum_{\substack{w \in P,D}}\log{\frac{N - df + 0.5}{df + 0.5}} \times 
+{\frac{(k_1 + 1) \times c(w, D)}{k_1 \times (1 - b + b \frac{n}{n_{avg}}) + c(w,D)}} \times p_p(w)
+\end{equation*}
+\end{widetext}
+
+
+   
 
 \subsection{Performance Measurement of the System}
 
