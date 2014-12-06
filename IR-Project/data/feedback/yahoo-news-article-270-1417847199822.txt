@@ -1,0 +1,15 @@
+Relevance of Comment # 0 : Non-Relevant
+Relevance of Comment # 1 : Relevant
+Relevance of Comment # 2 : Relevant
+Relevance of Comment # 3 : Relevant
+Relevance of Comment # 4 : Non-Relevant
+Relevance of Comment # 5 : Non-Relevant
+Relevance of Comment # 6 : Non-Relevant
+Relevance of Comment # 7 : Non-Relevant
+Relevance of Comment # 8 : Relevant
+Relevance of Comment # 9 : Non-Relevant
+Relevance of Comment # 10 : Non-Relevant
+Relevance of Comment # 11 : Relevant
+Relevance of Comment # 12 : Relevant
+Relevance of Comment # 13 : Non-Relevant
+Relevance of Comment # 14 : Non-Relevant
