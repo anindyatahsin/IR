@@ -10,6 +10,9 @@
 \newcounter{tmpc}
 \usepackage{mathtools}
 \usepackage{widetext,amsmath}
+\usepackage{subfigure}
+\usepackage{caption}
+
 
 \begin{document}
 \title{Mapping Readers' Comments Back to Newspaper Articles}
@@ -143,6 +146,7 @@ The rationale for this treatment lies in the assumption about the logical flow o
 Note that in Equation \ref{rwEq} only the term with lesser significance, $w_i$, gets the benefit of co-occurrence -- not the term with greater significance, $w_j$. This apparent lacking is balanced by the frequency weight of individual terms which has the following formula.
 
 \begin{equation}
+\label{fweight}
 fWeight_i = tf \times {\frac{s_i + k}{s_i (k + 1)}}
 \end{equation}   
 Here $k$ is a scaling parameter used to exponentially decrease the importance of a term's occurrences with increase of its significance level.
@@ -160,10 +164,20 @@ Equation \ref{docW} is combined with the collection probability of a terms $p(w_
 p_q(w_i) = (1 - \lambda) \times weight_i + \lambda \times p(w_i, C) 
 \end{equation}
 
+
+
 \subsection{Ranking Evaluation}
 If we remember the discussion of Section \ref{pf}, we see that the criteria for judging relevance of a comment to the discussion presented in the article or a passage of the article is the degree of overlapping of comment's language model with that of the latter. Here \textit{overlapping} deserves careful attention.
 
 Note that we expect from a relevant comment to complement the discussion of the article with supporting or contradictory arguments. We do not expect the comment to say the same thing the article does. So there should be significant overlapping in principal terms of the comment and the article, but there should also be considerable distinction in their auxiliary terms. Therefore, ideally the goal of comments ranking should not be to maximize overlapping. Rather it should be to balance similarity in principal terms with dissimilarity in auxiliary terms.
+
+\begin{figure*}[!ht]
+\centering
+\captionsetup{justification=centering}
+\includegraphics[trim=0cm 0cm 0cm 0cm, clip=true, totalheight=0.5\textheight, angle=0]{feedback-1.png}
+\caption{\textbf{User interface to provide feedback}} \label{feedback}
+\end{figure*}
+
 
 If we define a cut-off threshold for partitioning the query language model of a passage $P$ into a principal $\theta_{pri}$ and an auxiliary part $\theta_{aux}$ then the relevance judgement for a comment $D$ with respect to the passage can be expressed as a harmonic mean as follows.
 
@@ -171,6 +185,8 @@ If we define a cut-off threshold for partitioning the query language model of a 
 \label{relMes}
 relevance(P,D) = \frac{1}{\frac{\beta}{sim(\theta_{pri}, \theta_d)} - \frac{1 - \beta}{sim(\theta_{aux}, \theta_d)}}
 \end{equation}           
+
+
 
 This is a generic equation and any standard metric -- for example KL-divergence -- can be substituted as the similarity measure to calculate the relevance in the above.
 
@@ -180,6 +196,8 @@ A reasonable simplification to Equation \ref{relMes} is to consider only the sim
 \label{rank}
 rank(P,D) \sim sim(\theta_{pri}, \theta_d)
 \end{equation} 
+
+
 
 \section{Implementation}
 \label{si}
@@ -193,34 +211,109 @@ The query language model is implemented exactly according to the formulas given 
 
 Computing the collection (or corpus) model is the costliest part because we have to analyse all articles. That is however computed only once and the model is been stored in a file. Before ranking, the model is been loaded in memory and used as many times as required. Note that we keep separate collection models for articles coming from different news websites. This is to capture the writing style and vocabulary differences that we observe when reading articles from different news sources. Our original plan was to further partition the collections based on news categories as it is reasonable to expect to see differences in frequent terms as we shift reading articles from, say, sports to politics. We did not do that at the end as our collections of news per category were not large enough.     
 
-The biggest sacrifice that we have to make concerns about ranking evaluation. This happened regrettably because of time constraint due to our engagement in other research. We use Apache Lucene \cite{McCandless:2010:LAS:1893016} for indexing comments of an article and ranking them against our generated query model. Since we could not manage time to study and implement a language model based ranking process over Lucene as that would be required by Equation \ref{rank}, we directly generate a query from the model selecting terms with high weights and rank comments against this query using Okapi BM25 \cite{Robertson96okapiat}.
+The biggest sacrifice that we have to make concerns about ranking evaluation. This happened regrettably because of time constraint due to our engagement in other research. We use Apache Lucene \cite{McCandless:2010:LAS:1893016} for indexing comments of an article and ranking them against our generated query model. Since we could not manage time to study and implement a language model based ranking process over Lucene as that would be required by Equation \ref{rank}, we directly generate a query from the model selecting terms with high weights and 
+rank comments against this query using Okapi BM25 \cite{Robertson96okapiat}.
+
+\begin{figure*}[!ht]
+\centering
+\captionsetup{justification=centering}
+{\subfigure[ MAP Varying $\alpha$ ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{alpha-map.png}%
+\label{alpha-map}} \hfil 
+\subfigure[ P@5 Varying $\alpha$ ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{alpha.png}%
+\label{alpha-p5}}} \caption{\textbf{Two different performance measure(MAP and P@5) were computed for different values of $\alpha$. For these experiments the others parameters were as follows: $\lambda$ = 0.9, terms = 70, $b$ = 0.1}} \label{alpha}
+\end{figure*}
+
 
 This adjustment has the shortcoming that the probabilities for principal terms available in the query model have been used during query generation, but the advantage of their presence has not been taken during ranking comments as the ranking function treats all query terms to be equal. We suspect this has a significant adverse effect in our solution's performance. We hope to correct this problem in the future -- depending on the feedback we may get regarding the future prospect of this work.          
 
+%\begin{figure*}[!ht]
+%\center{\subfigure[ An Article ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.25\textheight, angle=0]{snapshot1.png}%
+%\label{res1}} \hfil 
+%\subfigure[ The comments to provide feedback ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.25\textheight, angle=0]{snapshot2.png}%
+%\label{res2}}} \caption{User interface to provide feedback} \label{results}
+%\end{figure*}
+
 \section{Evaluation}
 \label{ev}
+In order to evaluate our system, we asked some of our peers to read a few articles from our crawled Alzajeera and Yahoo-news archive and requested them to provide feedback specifying which of the comments associated with the article are relevant. We implemented a web interface  to acquire user feedback. Figure \ref{feedback} presents a snap-shot of our user interface. We gathered 10 feedback for Alzajeera news articles and 10 feedback for Yahoo-news articles. These feedback were used as our ground truth for our evaluation.  
+
+We conducted our evaluation in two-phases. At the first phase, we used the feedback  for Alzajeera news articles as our test case to determine the optimal value for all the parameters discussed in the previous section. At the second phase, we used these parameters to evaluate the performance of our system with Yahoo-news articles.
+
+We used two very well known performance measures for information retrieval: MAP (Mean Average Precision) and P@5 (Precision at position 5). As one of the motivation of the project was to present an editors' pick of comments (typically 5 of the best comments are selected as editors' pick), we choose to use P@5 to evaluate our system. MAP would present an overall performance of our system in terms of precision and recall.
+
+\subsection{Identifying the best Parameters}
+\label{best-param}
+In our proposed approach, we have used several different parameters, such as the parameter $k$ in Equation \ref{fweight}, parameter $\alpha$ in Equation \ref{docW} and parameter $\lambda$ in Equation \ref{wProb}. Also, BM25 have length normalization parameter ($b$), and other parameters like $k_1$, $k_2$. Also, we can vary the number of terms generated in our query generation process. In order to identify the best parameters, we tried to vary each of these parameters individually while keeping all other parameters constant. Our results show that the parameters $k$, $k_1$ and $k_2$ don't have much of an impact on the MAP and P@5 value. So, in this section, we present the results of varying other four parameters to get their best possible value.
+
+\subsubsection{$\alpha$}
+Equation \ref{docW} is a mixture of normalized relevance and frequency weights. It gives the likelihood of a term to appear in the query for the concerned passage of the article. Figure \ref{alpha-map} and Figure \ref{alpha-p5} shows impact of change in $\alpha$ on MAP and P@5 respectively. For the experiment the value of the other parameters were fixed as $\lambda$ = 0.9, terms = 70, $b$ = 0.1.
+
+From Equation \ref{docW}, we see that, if the value of $\alpha$ is close to 0, relevance weight will have very low impact on term likelihood to appear in query. If value of $\alpha$ is close to 1, frequency weight of individual terms will have very low impact on likelihood to appear in query.  Figure \ref{alpha} shows that, both P@5 and MAP increase with increase of $\alpha$ which indicates that, relevance weight should have more significant impact on term likelihood to appear in query for the concerned passage of the article. So for the rest of the experiments we set the value of $\alpha$ as 1.0.
+
+\subsubsection{$\lambda$}
+\begin{figure*}[!ht]
+\centering
+\captionsetup{justification=centering}
+{\subfigure[ MAP Varying $\lambda$ ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{beta-map.png}%
+\label{lambda-map}} \hfil 
+\subfigure[ P@5 Varying $\lambda$ ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{beta.png}%
+\label{lambda-p5}}} \caption{\textbf{Two different performance measure(MAP and P@5) were computed for different values of $\lambda$. For these experiments the others parameters were as follows: $\alpha$ = 1.0, terms = 70, $b$ = 0.1}} \label{lambda}
+\end{figure*}
+Equation \ref{wProb} combines the term likelihood to appear in query for the concerned passage of the article with the collection probability of a term $p(w_i,C)$ using the Jelinek-Mercer interpolated smoothing method. In this equation the smoothing parameter is $\lambda$. Figure \ref{lambda-map} and Figure \ref{lambda-p5} shows the change of MAP and P@5 with the change of the smoothing parameter $\lambda$. For these experiments, the values of terms and $b$ were set to 70 and 0.1 respectively.
+
+Figure \ref{lambda} shows that MAP and P@5 both remains almost similar for values of 0 to .9 for $\lambda$. We get highest MAP of .4804 for $\lambda$ value of 0.9. MAP decrease significantly if $\lambda$ is 1. However, as the smoothing probabilities ($p(w_i,c)$) are so small that we typically can't get any effect of smoothing unless we set a higher value for $\lambda$. For this reason, for the rest of the evaluation we selected the $lambda$ as 0.9.
+
+\subsubsection{Doc Length Normalization for BM25}
+\begin{figure*}[!ht]
+\centering
+\captionsetup{justification=centering}
+{\subfigure[ MAP Varying the parameter $b$ ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{b-map.png}%
+\label{b-map}} \hfil 
+\subfigure[ P@5 Varying the parameter $b$ ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{b.png}%
+\label{b-p5}}} \caption{\textbf{Two different performance measure(MAP and P@5) were computed by varying the number of terms for our query generation. For these experiments the others parameters were as follows: $\alpha$ = 1.0, $\lambda$ = 0.9, terms = 70}} \label{b-perf}
+\end{figure*}
+In our approach we have used BM25 to rank the comments. BM25 penalizes the longer documents by normalizing them to the average overall document length for better ranking performance. The logic behind that is, if a document length is larger, for obvious reasons the term frequencies for the document will be comparatively higher and hence the document would have some unfair advantage. However, in our case, typically larger documents (comments) are more likely to be relevant. Hence, we tried to vary the document length normalization parameter ($b$) for BM25 to get an optimal value of $b$.  Figure \ref{b-map} and Figure \ref{b-p5} represents the change in MAP and P@5 respectively with the change of $b$. 
+
+If the value of $b$ is close to 0, length of ranked document will not have any impact on ranking. Also, if the Document normalization parameter has higher value, rank of longer length documents will be penalized significantly. Figure \ref{b-perf} shows that, both P@5 and MAP decrease with increase in $b$. Since, in our approach we are ranking comments, longer comments have higher probability to cover the overall topics of an article compare to smaller comments. Hence, our approach works better with smaller value of document length normalization parameter. This is why, we set the value of $b$ at 0.1 for further experimentation.
 
 
-\begin{widetext}
-\begin{equation}
-\label{bm25}
-rank(P,D) = \sum_{\substack{w \in P,D}}\log{\frac{N - df + 0.5}{df + 0.5}} \times 
-{\frac{(k_1 + 1) \times c(w, D)}{k_1 \times (1 - b + b \frac{n}{n_{avg}}) + c(w,D)}} \times
-\frac{(k_2 + 1) \times {c(w, P)}}{k_2 + c(w, P)}
-\end{equation}
-\end{widetext}
+\subsubsection{Number of Terms}
+\begin{figure*}[!ht]
+\centering
+\captionsetup{justification=centering}
+{\subfigure[ MAP Varying the Number of Terms ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{terms-map.png}%
+\label{terms-map}} \hfil 
+\subfigure[ P@5 Varying the Number of Terms ]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{terms.png}%
+\label{terms-p5}}} \caption{\textbf{Two different performance measure(MAP and P@5) were computed by varying the number of terms for our query generation. For these experiments the others parameters were as follows: $\alpha$ = 1.0, $\lambda$ = 0.9, $b$ = 0.1}} \label{terms}
+\end{figure*}
+\begin{figure*}[!ht]
+\centering
+\captionsetup{justification=centering}
+{\subfigure[]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{comparison-terms.png}%
+\label{com-terms-map}} \hfil 
+\subfigure[]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{comparison-terms-p5.png}%
+\label{com-terms-p5}}} \caption{\textbf{Performance Comparison of MAP and P@5 between the typical Okapi-BM25 algorithm and our modified Okapi-BM25 algorithm by varying the number of terms in a passage query}} \label{com-terms}
+\end{figure*}
+\begin{figure*}[!ht]
+\centering
+\captionsetup{justification=centering}
+{\subfigure[]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{comparison-terms-yahoo.png}%
+\label{com-terms-map-yahoo}} \hfil 
+\subfigure[]{\includegraphics[trim=0cm 0cm 0cm 0cm, clip=false, totalheight=0.3\textheight, angle=0]{comparison-terms-yahoo-p5.png}%
+\label{com-terms-yahoo-p5}}} \caption{\textbf{Performance Comparison of MAP and P@5 between the typical Okapi-BM25 algorithm and our modified Okapi-BM25 algorithm by varying the number of terms in a passage query with Yahoo-news articles}} \label{com-terms}
+\end{figure*}
 
-The probability of a term's contributing to the query generated by the passage $P$ replaces the query term frequency component in the standard BM25 ranking formula given in Equation \ref{bm25} and gives us Equation \ref{modBM25}. 
+In our System, from each passage of an article we generate a query representing the information need satisfied by the concerned passage of that article. If the number of terms in that query is too small, it may not cover all the concerned topics of an article. Also, if the numbers of terms are too many, it might become too generic. Figure \ref{terms-map} and Figure \ref{terms-p5} presents the impact of number of terms in the query on MAP and P@5 respectively.
 
-\begin{widetext}
-\begin{equation}
-\label{modBM25}
-rank(P,D) = \sum_{\substack{w \in P,D}}\log{\frac{N - df + 0.5}{df + 0.5}} \times 
-{\frac{(k_1 + 1) \times c(w, D)}{k_1 \times (1 - b + b \frac{n}{n_{avg}}) + c(w,D)}} \times p_p(w)
-\end{equation}
-\end{widetext}
+Figure \ref{terms-map} shows that, the MAP generally increases with the increased number of terms in query. And we get the highest MAP for query with 70 terms. This is quite expected because with the increase in the number of terms generally more relevant comments are pulled out. However, for much higher number of terms the query becomes more general and hence more irrelevant documents are also pulled out so with more than 80 terms MAP suffers a little bit.
+Figure \ref{terms-p5} shows that, the value of P@5 also generally increases with the increase in the number of terms in query. We get the highest value of P@5 when number of terms in query is 70 and 80. Also, the value of P@5 decreases for much higher number of terms in query for reasons mentioned above.  Hence, we chose the 70 terms for each query for the next set of experiments. 
 
-\section{Future Work}
+\subsection{Performance Measurement of the System}
+
+
+
+
+\section{Limitation and Future Work}
 \label{fw}
 As we expressed before that our broad objective for the research was to develop a mechanism for classifying, filtering, and highlighting readers' comments; and we restrict it to only filtering relevant comments to fit our work within the time frame of the class project. Given that none of us works in Information Retrieval and has his personal research to do, it seems unlikely that our initial plan will come to fruition.
 
