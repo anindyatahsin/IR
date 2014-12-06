@@ -16,7 +16,7 @@ public class WeighingConfiguration {
 	public static double K  = 10;
 	
 	// a parameter to control the relative impact of relevance and frequency weights of a term
-	public static float ALPHA = 1f;
+	public static float ALPHA = .5f;
 	
 	// a smoothing parameter to smooth using collection probabilities
 	public static float BETA = 0.9f;

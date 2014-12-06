@@ -26,7 +26,7 @@ public class Main {
 		int articleList[] = {20,39,56,60,81,88,89,106,107,115};
 		double map[] = new double[articleList.length];
 
-		for(double parameter=10; parameter <= 100; parameter+=10){
+		for(double parameter=10; parameter <= 150; parameter+=10){
 			int i = 0;
 			
 			WeighingConfiguration.TERMS = (int) parameter;

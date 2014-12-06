@@ -57,7 +57,7 @@ public class PostMain {
 				WordWeight QueryWordlist = iter.next();
 				
 				try{
-					results=Runner.interactiveSearchpost(FILE_PATH, QueryWordlist.getWord());
+					results=Runner.interactiveSearchpost(FILE_PATH, QueryWordlist.getWord(),QueryWordlist.getProbability(RunTimeConfiguration.CURRENTCOLLECTIONMODEL));
 					Double wordProb=QueryWordlist.getProbability(collectionModel);
 					for (Iterator<ResultDoc> iter_result = results.iterator(); iter_result.hasNext(); ) {
 						ResultDoc tempResultDoc=iter_result.next();

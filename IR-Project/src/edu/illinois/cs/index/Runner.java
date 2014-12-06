@@ -17,74 +17,31 @@ public class Runner {
     final static String _dataset = "npl";
     final static String _indexPath = "lucene-npl-index";
     final static String _prefix = "data/";
-    final static String _file = "npl.txt";
+    final static String _file = "npl.txt";	
 
-////This enables you to interact with the program in command line data/yahoo-news/Yahoo/
-//    public static void main(String[] args) throws IOException {
-//        if (args.length == 1 && args[0].equalsIgnoreCase("--index"))
-//            Indexer.index(_indexPath, _prefix, _file);
-//        else if (args.length >= 1 && args[0].equalsIgnoreCase("--search"))
-//        {
-//            String method = null;
-//            if (args.length == 2)
-//                method = args[1];
-//            interactiveSearch(method);
-//        }
-//        else
-//        {
-//            System.out.println("Usage: --index to index or --search to search an index");
-//            System.out.println("If using \"--search\",");
-//            printUsage();
-//        }
-//    }
-    
-////This makes it easier for you to run the program in an IDE
-    public static void main(String[] args) throws IOException {
-    	//To crate the index
-    	//NOTE: you need to create the index once, and you cannot call this function twice without removing the existing index files
-    	//Indexer.index(_indexPath, _prefix, _file);
-        
-        //Interactive searching function with your selected ranker
-    	//NOTE: you have to create the index before searching!
-    	String method = "--ok";//specify the ranker you want to test
-    	String path="data/yahoo-news/IndexYahoo/";
-        //interactiveSearch(path, method);
-    }
 
-    public static ArrayList<ResultDoc> interactiveSearchpost(String index_path, String query) throws IOException {
+    public static ArrayList<ResultDoc> interactiveSearchpost(String index_path, String query, double weight) throws IOException {
         String method= "--ok";
     	Searcher searcher = new Searcher(index_path);
         setSimilarity(searcher, method);
-        //BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        //System.out.println("Type text to search, blank to quit.");
-        //System.out.print("> ");
         String input=query;
-        //while ((input = br.readLine()) != null && !input.equals("")) {
         SearchResult result = searcher.search(input);
         
         ArrayList<ResultDoc> results = result.getDocs();
         int rank = 1;
         if (results.size() == 0){
-        	RunTimeConfiguration.writer.write("\n"+"No results found!");
         	return null;
         }
         
-        return results;
-        /*
-        for (ResultDoc rdoc : results) {
-        	
-            System.out.println("\n------------------------------------------------------");
-            System.out.println(rank + ". " + rdoc.title());
-            System.out.println("------------------------------------------------------");
-            // System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
-            System.out.println(rdoc.content());
-            ++rank;
+        for(ResultDoc rdoc: results){
+        	if(RunTimeConfiguration.DOCMAP.containsKey(rdoc.title())){
+        		RunTimeConfiguration.DOCMAP.put(rdoc.title(), RunTimeConfiguration.DOCMAP.get(rdoc.title()) + weight * rdoc.score);
+        	} else{
+        		RunTimeConfiguration.DOCMAP.put(rdoc.title(), weight * rdoc.score);
+        	}
         }
         
-        */
-        //    System.out.print("> ");
-        //}
+        return results;
 
     }    
     
@@ -157,32 +114,121 @@ public class Runner {
 			} else {
 				//System.out.print("\n"+"X ");
 			}
-			//try{
-				//RunTimeConfiguration.writer.write("\n"+"\n------------------------------------------------------");
-				//RunTimeConfiguration.writer.write("\n"+i + ". " + rdoc.title());
-				//RunTimeConfiguration.writer.write("\n"+"------------------------------------------------------");
-				// System.out.println(result.getSnippet(rdoc).replaceAll("\n", " "));
-			//System.out.println(i + ". " + rdoc.title());
-				//RunTimeConfiguration.writer.write("\n"+rdoc.content());
-			//} catch(IOException e) {
-				// TODO Auto-generated catch block
-			//	e.printStackTrace();
-			//}
-			 ++i;
+			++i;
 		}
-    	/*try{
-    	RunTimeConfiguration.writer.write("\n"+"\n*************************************************************\n");
-    	RunTimeConfiguration.writer.write("\n"+"Average Precision: " + (avgp / num_rel));
-    	RunTimeConfiguration.writer.write("\n"+"\n***************************************************************\n");
-    	RunTimeConfiguration.writer.write("\n"+"P@K: " + ((numRel-1) / (i-1)));
-    	RunTimeConfiguration.writer.write("\n"+"\n***************************************************************\n");
-    	}catch(IOException e){
-    		e.printStackTrace();
-    	}*/
+    	
     	return avgp / num_rel;  // returning AP
     	//int exp_i = Math.min(num_rel, i-1);
     	//return (numRel-1) / exp_i; //returning p@5
     }
+    
+    public static double calculateMAPPost(ArrayList results){
+    	File folder = new File(DeploymentConfiguration.FEEDBACK_DIRECTORY);
+    	File[] listOfFiles = folder.listFiles();
+    	FileInput in = new FileInput();
+    	String prefix = "";
+    	ArrayList<Integer> relevance = new ArrayList<Integer>();
+    	int num_rel = 0;
+    	if(RunTimeConfiguration.CURRENTARTICLESOURCE.equals("alzajeera")){
+    		prefix += RunTimeConfiguration.CURRENTARTICLESOURCE + "-" 
+    				+ RunTimeConfiguration.CURRENTARTICLECATEGORY + "-article-"
+    				+ RunTimeConfiguration.CURRENTARTICLEID + "-";
+    	} else{
+    		prefix += RunTimeConfiguration.CURRENTARTICLESOURCE + "-article-"
+    				+ RunTimeConfiguration.CURRENTARTICLEID + "-";
+    	}
+    	for (int i = 0; i < listOfFiles.length; i++) {
+    		if(listOfFiles[i].getName().startsWith(prefix)){
+    			ArrayList<String> lines = in.readFromFile(listOfFiles[i].getAbsolutePath());
+    			for(String line : lines){
+    				String val[] = line.split("\\s+");
+    				if(val.length == 7){
+    					if(val[6].equals("Relevant")){
+    						relevance.add(1);
+    						num_rel++;
+    					} else{
+    						relevance.add(0);
+    					}
+    				}
+    			}
+    		}
+    	}
+    	
+    	double avgp = 0.0;
+		double numRel = 1;
+    	int i;
+    	//System.out.println(results);
+		for (i = 1; i <= results.size(); i++) {
+    		//if(i > 5) break;
+			StringTokenizer st = new StringTokenizer(results.get(i-1).toString(), "=");
+    		if(st.countTokens() != 2) continue;
+    		if (relevance.get(Integer.parseInt(st.nextToken()) - 1) == 1) {
+				avgp += numRel / i;
+				++numRel;
+				//System.out.print("\n"+"  ");
+			} else {
+				//System.out.print("\n"+"X ");
+			}
+		}
+    	
+    	return avgp / num_rel;  // returning AP
+    	//int exp_i = Math.min(num_rel, i-1);
+    	//return (numRel-1) / exp_i; //returning p@5
+    }
+    /*
+    public static double calculateP5(ArrayList results){
+    	File folder = new File(DeploymentConfiguration.FEEDBACK_DIRECTORY);
+    	File[] listOfFiles = folder.listFiles();
+    	FileInput in = new FileInput();
+    	String prefix = "";
+    	ArrayList<Integer> relevance = new ArrayList<Integer>();
+    	int num_rel = 0;
+    	if(RunTimeConfiguration.CURRENTARTICLESOURCE.equals("alzajeera")){
+    		prefix += RunTimeConfiguration.CURRENTARTICLESOURCE + "-" 
+    				+ RunTimeConfiguration.CURRENTARTICLECATEGORY + "-article-"
+    				+ RunTimeConfiguration.CURRENTARTICLEID + "-";
+    	} else{
+    		prefix += RunTimeConfiguration.CURRENTARTICLESOURCE + "-article-"
+    				+ RunTimeConfiguration.CURRENTARTICLEID + "-";
+    	}
+    	for (int i = 0; i < listOfFiles.length; i++) {
+    		if(i == 6) break;
+    		if(listOfFiles[i].getName().startsWith(prefix)){
+    			ArrayList<String> lines = in.readFromFile(listOfFiles[i].getAbsolutePath());
+    			for(String line : lines){
+    				String val[] = line.split("\\s+");
+    				if(val.length == 7){
+    					if(val[6].equals("Relevant")){
+    						relevance.add(1);
+    						num_rel++;
+    					} else{
+    						relevance.add(0);
+    					}
+    				}
+    			}
+    		}
+    	}
+    	
+    	double avgp = 0.0;
+		double numRel = 1;
+    	int i = 1;
+		for (i = 1; i <= results.size(); i++) {
+    		StringTokenizer st = new StringTokenizer(results.get(i-1).toString(), "=");
+    		if(st.countTokens() != 2) continue;
+    		if (relevance.get(Integer.parseInt(st.nextToken()) - 1) == 1) {
+				avgp += numRel / i;
+				++numRel;
+				//System.out.print("\n"+"  ");
+			} else {
+				//System.out.print("\n"+"X ");
+			}
+		}
+    	
+    	//System.out.println(avgp / num_rel);
+    	//return avgp / num_rel;  // returning AP
+    	int exp_i = Math.min(num_rel, i-1);
+    	return (numRel-1) / exp_i; //returning p@5
+    } */
 
     public static void setSimilarity(Searcher searcher, String method) {
         if(method == null)
