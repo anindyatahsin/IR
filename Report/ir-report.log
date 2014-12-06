@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.17)  5 DEC 2014 18:50
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.17)  5 DEC 2014 20:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -575,6 +575,34 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_below_intertext_sep=\dimen173
 \l_MT_above_shortintertext_sep=\dimen174
 \l_MT_below_shortintertext_sep=\dimen175
+) (./widetext.sty
+Package: widetext 
+
+(/usr/share/texlive/texmf-dist/tex/latex/sttools/flushend.sty
+Package: flushend 2012/05/29 v1.1 Balancing columns at last page
+Package: flushend 1997/10/01
+\@aaa=\box32
+\@ccc=\box33
+\@viper=\box34
+\hold@viper=\box35
+\atColsBreak=\toks29
+\@extra@skip=\dimen176
+\@nd@page@rule=\dimen177
+)
+(/usr/share/texlive/texmf-dist/tex/latex/sttools/cuted.sty
+Package: cuted 2012/10/04 v1.5 Mixing onecolumn and twocolumn modes
+\At@ViperColsBreak=\toks30
+\v@aaa=\box36
+\v@ccc=\box37
+\lastskip@a=\skip56
+\lastskip@b=\skip57
+\lastskip@d=\skip58
+\lastbox@a=\box38
+\stripsep=\skip59
+\viper@penalty=\count119
+\ht@viper=\dimen178
+)
+\@parindent=\skip60
 )
 
 LaTeX Warning: Unused global option(s):
@@ -583,31 +611,31 @@ LaTeX Warning: Unused global option(s):
 (./ir-report.aux)
 \openout1 = `ir-report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
  (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count119
-\scratchdimen=\dimen176
-\scratchbox=\box32
-\nofMPsegments=\count120
-\nofMParguments=\count121
-\everyMPshowfont=\toks29
-\MPscratchCnt=\count122
-\MPscratchDim=\dimen177
-\MPnumerator=\count123
-\makeMPintoPDFobject=\count124
-\everyMPtoPDFconversion=\toks30
+\scratchcounter=\count120
+\scratchdimen=\dimen179
+\scratchbox=\box39
+\nofMPsegments=\count121
+\nofMParguments=\count122
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count123
+\MPscratchDim=\dimen180
+\MPnumerator=\count124
+\makeMPintoPDFobject=\count125
+\everyMPtoPDFconversion=\toks32
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -652,41 +680,89 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 19.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 20.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <11> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 19.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 20.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
-] [2] [3] [4] (./ir-report.bbl [5]) [6
+] [2] [3]
+Extra height:0.0pt when 496.79842pt
+(2)Left:496.79842pt Right:499.77486pt Output:496.79842pt
+(2)Left:499.77486pt Right:499.77486pt Output:499.77486pt
+- LAST -
+Left:499.77486pt
+Right:499.77486pt
+Output:499.77486pt
 
-]
-(./ir-report.aux) ) 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:0.0pt when 23.08246pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+(2)Left:23.08246pt Right:21.0pt Output:23.08246pt
+- LAST -
+Left:23.08246pt
+Right:21.0pt
+Output:23.08246pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (1.60707pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (1.60707pt too high) has occurred while \output is active []
+
+
+[4]
+Extra height:0.0pt when 0.0pt
+(2)Left:0.0pt Right:0.0pt Output:0.0pt
+- LAST -
+Left:0.0pt
+Right:0.0pt
+Output:0.0pt
+ [5] (./ir-report.bbl)
+Extra height:11.0pt when 216.48093pt
+Extra height:0.0pt when 217.48093pt
+(2)Left:217.48093pt Right:207.61192pt Output:217.48093pt
+- LAST -
+Extra skip:0.0pt
+Left:217.48093pt
+Right:207.61192pt
+Output:217.48093pt
+ [6
+
+] (./ir-report.aux) ) 
 Here is how much of TeX's memory you used:
- 5218 strings out of 494985
- 76240 string characters out of 6180355
- 155075 words of memory out of 5000000
- 8338 multiletter control sequences out of 15000+600000
+ 5285 strings out of 494985
+ 77270 string characters out of 6180355
+ 167335 words of memory out of 5000000
+ 8395 multiletter control sequences out of 15000+600000
  35932 words of font info for 67 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 39i,13n,53p,852b,262s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}<
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
-mb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ir-report.pdf (6 pages, 157646 bytes).
+ 39i,13n,53p,852b,211s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
+}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
+utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on ir-report.pdf (6 pages, 160808 bytes).
 PDF statistics:
  72 PDF objects out of 1000 (max. 8388607)
  51 compressed objects within 1 object stream
