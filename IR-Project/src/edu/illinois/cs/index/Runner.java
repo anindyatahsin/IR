@@ -107,8 +107,11 @@ public class Runner {
         ArrayList<ResultDoc> results = result.getDocs();
         int rank = 1;
         if (results.size() == 0)
-        	RunTimeConfiguration.writer.write("\n"+"No results found!");
-        
+        	try{
+        		RunTimeConfiguration.writer.write("\n"+"No results found!");
+        	} catch (Exception e){
+        		return 0.0;
+        	}	
         return calculateMAP(results);
     }
     
@@ -147,10 +150,7 @@ public class Runner {
     	double avgp = 0.0;
 		double numRel = 1;
     	for (ResultDoc rdoc : results) {
-    		if (i == 6){
-    			break;
-    		}
-			if (relevance.get(Integer.parseInt(rdoc.title()) - 1) == 1) {
+    		if (relevance.get(Integer.parseInt(rdoc.title()) - 1) == 1) {
 				avgp += numRel / i;
 				++numRel;
 				//System.out.print("\n"+"  ");
@@ -179,9 +179,9 @@ public class Runner {
     	}catch(IOException e){
     		e.printStackTrace();
     	}*/
-    	//return avgp / num_rel;  // returning AP
-    	int exp_i = Math.min(num_rel, i-1);
-    	return (numRel-1) / exp_i; //returning p@5
+    	return avgp / num_rel;  // returning AP
+    	//int exp_i = Math.min(num_rel, i-1);
+    	//return (numRel-1) / exp_i; //returning p@5
     }
 
     public static void setSimilarity(Searcher searcher, String method) {
