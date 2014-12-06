@@ -16,13 +16,15 @@ public class WeighingConfiguration {
 	public static double K  = 10;
 	
 	// a parameter to control the relative impact of relevance and frequency weights of a term
-	public static float ALPHA = 0.5f;
+	public static float ALPHA = 1.0f;
 	
 	// a smoothing parameter to smooth using collection probabilities
 	public static float BETA = 0.9f;
 	
 	public static float BM25_B = 0.1f;
 	public static float BM25_K1 = 1.6f;
+	
+	public static int TERMS = 60;
 	// equation for calculating relevance weight
 	public static final double getRelevanceWeight(int level) {
 		return Math.max(0, 1 - Math.log10(level));

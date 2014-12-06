@@ -147,6 +147,9 @@ public class Runner {
     	double avgp = 0.0;
 		double numRel = 1;
     	for (ResultDoc rdoc : results) {
+    		if (i == 6){
+    			break;
+    		}
 			if (relevance.get(Integer.parseInt(rdoc.title()) - 1) == 1) {
 				avgp += numRel / i;
 				++numRel;
@@ -176,8 +179,9 @@ public class Runner {
     	}catch(IOException e){
     		e.printStackTrace();
     	}*/
-    	return avgp / num_rel;  // returning AP
-    	//return (numRel-1) / (i-1); //returning p@k
+    	//return avgp / num_rel;  // returning AP
+    	int exp_i = Math.min(num_rel, i-1);
+    	return (numRel-1) / exp_i; //returning p@5
     }
 
     public static void setSimilarity(Searcher searcher, String method) {

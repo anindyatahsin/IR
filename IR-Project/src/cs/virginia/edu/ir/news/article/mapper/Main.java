@@ -28,7 +28,9 @@ public class Main {
 
 		for(double parameter=10; parameter <= 100; parameter+=10){
 			int i = 0;
-			WeighingConfiguration.K = parameter;
+			
+			WeighingConfiguration.TERMS = (int) parameter;
+			System.out.println("Term = " + parameter);
 			for (int articleId: articleList){
 				RunTimeConfiguration.CURRENTARTICLEID = articleId;
 				NewsArticle article = null;
@@ -52,16 +54,16 @@ public class Main {
 				
 				for (PassageModel model : weightingConfig.getPassageModels()) {
 					RunTimeConfiguration.CURRENTPASSAGEMODEL = model;
-					String Query = model.getTopWords(60, collectionModel);
+					String Query = model.getTopWords(WeighingConfiguration.TERMS, collectionModel);
 					//System.out.println("The Query is: " + Query);
 					String FILE_PATH=GetIndexFolder(article);
 					//Suppose String Query
 					map[i++] = Runner.interactiveSearch(FILE_PATH, Query);
 					//model.describeModel();
-					//System.out.println("AP=" + map[i-1]);
+					System.out.println(map[i-1]);
 				}
 			}
-			System.out.println(parameter + "\t" + average(map));
+			System.out.println(parameter + "\t" + average(map) + "\t" + stdev(map));
 		}
 	}
 	
@@ -74,6 +76,19 @@ public class Main {
 	    double average = sum / data.length;; 
 
 	    return average;
+	}
+	
+	public static double stdev(double[] data){
+		double mean = average(data);
+		double sqrsum = 0;
+		
+		for(int i=0; i < data.length; i++){ 
+	    	sqrsum += (data[i]-mean) * (data[i]-mean); 
+	    }
+		
+		double sd = Math.sqrt(sqrsum/(data.length - 1));
+		return sd;
+		
 	}
 	
 	public static String GetIndexFolder(NewsArticle article){
