@@ -16,7 +16,7 @@ public class Main {
 
 	public static void main(String args[]) throws Exception {
 		
-//		CollectionModel.reloadCollectionModel("alzajeera");
+		//CollectionModel.reloadCollectionModel("alzajeera");
 		//CollectionModel.reloadCollectionModel("yahoo-news");		
 		CollectionModel  collectionModel = CollectionModel.getModel("alzajeera");
 		RunTimeConfiguration.CURRENTCOLLECTIONMODEL = collectionModel;
